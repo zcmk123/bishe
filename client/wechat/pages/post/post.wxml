@@ -1,0 +1,59 @@
+<!--pages/post/post.wxml-->
+<view class="container">
+  <view class="content">
+    <view class="hr">拼车简介</view>
+    <view class="content-item">
+      <label for="content-title">标题</label>
+      <input id="content-title" placeholder="请输入标题" maxlength="20" bindinput="bindiTitleChange" />
+    </view>
+    <view class="content-item">
+      <label for="content-desc">备注</label>
+      <view><textarea id="content-desc" placeholder="请输入备注" maxlength="60" bindinput="bindiDescChange" /></view>
+    </view>
+    <view class="hr">拼车信息</view>
+    <view class="content-item">
+      <label for="content-loc">出发地</label>
+      <view class="content-loc-right" bindtap="bindtapToMap">
+        <input id="content-loc" value="{{postInfo.startLoc.name}}" disabled="true" maxlength="60" />
+        <view id="loc-btn" bindtap=""><image src="../../images/icon/location.png" mode="aspectFit"></image></view>
+      </view>
+    </view>
+    <view class="content-item">
+      <label for="content-dest">目的地</label>
+      <view class="content-dest-right" bindtap="bindtapToMap">
+        <input id="content-dest" value="{{postInfo.destLoc.name}}" disabled="true" maxlength="60" />
+        <view id="dest-btn" bindtap=""><image src="../../images/icon/location.png" mode="aspectFit"></image></view>
+      </view>
+    </view>
+    <view class="content-item">
+      <label for="content-date">出发日期</label>
+      <picker id="content-date" mode="date" value="{{postInfo.date}}" start="{{postInfo.date}}" end="{{endDate}}" bindchange="bindDateChange">
+        <view class="picker">{{postInfo.date}}</view>
+      </picker>
+    </view>
+    <view class="content-item">
+      <label for="content-time">出发时间</label>
+      <picker id="content-time" mode="time" value="{{postInfo.time}}" start="{{postInfo.time}}" end="{{endTime}}" bindchange="bindTimeChange">
+        <view class="picker">{{postInfo.time}}</view>
+      </picker>
+    </view>
+    <view class="content-item">
+      <label for="content-seat">空位</label>
+      <picker bindchange="bindSeatChange" range="{{seatArr}}">
+        <view class="picker">{{postInfo.seat}}</view>
+      </picker>
+    </view>
+
+  </view>
+
+  <view class="content-bottom">
+  <view class="rules">
+  <checkbox-group  bindchange="bindRulesChange">
+    <label>
+      <checkbox value="1" /><text>勾选代表已经同意xxx规则</text>
+    </label>
+  </checkbox-group>
+  </view>
+  <button type="primary" bindtap="bindPostInfo">发布信息</button>
+  </view>
+</view>

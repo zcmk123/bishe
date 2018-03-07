@@ -1,0 +1,15 @@
+<!--pages/list/list.wxml-->
+<view class="container-a">
+    <view class="post-list">
+<!-- wx:for="{{loadedList}}" -->
+    <view class="post-item" wx:for="{{loadedList}}">
+      <view class="item-title">标题:{{item.title}}</view>
+      <view class="item-start"><image class="icon-dot" src="../../images/icon/startdot.png" mode="aspectFit"></image>出发地：{{item.startLoc.name}}</view>
+      <view class="item-dest"><image class="icon-dot" src="../../images/icon/destdot.png" mode="aspectFit"></image>目的地：{{item.destLoc.name}}</view>
+      <view class="item-date">出发时间：{{item.date}} {{item.time}}</view>
+      <view class="item-seat">剩余座位：{{item.seat}}</view>
+    </view>
+
+    <view class="loading-icon" wx:if="{{isLoading}}">加载中。。。</view>
+  </view>
+</view>

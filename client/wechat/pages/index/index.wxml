@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='title'>
+    <image class="logo" src="../../images/img/guet-logo.png" mode="aspectFit"></image>
+  </view>
+  <view class="item" bindtap="toPostPage">
+   发布拼车信息 
+  </view>
+  <view class="item" bindtap="toListPage">
+   我要搭顺风车 
+  </view>
+</view>

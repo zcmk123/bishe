@@ -1,0 +1,75 @@
+/* pages/info/info.wxss */
+.user-info {
+  width: 100%;
+}
+.info-top {
+  padding: 40rpx;
+  text-align: center;
+  background-color: #1296db;
+}
+.user-info-avatar {
+  width: 200rpx;
+  height: 200rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+}
+.user-info-name {
+  color: #fff;
+}
+.user-info-name text {
+  font-size: 18px;
+}
+.user-info-name .id-icon {
+  margin-left: 20rpx;
+  width: 80rpx;
+  height: 80rpx;
+  vertical-align: middle;
+}
+.info-middle {
+  border-bottom: 1px solid #ccc;
+}
+.info-middle .middle-item {
+  display: inline-block;
+  padding: 10rpx 0;
+  width: 50vw;
+  text-align: center;
+  box-sizing: border-box;
+}
+.info-middle .info-driver {
+  border-right: 1px solid #ccc;
+}
+.middle-item .middle-icon {
+  width: 80rpx;
+  height: 80rpx;
+  vertical-align: bottom;
+}
+.info-middle .middle-content {
+  font-size: 14px;
+}
+.info-bottom {
+  /* margin-top: 40rpx; */
+}
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  margin: 0 42rpx;
+  border-bottom: 1px solid #ccc;
+}
+.info-item text {
+  line-height: 50rpx;
+}
+.info-item input {
+  text-align: right;
+}
+.info-icon {
+  margin-right: 20rpx;
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: top;
+}
+.edit-info-btn {
+  margin-top: 40rpx;
+  width: 90%;
+}

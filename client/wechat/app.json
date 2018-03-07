@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/info/info",
+    "pages/list/list",
+    "pages/post/post"
+    
+  ],
+  "tabBar": {
+    "selectedColor": "#1296db",
+    "color": "#8a8a8a",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icon/index.png",
+        "selectedIconPath": "images/icon/index-s.png"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "text": "拼车",
+        "iconPath": "images/icon/list.png",
+        "selectedIconPath": "images/icon/list-s.png"
+      },
+      {
+        "pagePath": "pages/info/info",
+        "text": "我的",
+        "iconPath": "images/icon/user.png",
+        "selectedIconPath": "images/icon/user-s.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "桂电校园拼车",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#eee"
+  },
+  "networkTimeout": {
+    "request": 20000
+  }
+}

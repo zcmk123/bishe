@@ -1,0 +1,60 @@
+/* pages/post/post.wxss */
+.container {
+  padding: 0;
+  flex-direction: column;
+}
+.content {
+  width: 100%; 
+}
+.hr {
+  padding: 10rpx 0 10rpx 10rpx;
+  font-size: 14px;
+  border-left: 10rpx solid #1171a4;
+  color: #666;
+  background-color: #eee;
+}
+.content-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10rpx 40rpx 0 40rpx;
+  border-bottom: 1px solid #ccc;
+  line-height: 50rpx;
+}
+.content-item label {
+  padding: 10rpx 0;
+}
+.content-item input, .content-item textarea, .content-item .picker {
+  padding: 10rpx 0;
+  width: 440rpx;
+  box-sizing: border-box;
+}
+.content-item input,.content-item .picker {
+  height: 74rpx;
+}
+.content-loc-right, .content-dest-right {
+  height: 74rpx;
+}
+ #content-loc, #content-dest {
+  display: inline-block;
+  width: 380rpx;
+  text-overflow: ellipsis;
+} 
+#loc-btn, #dest-btn {
+  display: inline-block;
+  margin: 0;
+  width: 60rpx;
+  height:74rpx;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+#loc-btn image, #dest-btn image {
+  width: 100%;
+  height:100%;
+}
+.content-bottom {
+  margin-top: 40rpx;
+  width: 90%;
+}
+.content-bottom .rules {
+  margin-bottom: 10rpx;
+}

@@ -1,0 +1,20 @@
+/**index.wxss**/
+page {
+  height: 100%;
+}
+.title {
+  width: 100%;
+  text-align: center;
+}
+.title .logo {
+  width: 90%;
+  height: 16vh;
+}
+.item {
+  height: 80vh;
+  width: 350rpx;
+  /* border: 1px solid black; */
+  border-radius: 10rpx;
+  background-color: #ddd;
+  box-shadow: 2rpx 2rpx 4rpx #ccc;
+}
