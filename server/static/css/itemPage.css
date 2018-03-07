@@ -1,0 +1,24 @@
+.mov-content-wrap {
+    width: 100%;
+}
+.mov-content {
+    width: 1040px;
+    margin: 40px auto;
+    padding: 5px;
+    border: 1px solid black;
+    overflow: hidden;
+}
+.mov-content .content {
+    display: inline-block;
+    width: 750px;
+    vertical-align: top;
+}
+.mov-content img {
+    display: inline-block;
+}
+.mov-content p, .mov-content h1 {
+    padding-left: 30px;
+}
+.mov-content p {
+    margin-top: 50px;
+}

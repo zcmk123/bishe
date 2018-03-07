@@ -1,0 +1,30 @@
+{
+  "name": "doublebird",
+  "version": "1.0.0",
+  "description": "birds-cage",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "8.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zcmk123/nodeJs.git"
+  },
+  "author": "doublexbird",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zcmk123/nodeJs/issues"
+  },
+  "homepage": "https://github.com/zcmk123/nodeJs#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.16.2",
+    "mime": "^2.2.0",
+    "mongodb": "^3.0.2",
+    "request": "^2.83.0"
+  },
+  "keywords": []
+}

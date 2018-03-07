@@ -1,0 +1,140 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.nav-head {
+    min-width: 950px;
+    height: 28px;
+    font-size: 12px;
+    line-height: 28px;
+    color: #d5d5d5;
+    background-color: #545652;
+}
+.nav-head::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.nav-left {
+    float: left;
+}
+.nav-right {
+    float: right;
+}
+.nav-left li, .nav-right li {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 12px;
+}
+.nav-left li:hover, .nav-right li:hover {
+    color: #FFF;
+}
+.nav-top-wrap {
+    width: 100%;
+    border-color: #e3ebec;
+    border-bottom: 1px solid #e5ebe4;
+    background-color: #f0f3f5;
+    font-size: 13px;
+}
+.nav-top {
+    width: 1040px;
+    margin: 0 auto;
+    padding: 10px 0 5px;
+}
+.nav-top::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.nav-logo {
+    float: left;
+    width: 145px;
+    margin: 0 13px 0 0;
+    padding-top: 56px;
+    overflow: hidden;
+    background: url(https://img3.doubanio.com/dae/accounts/resources/094108a/movie/assets/lg_movie_a12_2.png) no-repeat 0 12px;
+}
+.nav-search {
+    position: relative;
+    margin-left: 145px;
+    padding: 10px 0 15px 0;
+    font-size: 0;
+}
+.nav-search .search-suggest {
+    position: absolute;
+    display: none;
+    z-index: 99;
+    left: 14px;
+    width: 468px;
+    font-size: 13px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.search-suggest ul li {
+    border-bottom: 1px solid #eee;
+}
+.search-suggest ul li a {
+    color: #999;
+    display: block;
+    padding: 6px;
+}
+.search-suggest ul li a::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.search-suggest ul li img {
+    float: left;
+    width: 40px;
+    margin-right: 8px;
+    margin-top: 3px;
+}
+#input-text {
+    width: 470px;
+    height: 34px;
+    padding-left: 10px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px #06050514;
+    outline: none;
+    text-align: left;
+}
+.nav-search .sub-btn {
+    cursor: pointer;
+    width: 37px;
+    height: 35px;
+    border: none;
+    background: url(https://img3.doubanio.com/dae/accounts/resources/094108a/movie/assets/nav_mv_bg.png?s=1) no-repeat 0 -38px;
+}
+.nav-sec-wrap {
+    position: relative;
+    width: 100%;
+    background-color: #f0f3f5;
+    font-size: 14px;
+}
+.nav-sec {
+    width: 1040px;
+    margin: 0 auto;
+}
+.nav-sec ul {
+    padding: 9px 0;
+}
+.nav-sec ul li {
+    display: inline;
+    margin-right: 25px;
+}
+.nav-sec ul li a {
+    color: #27a;
+    text-decoration: none;
+}
+.nav-sec-wrap .ad {
+    position: absolute;
+    width: 186px;
+    height: 96px;
+    top: -68px;
+    left: 50%;
+    margin-left: 220px;
+    background: url(https://img3.doubanio.com/dae/accounts/resources/094108a/movie/assets/annual_2017.png) center/contain no-repeat;
+}

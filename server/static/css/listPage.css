@@ -1,0 +1,55 @@
+.list-wrap {
+    margin-top: 20px;
+    width: 100%;
+}
+.list-data {
+    width: 1040px;
+    margin: 0 auto;
+}
+.list-data ul li {
+    margin-bottom: 20px;
+    padding: 0 5px 10px 5px ;
+    border-bottom: 2px solid #c5c5c5;
+    overflow: hidden;
+}
+.list-data ul li a {
+    text-decoration: none;
+    color: #6e6e6e;
+}
+.list-data ul li a img {
+    float: left;
+    width: 150px;
+}
+.ls-title {
+    margin-bottom: 30px;
+    padding-left: 180px;
+}
+.ls-content{
+    padding-left: 180px;
+}
+
+.footer-wrap {
+    width: 100%;
+}
+.footer-wrap .changePage {
+    width: 1040px;
+    margin: 30px auto;
+    text-align: center;
+}
+.changePage a {
+    width: 20px;
+    height: 28px;
+    padding: 0px 4px;
+    margin: 2px;
+    text-decoration: none;
+}
+.changePage .active {
+    color: #FFF;
+    background: #83BF73;
+    cursor: normal;
+    pointer-events: none;
+}
+.changePage .non-active:hover{
+    color: #FFF;
+    background: #37a;
+}
