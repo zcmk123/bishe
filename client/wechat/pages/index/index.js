@@ -20,6 +20,7 @@ Page({
       selectSchool: e.detail.value
     })
     app.globalData.selectSchool = parseInt(e.detail.value);
+    wx.setStorageSync('selectSchool', e.detail.value);
     console.log(app.globalData)
   },
   toListPage: function () {
@@ -38,18 +39,16 @@ Page({
   init: function () {
     var schoolList = [];
     var sourceList = config.schoolList;
-
+    //读取学校名字
     sourceList.forEach(function (ele, index) {
       schoolList.push(ele.name);
     })
+    //设置页面初始数据
     this.setData({
-      schoolList: schoolList
-    })
-
-    this.setData({
+      selectSchool: app.globalData.selectSchool,
+      schoolList: schoolList,
       schoolLogoArr: config.schoolLogoArr
-    })
-    
+    }) 
   },
   onLoad: function () {
     this.init();

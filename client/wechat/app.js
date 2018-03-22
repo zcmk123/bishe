@@ -3,14 +3,18 @@ var config = require('./config/config');
 App({
   onLaunch: function () {
     var _this = this;
-
+    
     //加载学校信息到全局
     this.globalData.schoolInfoList = config.schoolList;
+
+    //从缓存加载选择的学校
+    this.globalData.selectSchool = wx.getStorageSync('selectSchool') || 0;
 
     // // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
     // wx.setStorageSync('logs', logs)
+
     // 登录
     wx.login({
       success: res => {
@@ -19,12 +23,12 @@ App({
         var _this = this;
         wx.request({
           method: 'GET',
-          url: config.requestUrl+ 'getopenid',
+          url: config.requestUrl + 'getopenid',
           data: {
             jsCode: res.code
           },
           success: function (data) {
-            _this.globalData.openid = data.data.openid;
+            _this.globalData.openId = data.data.openid;
             console.log(data)
             // var errcode = data.errcode || true;
             if (data.errcode) {
@@ -34,13 +38,13 @@ App({
               wx.request({
                 url: config.requestUrl + 'setopenid',
                 data: {
-                  openid: _this.globalData.openid
+                  openid: _this.globalData.openId
                 },
                 success: function (data) {
                   var uInfo = data.data[0];
                   _this.globalData.uInfo = uInfo;
                   // 回调以解决不同步问题
-                  if(_this.uInfoCallback) {
+                  if (_this.uInfoCallback) {
                     _this.uInfoCallback(uInfo);
                   }
                 },

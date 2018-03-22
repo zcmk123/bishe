@@ -41,27 +41,48 @@ var info = {
      * 不存在则添加
      */
     setOpenid: function (oid, resp) {
-        dbUtil.find('user', { openid: oid }, function (len, results) {
+        this.getUInfo(oid, null, function (len, results) {
             if (len == 0) {
-                // 不存在，添加记录
-                var userDefaultObj = { 
+                // 不存在，添加默认记录
+                var userDefaultObj = {
                     openid: oid,
                     gender: 1,
                     credit: 0,
                     school: '',
                     phone: '',
-                    driver: false
+                    driver: {
+                        isdriver: false,
+                        car: '',
+                        carpic: ''
+                    }
                 };
+
                 dbUtil.insert('user', userDefaultObj, function (res) {
                     userDefaultObj._id = res.insertedId;
                     resp.jsonp([userDefaultObj]);
                     resp.end();
                 });
-                
             } else {
                 // 如果存在，直接把查询结果返回
                 resp.jsonp(results);
                 resp.end();
+            }
+        })
+    },
+    /**
+     * 查询用户信息并返回
+     */
+    getUInfo: function (oid, resp, callback) {
+        //去数据库中查找oid对应的用户
+        dbUtil.find('user', { openid: oid }, function (len, results) {
+            if (resp) {
+                //返回一条数据
+                resp.jsonp(results[0]);
+                resp.end();
+            } else {
+                if (callback) {
+                    callback(len, results);
+                }
             }
         })
     }

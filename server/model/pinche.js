@@ -6,6 +6,7 @@
 
 var dbUtil = require('./mongodb');
 var ObjectId = require('mongodb').ObjectId;
+var fs = require('fs');
 
 var pinche = {
     /**
@@ -42,7 +43,7 @@ var pinche = {
      * 将乘客添加到拼车中，修改拼车信息中的剩余座位数
      */
     addPassenger: function (itemId, passengerId, resp) {
-        console.log(itemId + ' ' + passengerId);
+        // console.log(itemId + ' ' + passengerId);
         dbUtil.update('list', {
             //where条件找到对应的拼车条目，将乘客ObjectID添加到内部
             _id: ObjectId(itemId)
@@ -57,6 +58,18 @@ var pinche = {
             resp.jsonp('success');
             resp.end();
         })
+    },
+    uploadCarPic: function (picName, filePath, resp) {
+    // console.log(req.file.originalname);
+    //上传车的图片
+    fs.rename(filePath, 'uploadpic/car/' + picName + '.jpg', function(err) {
+        if (err) {
+            throw err;
+        }
+        console.log('上传成功!');
+    })
+    resp.jsonp('success')
+    resp.end();
     }
 }
 

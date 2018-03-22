@@ -5,17 +5,17 @@
       <image class="user-info-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
       <view class="user-info-name">
         <text>{{userInfo.nickName}}</text>
-        <image class="id-icon" wx:if="{{uInfo.driver == true}}" src="../../images/icon/id.png" mode="aspectFit"></image>
+        <image class="id-icon" wx:if="{{uInfo.driver.v_status == 2}}" src="../../images/icon/id.png" mode="aspectFit"></image>
         <image class="id-icon" wx:else src="../../images/icon/unid.png" mode="aspectFit"></image>
       </view>
       
     </view>
     <view class="info-middle">
-      <view class="middle-item info-driver">
+      <view class="middle-item info-driver" hover-class="btn-hover" bindtap="bindToDriverInfo">
         <image class="middle-icon" src="../../images/icon/driver.png" mode="aspectFit"></image>
         <view class="middle-content">司机信息</view>
       </view>
-      <view class="middle-item info-order">
+      <view class="middle-item info-order" hover-class="btn-hover" bindtap="bindToOrder">
         <image class="middle-icon" src="../../images/icon/myorder.png" mode="aspectFit"></image>
         <view class="middle-content">我的拼车</view>
       </view>

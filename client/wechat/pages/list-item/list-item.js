@@ -15,26 +15,39 @@ Page({
    * 确认拼车，按钮逻辑
    */
   bindPinChe: function () {
-    var passengerId = app.globalData.uInfo._id;
-    var itemId = this.data.itemId;
-    //发请求添加乘客到拼车中
-    wx.request({
-      url: config.requestUrl + 'addpassenger',
-      data: {
-        itemId: itemId,
-        passengerId: passengerId
-      },
-      success: function (data) {
-        wx.showToast({
-          title: '成功！',
-          icon: "success",
-          success: function () {
-            //返回上一页
-            setTimeout(wx.navigateBack, 1500);
-          }
-        })
+    var _this = this;
+    //第二次确认
+    wx.showModal({
+      title: '确认拼车',
+      content: '确定要拼车吗？',
+      success: function (res) {
+        if(res.confirm) {
+          sendInfo();
+        }
       }
     })
+    function sendInfo () {
+      var passengerId = app.globalData.uInfo._id;
+      var itemId = _this.data.itemId;
+      //发请求添加乘客到拼车中
+      wx.request({
+        url: config.requestUrl + 'addpassenger',
+        data: {
+          itemId: itemId,
+          passengerId: passengerId
+        },
+        success: function (data) {
+          wx.showToast({
+            title: '成功！',
+            icon: "success",
+            success: function () {
+              //返回上一页
+              setTimeout(wx.navigateBack, 1500);
+            }
+          })
+        }
+      })
+    }
   },
   /**
    * 初始化页面

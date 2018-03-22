@@ -3,10 +3,10 @@
  */
 
 //请求Url
-// var requestUrl = 'https://localhost/';
-var requestUrl = 'https://pinche.istarmcgames.com/';
+var requestUrl = 'https://localhost/';
+// var requestUrl = 'https://pinche.istarmcgames.com/';
 
-//学校信息
+//学校信息配置
 var schoolList = [{
   tag: 'guet',
   name: '桂林电子科技大学',
@@ -53,10 +53,14 @@ var schoolList = [{
 }]
 
 //学校logo数组
-var schoolLogoArr = ['/images/img/guet-logo.png', '/images/img/glut-logo.png']
+var schoolLogoArr = ['/images/img/guet-logo.png', '/images/img/glut-logo.png'];
+
+//司机认证状态转换数组 [未认证，认证中， 已认证]
+var v_statusArr = ['unverified', 'verifying', 'verified'];
 
 module.exports = {
   requestUrl: requestUrl,
   schoolList: schoolList,
-  schoolLogoArr: schoolLogoArr
+  schoolLogoArr: schoolLogoArr,
+  v_statusArr: v_statusArr
 }

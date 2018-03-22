@@ -3,8 +3,6 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var info = require('./router/router');
-
 var bodyParser = require('body-parser');
 
 var privateKey = fs.readFileSync('./certificate/2_pinche.istarmcgames.com.key', 'utf8');

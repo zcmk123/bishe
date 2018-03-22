@@ -36,6 +36,9 @@
   text-align: center;
   box-sizing: border-box;
 }
+.btn-hover {
+  background-color: #ccc;
+}
 .info-middle .info-driver {
   border-right: 1px solid #ccc;
 }

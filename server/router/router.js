@@ -1,5 +1,9 @@
 var express = require('express');
 
+// 文件上传模块
+var multer = require("multer");
+var upload = multer({ dest: 'uploadpic/' });
+
 var router = express.Router();
 
 var url = require('url');
@@ -17,12 +21,30 @@ router.get('/getinfo', function (req, res) {
 })
 
 /**
+ * 上传车的图片处理
+ */
+router.post('/uploadpic', upload.single('file'), function(req, res){
+    var picName = req.body.id;
+    var filePath = req.file.path;
+    pinche.uploadCarPic(picName, filePath, res);
+})
+
+
+/**
  * 获取openid
  */
 router.get('/getopenid', function (req, res) {
     var jsCode = url.parse(req.url, true).query.jsCode;
     info.getOpenId(jsCode, res);
     // res.jsonp(openid);
+})
+
+/**
+ * 获取用户信息
+ */
+router.get('/getuinfo', function (req, res) {
+    var oid = url.parse(req.url, true).query.openid;
+    info.getUInfo(oid, res);
 })
 
 /**
