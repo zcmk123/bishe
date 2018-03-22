@@ -36,10 +36,17 @@ var dbUtil = {
         })
     },
     delete: function () {
-        // 删除
+        // TODO删除
     },
-    update: function () {
+    update: function (collectionName, filter, obj, callback) {
         // 更新
+        connect(function (err, db) {
+            db.collection(collectionName).updateOne(filter, obj, function (error, result) {
+                if(callback) {
+                    callback(result);
+                }
+            })
+        })
     },
     find: function (collectionName, obj, callback) {
         // 查找
@@ -51,8 +58,12 @@ var dbUtil = {
             })
         })
     },
-    findById: function (collectionName, ObjectId, callback) {
-        var _id = ObjectId(ObjectId);
+    /**
+     * 通过ObjectID查询
+     * 废弃方法
+     */
+    findById: function (collectionName, oid, callback) {
+        var _id = ObjectId(oid);
         connect(function (err, db) {
             db.collection(collectionName).findOne({ _id: _id }, {}, function (error, result) {
                 if (callback) {
@@ -61,11 +72,26 @@ var dbUtil = {
             })
         })
     },
+    /**
+     * 通过页数查询
+     */
     findByPage: function (page, callback) {
         var pageSize = 5;
-        var skip = (page-1) * pageSize;
+        var skip = (page - 1) * pageSize;
         connect(function (err, db) {
-            db.collection('list').find({}, {limit: pageSize, skip: skip}).toArray(function (error, results) {
+            db.collection('list').find({}, {
+                limit: pageSize,    //分页，每页多少条
+                skip: skip, //从第几条开始
+                projection: {//指定输出哪些字段
+                    'title': 1,
+                    'desc': 1,
+                    'date': 1,
+                    'time': 1,
+                    'seat': 1,
+                    'startLoc.name': 1,
+                    'destLoc.name': 1
+                }
+            }).toArray(function (error, results) {
                 if (callback) {
                     callback(results);
                 }

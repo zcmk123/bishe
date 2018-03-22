@@ -1,5 +1,6 @@
 // pages/post/post.js
 const app = getApp();
+var config = require('../../config/config');
 Page({
   /**
    * 页面的初始数据
@@ -62,6 +63,8 @@ Page({
 
         // 发送之前设置司机的ObjectID
         postInfo.driverId = app.globalData.uInfo._id;
+        //设置乘客列表为空
+        postInfo.passenger = [];
 
         // 显示loading
         wx.showLoading({
@@ -70,8 +73,7 @@ Page({
         // 给服务器发送请求传递数据
         wx.request({
           method: 'POST',
-          url:  'https://pinche.istarmcgames.com/postinfo',
-          // url: 'http://localhost/postinfo',
+          url: config.requestUrl + 'postinfo',
           data: postInfo,
           success: function (data) {
             wx.hideLoading();
@@ -125,18 +127,22 @@ Page({
     var actionStr = '';
     if (targetId == 'content-loc') {
       actionStr = 'startLoc';
+      wx.navigateTo({
+        url: '../map/map',
+      })
     } else if (targetId == 'content-dest') {
       actionStr = 'destLoc';
+      wx.chooseLocation({
+        success: function (res) {
+          delete res.errMsg;
+          // console.log(res)
+          _this.setData({
+            ['postInfo.' + actionStr]: res
+          })
+        }
+      })
     }
-    wx.chooseLocation({
-      success: function (res) {
-        delete res.errMsg;
-        // console.log(res)
-        _this.setData({
-          ['postInfo.' + actionStr]: res
-        })
-      }
-    })
+    // console.log(this.data)
   },
   /**
   * 初始化时间

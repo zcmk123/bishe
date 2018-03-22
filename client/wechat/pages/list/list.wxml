@@ -2,7 +2,7 @@
 <view class="container-a">
     <view class="post-list">
 <!-- wx:for="{{loadedList}}" -->
-    <view class="post-item" wx:for="{{loadedList}}">
+    <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:for="{{loadedList}}" bindtap="bindItemTap">
       <view class="item-title">标题:{{item.title}}</view>
       <view class="item-start"><image class="icon-dot" src="../../images/icon/startdot.png" mode="aspectFit"></image>出发地：{{item.startLoc.name}}</view>
       <view class="item-dest"><image class="icon-dot" src="../../images/icon/destdot.png" mode="aspectFit"></image>目的地：{{item.destLoc.name}}</view>

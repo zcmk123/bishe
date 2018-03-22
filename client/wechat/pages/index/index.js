@@ -1,29 +1,26 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+var config = require('../../config/config');
 
 Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-    
+    schoolList: [],
+    selectSchool: 0,
+    schoolLogoArr: []
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    
-  },
-  getUserInfo: function(e) {
-    // console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+  /**
+   * 改变学校逻辑处理
+   */
+  bindChangeSchool: function (e) {
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      selectSchool: e.detail.value
     })
+    app.globalData.selectSchool = parseInt(e.detail.value);
+    console.log(app.globalData)
   },
   toListPage: function () {
     wx.switchTab({
@@ -33,6 +30,36 @@ Page({
   toPostPage: function () {
     wx.navigateTo({
       url: '../post/post',
+    })
+  },
+  /**
+   * 初始化首页数据
+   */
+  init: function () {
+    var schoolList = [];
+    var sourceList = config.schoolList;
+
+    sourceList.forEach(function (ele, index) {
+      schoolList.push(ele.name);
+    })
+    this.setData({
+      schoolList: schoolList
+    })
+
+    this.setData({
+      schoolLogoArr: config.schoolLogoArr
+    })
+    
+  },
+  onLoad: function () {
+    this.init();
+  },
+  getUserInfo: function(e) {
+    // console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
     })
   }
 })

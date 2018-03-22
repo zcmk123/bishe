@@ -3,3 +3,5 @@ collection
 user：  openid(唯一识别码)   credit(用户积分)   gender(性别)    school(学校)    phone(电话)    driver(是否通过司机认证boolean)
 
 list：  title(标题)    des(描述)    location(地点)    date(日期时间)    seat(剩余位置)    driver(司机信息){存ObjectID}
+
+school: name(学校名称) loclist(上车地点列表)

@@ -12,12 +12,18 @@
   border-bottom: 10rpx solid #ccc;
   box-sizing: border-box;
 }
+.item-hover {
+  background-color: #ccc;
+}
 .post-item .item-title {
   font-size: 20px;
 }
 .post-item .item-start, .post-item .item-dest {
   position: relative;
   padding-left: 25rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .post-item .icon-dot {
   position: absolute;

@@ -1,0 +1,30 @@
+/* pages/map/map.wxss */
+map {
+  height: 60vh;
+}
+.loc-list {
+  height: 40vh;
+}
+map, .loc-list {
+   width: 100%;
+}
+.loc-list .loc-item {
+  width: 100%;
+}
+.hover-loc-item {
+  background-color: #ddd;
+}
+.inner-wrap {
+  padding: 20rpx 0;
+  margin: 0 40rpx;
+  border-bottom: 1px solid #ccc;
+}
+.loc-list .loc-item text {
+  display: block;
+  text-overflow: ellipsis;
+}
+.loc-list .loc-item .bottom {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #999;
+}

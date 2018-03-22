@@ -1,12 +1,16 @@
+var config = require('./config/config');
 //app.js
 App({
   onLaunch: function () {
     var _this = this;
+
+    //加载学校信息到全局
+    this.globalData.schoolInfoList = config.schoolList;
+
     // // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
     // wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
@@ -15,8 +19,7 @@ App({
         var _this = this;
         wx.request({
           method: 'GET',
-          url: 'https://pinche.istarmcgames.com/getopenid',
-          // url: 'http://localhost/getopenid',
+          url: config.requestUrl+ 'getopenid',
           data: {
             jsCode: res.code
           },
@@ -29,8 +32,7 @@ App({
             } else {
               // 发请求给服务器存openid
               wx.request({
-                url: 'https://pinche.istarmcgames.com/setopenid',
-                // url: 'http://localhost/setopenid',
+                url: config.requestUrl + 'setopenid',
                 data: {
                   openid: _this.globalData.openid
                 },
@@ -88,10 +90,11 @@ App({
         }
       })
     }
-
   },
   globalData: {
     userInfo: null,
+    selectSchool: 0,
+    schoolInfoList: [],
     openId: null,
     uInfo: {}
   }

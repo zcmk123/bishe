@@ -64,26 +64,6 @@ var info = {
                 resp.end();
             }
         })
-    },
-    /**
-     * 发布拼车信息逻辑
-     */
-    postInfo: function (postInfoObj, resp) {
-        // console.log(postInfoObj);
-        dbUtil.insert('list', postInfoObj, function () {
-            console.log('list-item插入数据库成功');
-            resp.end();
-        })
-    },
-    /**
-     * 加载拼车信息列表
-     */
-    loadList: function (page, resp) {
-        // console.log(page);
-        dbUtil.findByPage(page, function (results) {
-            resp.jsonp(results);
-            resp.end();
-        })
     }
 }
 

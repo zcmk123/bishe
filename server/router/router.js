@@ -6,6 +6,8 @@ var url = require('url');
 
 var info = require('../model/getinfo');
 
+var pinche = require('../model/pinche');
+
 // 路由
 
 router.get('/getinfo', function (req, res) {
@@ -36,7 +38,7 @@ router.get('/setopenid', function (req, res) {
  */
 router.post('/postinfo', function (req, res) {
     var postData = req.body;
-    info.postInfo(postData, res);
+    pinche.postInfo(postData, res);
 })
 
 /**
@@ -44,7 +46,24 @@ router.post('/postinfo', function (req, res) {
  */
 router.get('/loadlist', function (req, res) {
     var page = url.parse(req.url, true).query.page;
-    info.loadList(page, res);
+    pinche.loadList(page, res);
 })
+
+/**
+ * 加载一条拼车信息详情list-item页面
+ */
+ router.get('/loaditem', function (req, res) {
+    var itemId = url.parse(req.url, true).query.itemId;
+    pinche.loadItem(itemId, res);
+ })
+
+ /**
+  * 确认拼车，将用户信息添加到拼车详情中
+  */
+ router.get('/addpassenger', function (req, res) {
+    var itemId = url.parse(req.url, true).query.itemId;
+    var passengerId = url.parse(req.url, true).query.passengerId;
+    pinche.addPassenger(itemId, passengerId, res);
+ })
 
 module.exports = router;

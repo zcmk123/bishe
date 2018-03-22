@@ -1,0 +1,13 @@
+<!--pages/map/map.wxml-->
+<view class="container-a">
+  <map id="myMap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location></map>
+
+  <scroll-view class="loc-list" scroll-y>
+    <view class="loc-item" hover-class="hover-loc-item" wx:for="{{locList}}" data-loc="{{item}}" bindtap="selectLoc">
+      <view class="inner-wrap">
+        <text class="top">{{item.name}}</text>
+        <text class="bottom">{{item.address}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

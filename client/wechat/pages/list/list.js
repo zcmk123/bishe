@@ -1,5 +1,5 @@
 // pages/list/list.js
-var util = require('../../utils/util.js');
+var config = require('../../config/config');
 Page({
   /**
    * 页面的初始数据
@@ -9,6 +9,13 @@ Page({
     isLoading: false,
     loadedList: []
   },
+  bindItemTap: function (e) {
+    var itemId = e.currentTarget.dataset.id;
+    //带参数跳转
+    wx.navigateTo({
+      url: '/pages/list-item/list-item?itemId=' + itemId
+    })
+  },
   loadList: function () {
     var _this = this;
     // show加载
@@ -16,16 +23,22 @@ Page({
       title: '加载中'
     })
     wx.request({
-      url: 'https://pinche.istarmcgames.com/loadlist',
-      // url: 'http://localhost/loadlist',
+      url: config.requestUrl + 'loadlist',
       data: {
         page: _this.data.page
       },
       success: function (data) {
+        console.log(data)
         _this.setData({
           loadedList: data.data
         })
         wx.hideLoading();
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器连接超时',
+          icon: 'none'
+        })
       }
     })
   },
@@ -33,8 +46,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(util.formatTime(new Date()));
-
 
   },
 

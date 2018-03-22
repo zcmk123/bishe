@@ -1,9 +1,14 @@
 {
   "pages": [
+    
     "pages/index/index",
+    "pages/post/post",
     "pages/info/info",
     "pages/list/list",
-    "pages/post/post"
+    "pages/list-item/list-item",
+    
+    "pages/map/map"
+    
     
   ],
   "tabBar": {

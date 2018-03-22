@@ -1,0 +1,8 @@
+/* pages/list-item/list-item.wxss */
+.container {
+  height: 100vh;
+  flex-direction: column;
+}
+.sub-btn {
+  width: 90vw;
+}

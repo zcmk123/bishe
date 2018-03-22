@@ -6,14 +6,29 @@ page {
   width: 100%;
   text-align: center;
 }
+.title-box {
+  position: relative;
+  box-sizing: border-box;
+}
+.title-box .logo-aside {
+  position: absolute;
+  top: 0;
+  right: 5rpx;
+  line-height: 16vh;
+}
+.logo-aside image {
+  width: 60rpx;
+  height: 60rpx;
+  vertical-align: -22rpx;
+}
 .title .logo {
-  width: 90%;
+  width: 88%;
   height: 16vh;
+  padding-right: 60rpx;
 }
 .item {
-  height: 80vh;
+  height: 78vh;
   width: 350rpx;
-  /* border: 1px solid black; */
   border-radius: 10rpx;
   background-color: #ddd;
   box-shadow: 2rpx 2rpx 4rpx #ccc;

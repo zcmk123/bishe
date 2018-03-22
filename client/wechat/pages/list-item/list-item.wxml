@@ -1,0 +1,15 @@
+<!--pages/list-item/list-item.wxml-->
+<view class="container">
+  <view class="item-box">
+    <view>{{itemData.title}}</view>
+    <view>备注{{itemData.desc}}</view>
+    <view>时间{{itemData.date}} {{itemData.time}}</view>
+    <view>剩余座位{{itemData.seat}}</view>
+    <view class="driver-info">
+      司机信息...
+    </view>
+  </view>
+  <view>
+    <button class="sub-btn" type="primary" disabled="{{!subBtnStatus}}" bindtap="bindPinChe">确定拼车</button>
+  </view>
+</view>
