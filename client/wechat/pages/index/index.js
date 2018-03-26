@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 var config = require('../../config/config');
+var util = require('../../utils/util');
 
 Page({
   data: {
@@ -29,9 +30,17 @@ Page({
     })
   },
   toPostPage: function () {
-    wx.navigateTo({
-      url: '../post/post',
-    })
+    var uInfo = app.globalData.uInfo;
+    if (util.isDriver(uInfo)) {
+      wx.navigateTo({
+        url: '../post/post',
+      })
+    } else {
+      wx.showToast({
+        title: '请先完成司机认证',
+        icon: 'none'
+      })
+    }
   },
   /**
    * 初始化首页数据

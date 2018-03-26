@@ -3,7 +3,6 @@ const app = getApp();
 var util = require('../../utils/util.js');
 var config = require('../../config/config');
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -64,11 +63,44 @@ Page({
         //后端传回的数据设置到页面
         _this.setData({
           itemId: itemId,
-          itemData: data.data
+          itemData: util.formatDate(data.data)
         })
+        //转换rating评分为图标显示
+        _this.converRating();
         //检查乘客是否能拼车
         _this.checkPassenger();
       }
+    })
+  },
+  /**
+   * 转换评分变成对应分数的图片
+   */
+  converRating: function () {
+    var rating = this.data.itemData.driver.isdriver.rating;
+    var starClass = '';
+    if (rating >= 0 && rating < 0.5) {
+      starClass = 'star00';
+    } else if (rating >= 0.5 && rating < 1.0) {
+      starClass = 'star05';
+    } else if (rating >= 1.0 && rating < 1.5) {
+      starClass = 'star10';
+    } else if (rating >= 1.5 && rating < 2.0) {
+      starClass = 'star15';
+    } else if (rating >= 2.0 && rating < 2.5) {
+      starClass = 'star20';
+    } else if (rating >= 2.5 && rating < 3.0) {
+      starClass = 'star25';
+    } else if (rating >= 3.0 && rating < 3.5) {
+      starClass = 'star30';
+    } else if (rating >= 3.5 && rating < 4.0) {
+      starClass = 'star35';
+    } else if (rating >= 4.0 && rating < 4.5) {
+      starClass = 'star40';
+    } else if (rating >= 4.5 && rating < 5.0) {
+      starClass = 'star50';
+    }
+    this.setData({
+      ['itemData.starClass']: starClass
     })
   },
   /**
@@ -77,7 +109,7 @@ Page({
    */
   checkPassenger: function () {
     var selfId = app.globalData.uInfo._id;
-    var driverId = this.data.itemData.driverId;
+    var driverId = this.data.itemData.driver._id;
     var passengerArr = this.data.itemData.passenger;
     //判断乘客是否已经在这次拼车中，如果在则不允许再点击拼车按钮
     if ((selfId != driverId) && (passengerArr.indexOf(selfId) == -1)) {//司机自己不能再次参加自己的拼车
@@ -93,6 +125,11 @@ Page({
     console.log(util.formatTime(new Date()));
     var itemId = options.itemId;
     this.itemPageInit(itemId);
+    
+    // TODO 设置评分星级的图片位置
+    // this.setData({
+    //   ['itemData.ratingStar']: 25
+    // })
   },
 
   /**

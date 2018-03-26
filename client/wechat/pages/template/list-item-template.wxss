@@ -1,0 +1,85 @@
+.item-box {
+  width: 90vw;
+  padding: 20rpx 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+  box-shadow: 0 0 20rpx #bbb;
+  color: #8d8d8d;
+}
+.item-box .item {
+  padding: 20rpx 10rpx;
+  margin-bottom: 10rpx;
+}
+.item-box .item-title {
+  border-bottom: 1px solid #ccc;
+  color: #aaa;
+  font-size: 18px;
+}
+.item-driver-info {
+  position: relative;
+  height: 120rpx;
+}
+.driver-avatar-img {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+.driver-info {
+  height: 100%;
+  padding-left: 140rpx;
+  margin: 20rpx 0;
+}
+.driver-info view {
+  line-height: 60rpx;
+}
+.driver-rating {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.rating-star {
+  display: inline-block;
+  width: 55px;
+  height: 11px;
+  /* background-image: url('http://192.168.0.102/images/rating-s.png'); */
+  background-image: url('https://pinche.istarmcgames.com/images/rating-s.png');
+  background-position: 0 -110px;
+}
+
+/*评分星星 背景图片位置  */
+.star00 {
+  background-position: 0 -110px;
+}
+.star05 {
+  background-position: 0 -99px;
+}
+.star10 {
+  background-position: 0 -88px;
+}
+.star15 {
+  background-position: 0 -77px;
+}
+.star20 {
+  background-position: 0 -66px;
+}
+.star25 {
+  background-position: 0 -55px;
+}
+.star30 {
+  background-position: 0 -44px;
+}
+.star35 {
+  background-position: 0 -33px;
+}
+.star40 {
+  background-position: 0 -22px;
+}
+.star45 {
+  background-position: 0 -11px;
+}
+.star50 {
+  background-position: 0 0;
+}

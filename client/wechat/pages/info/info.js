@@ -1,6 +1,7 @@
 // pages/info/info.js
 const app = getApp();
 var config = require('../../config/config');
+var util = require('../../utils/util');
 Page({
   /**
    * 页面的初始数据
@@ -23,10 +24,13 @@ Page({
    * 跳转到司机验证/信息页面
    */
   bindToDriverInfo: function () {
-    var driverInfo = app.globalData.uInfo.driver;
-    var v_status = config.v_statusArr[driverInfo.v_status];
-
-    if (v_status == 'unverified') {
+    var driverInfo = app.globalData.uInfo;
+    
+    if (util.isDriver(driverInfo)) {
+      wx.navigateTo({
+        url: '/pages/driver-info/driver-info'
+      })
+    } else {
       wx.showModal({
         title: '提示',
         content: '你还没有完成司机认证，现在就认证吗？',
@@ -37,10 +41,6 @@ Page({
             })
           }
         }
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/driver-info/driver-info'
       })
     }
   },
@@ -100,7 +100,6 @@ Page({
     }
   },
   setUinfo: function () {
-
     if (app.globalData.uInfo.openid) {
       this.setData({
         uInfo: app.globalData.uInfo
@@ -120,6 +119,15 @@ Page({
   onLoad: function (options) {
     this.setUserInfo();
     this.setUinfo();
+    
+    
+    // 测试代码
+    // console.log(Object.prototype.toString.call(app.getUInfo));
+    // app.setUInfo({
+    //   ['driver.v_status']: 2
+    // }, function() {
+    //   app.getUInfo();
+    // })
   },
 
   /**

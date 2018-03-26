@@ -24,7 +24,7 @@
   margin-left: 20rpx;
   width: 80rpx;
   height: 80rpx;
-  vertical-align: middle;
+  vertical-align: -26rpx;
 }
 .info-middle {
   border-bottom: 1px solid #ccc;

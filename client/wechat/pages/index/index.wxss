@@ -29,7 +29,7 @@ page {
 .item {
   height: 78vh;
   width: 350rpx;
-  border-radius: 10rpx;
-  background-color: #ddd;
-  box-shadow: 2rpx 2rpx 4rpx #ccc;
+  border-radius: 6rpx;
+  background-color: #fff;
+  box-shadow: 0 0 20rpx #bbb;
 }

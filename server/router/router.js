@@ -8,7 +8,7 @@ var router = express.Router();
 
 var url = require('url');
 
-var info = require('../model/getinfo');
+var info = require('../model/info');
 
 var pinche = require('../model/pinche');
 
@@ -29,7 +29,6 @@ router.post('/uploadpic', upload.single('file'), function(req, res){
     pinche.uploadCarPic(picName, filePath, res);
 })
 
-
 /**
  * 获取openid
  */
@@ -48,11 +47,23 @@ router.get('/getuinfo', function (req, res) {
 })
 
 /**
- * 查询数据库、增加openid
+ * 查询数据库、保存用户信息
  */
-router.get('/setopenid', function (req, res) {
-    var oid = url.parse(req.url, true).query.openid;
-    info.setOpenid(oid, res);
+router.post('/setopenid', function (req, res) {
+    var postData = req.body;
+    var oid = postData.openid;
+    var userInfo = postData.userInfo;
+    info.setOpenid(oid, userInfo, res);
+})
+
+/**
+ * 更新用户信息
+ */
+router.put('/setuinfo', function (req, res) {
+    var postData = req.body;
+    var _id = postData._id;
+    var newInfo = postData.newInfo;
+    info.setUInfo(_id, newInfo, res);
 })
 
 /**

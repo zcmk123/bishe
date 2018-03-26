@@ -27,14 +27,14 @@
     </view>
     <view class="content-item">
       <label for="content-date">出发日期</label>
-      <picker id="content-date" mode="date" value="{{postInfo.date}}" start="{{postInfo.date}}" end="{{endDate}}" bindchange="bindDateChange">
-        <view class="picker">{{postInfo.date}}</view>
+      <picker id="content-date" mode="date" value="{{date}}" start="{{date}}" end="{{endDate}}" bindchange="bindDateChange">
+        <view class="picker">{{date}}</view>
       </picker>
     </view>
     <view class="content-item">
       <label for="content-time">出发时间</label>
-      <picker id="content-time" mode="time" value="{{postInfo.time}}" start="{{postInfo.time}}" end="{{endTime}}" bindchange="bindTimeChange">
-        <view class="picker">{{postInfo.time}}</view>
+      <picker id="content-time" mode="time" value="{{time}}" start="{{time}}" end="{{endTime}}" bindchange="bindTimeChange">
+        <view class="picker">{{time}}</view>
       </picker>
     </view>
     <view class="content-item">

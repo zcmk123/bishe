@@ -1,5 +1,6 @@
 // pages/list/list.js
 var config = require('../../config/config');
+var util = require('../../utils/util');
 Page({
   /**
    * 页面的初始数据
@@ -22,15 +23,16 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
+    // 请求列表
     wx.request({
       url: config.requestUrl + 'loadlist',
       data: {
         page: _this.data.page
       },
       success: function (data) {
-        console.log(data)
+        // console.log(util.formatDate(data.data));
         _this.setData({
-          loadedList: data.data
+          loadedList: util.formatDate(data.data)
         })
         wx.hideLoading();
       },

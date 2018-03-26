@@ -1,0 +1,36 @@
+<!--pages/template/list-item-template.wxml-->
+<template name="list-item-template">
+  <view class="item-box">
+    <view class="item item-title">我是标题 {{title}}</view>
+    <view class="item item-start-loc">出发地 {{startLoc.name}}</view>
+    <view class="item item-dest-loc">目的地 {{destLoc.name}}</view>
+    <view class="item item-date">时间 {{date}} {{time}}</view>
+    <view class="item item-seat">剩余座位 {{seat}}</view>
+    <view class="item item-desc">备注 {{desc}}</view>
+  </view>
+  <view class="item-box">
+    <view class="item item-title">司机信息</view>
+    <view class="item-driver-info">
+      <!-- 司机信息... -->
+      <image class="driver-avatar-img" src="{{driver.avatarUrl}}" mode="aspectFit"></image>
+      <view class="driver-info">
+        <view class="driver-name">
+          <text class="driver-name-text">{{driver.nickname}}</text>
+          <view class="driver-rating">
+            <text class="rating-star {{starClass}}"></text>
+            <text class="rating">评价:{{driver.isdriver.rating}}</text>
+          </view>
+        </view>
+        <view class="driver-phone">{{driver.phone}}</view>
+        
+      </view>
+
+    </view>
+  </view>
+
+  <view class="item-box" wx:if="{{isDriver}}">
+    <view class="item-passenger">乘客们</view>
+  </view>
+
+
+</template>

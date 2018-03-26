@@ -3,14 +3,18 @@
   justify-content: none;
 }
 .post-list {
-  width: 100%;
+  width: 90vw;
   height: 100%;
+  margin-top: 10rpx;
 }
 .post-item {
   padding: 20rpx 10rpx;
+  margin-bottom: 10rpx;
   width: 100%;
-  border-bottom: 10rpx solid #ccc;
   box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 6rpx;
+  box-shadow: 0 0 20rpx #bbb;
 }
 .item-hover {
   background-color: #ccc;

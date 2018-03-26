@@ -1,14 +1,14 @@
 {
   "pages": [
-    
     "pages/index/index",
-    "pages/post/post", 
+    "pages/post/post",
     "pages/list/list",
     "pages/list-item/list-item",
     "pages/map/map",
     "pages/info/info",
-    "pages/driver-info/driver-info"
-  
+    "pages/driver-info/driver-info",
+    "pages/my-order/my-order",
+    "pages/template/list-item-template"
   ],
   "tabBar": {
     "selectedColor": "#1296db",

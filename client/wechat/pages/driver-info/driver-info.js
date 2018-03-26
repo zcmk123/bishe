@@ -45,30 +45,13 @@ Page({
     })
   },
   /**
-   * 获取服务器端用户信息
-   */
-  getUInfo: function (callback) {
-    var _this = this;
-    wx.request({
-      url: config.requestUrl + 'getuinfo',
-      data: {
-        openid: app.globalData.openId
-      },
-      success: function (data) {
-        // _this.globalData.uInfo = data.data;
-        app.globalData.uInfo = data.data;
-        callback();
-      }
-    })
-  },
-  /**
    * 初始化页面
    */
   initPage: function () {
     var _this = this;
     //初始化时先同步用户数据
-    this.getUInfo(function () {
-      var driverInfo = app.globalData.uInfo.driver;
+    app.getUInfo(function () {
+      var driverInfo = app.globalData.uInfo.isdriver;
       var v_status = config.v_statusArr[driverInfo.v_status];
 
       // 文字默认为 提交审核
@@ -80,6 +63,7 @@ Page({
       } else if (v_status == 'verified') {
         subBtnText = '修改认证信息'
       }
+      //设置提交按钮的状态与文字
       _this.setData({
         ['subBtnProp.subBtnText']: subBtnText,
         ['subBtnProp.subBtnStatus']: subBtnStatus

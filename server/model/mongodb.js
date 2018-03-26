@@ -38,6 +38,13 @@ var dbUtil = {
     delete: function () {
         // TODO删除
     },
+    /**
+     * 更新一条数据
+     * @param {stirng} collectionName 集合名称
+     * @param {object} filter where筛选条件
+     * @param {object} obj 要修改的数据
+     * @param {function} callback 回调函数
+     */
     update: function (collectionName, filter, obj, callback) {
         // 更新
         connect(function (err, db) {

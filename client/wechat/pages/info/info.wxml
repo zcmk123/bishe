@@ -5,7 +5,7 @@
       <image class="user-info-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
       <view class="user-info-name">
         <text>{{userInfo.nickName}}</text>
-        <image class="id-icon" wx:if="{{uInfo.driver.v_status == 2}}" src="../../images/icon/id.png" mode="aspectFit"></image>
+        <image class="id-icon" wx:if="{{uInfo.isdriver.v_status == 2}}" src="../../images/icon/id.png" mode="aspectFit"></image>
         <image class="id-icon" wx:else src="../../images/icon/unid.png" mode="aspectFit"></image>
       </view>
       
