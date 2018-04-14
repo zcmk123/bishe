@@ -1,2 +1,12 @@
 <!--pages/my-order/my-order.wxml-->
-<text>pages/my-order/my-order.wxml</text>
+<import src="/pages/template/order-list-template.wxml"/>
+
+<view class="wrapper">
+<view class="swiper-tab">
+  <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">我加入的</view>
+  <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">我发布的</view>
+</view>
+
+<template is="order-list-template" data="{{listData}}"/>
+
+</view>

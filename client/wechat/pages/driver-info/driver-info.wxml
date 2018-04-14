@@ -1,18 +1,23 @@
 <!--pages/driver-info/driver-info.wxml-->
 <view class="container">
-  <view class="item">
-    <label for="real-name">真实姓名</label><input id="real-name"></input>
-  </view>
-  <view class="item">
-    <label for="car">车型</label><input id="car"></input>
-  </view>
-  
-  <view class="item">
-    <view class="upload-item">
-      <label for="upload-img">上传图片</label><input id="upload-img" disabled="true" bindtap="uploadPic"></input>
+  <view class="wrapper">
+    <view class="item item-title">
+      <text>司机信息</text>
     </view>
-    <view>
-      <image id="pre-view-img" src="{{carImgSrc}}" mode="aspectFit"></image>
+    <view class="item">
+      <label for="real-name">真实姓名</label><input id="real-name"></input>
+    </view>
+    <view class="item">
+      <label for="car">车型</label><input id="car"></input>
+    </view>
+    
+    <view class="item">
+      <view class="upload-item">
+        <label for="upload-img">上传图片</label><input id="upload-img" disabled="true" bindtap="uploadPic"></input>
+      </view>
+       <view class="pre-view-box" style="display: {{carImgSrc == '' ? 'none' : 'block'}}">
+        <image id="pre-view-img" src="{{carImgSrc}}" mode="aspectFit"></image>
+      </view> 
     </view>
   </view>
 

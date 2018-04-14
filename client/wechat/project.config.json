@@ -35,7 +35,7 @@
 				{
 					"id": 0,
 					"name": "test",
-					"pathName": "pages/list/list",
+					"pathName": "pages/post/post",
 					"query": ""
 				}
 			]

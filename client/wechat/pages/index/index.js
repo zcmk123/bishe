@@ -6,8 +6,8 @@ var util = require('../../utils/util');
 
 Page({
   data: {
+    pickerRotateCss: '',
     userInfo: {},
-    hasUserInfo: false,
     schoolList: [],
     selectSchool: 0,
     schoolLogoArr: []
@@ -24,23 +24,31 @@ Page({
     wx.setStorageSync('selectSchool', e.detail.value);
     console.log(app.globalData)
   },
+  /**
+   * 去拼车列表页面
+   */
   toListPage: function () {
     wx.switchTab({
       url: '../list/list',
     })
   },
+  /**
+   * 去发布页面
+   */
   toPostPage: function () {
-    var uInfo = app.globalData.uInfo;
-    if (util.isDriver(uInfo)) {
-      wx.navigateTo({
-        url: '../post/post',
-      })
-    } else {
-      wx.showToast({
-        title: '请先完成司机认证',
-        icon: 'none'
-      })
-    }
+    app.checkAuth(function () { // 验证权限
+      var uInfo = app.globalData.uInfo;
+      if (util.isDriver(uInfo)) {
+        wx.navigateTo({
+          url: '../post/post',
+        })
+      } else {
+        wx.showToast({
+          title: '请先完成司机认证',
+          icon: 'none'
+        })
+      }
+    })
   },
   /**
    * 初始化首页数据
@@ -57,17 +65,20 @@ Page({
       selectSchool: app.globalData.selectSchool,
       schoolList: schoolList,
       schoolLogoArr: config.schoolLogoArr
-    }) 
+    })
   },
-  onLoad: function () {
-    this.init();
-  },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     // console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  onLoad: function () {
+    this.init();
+  },
+  onShow: function () {
+
   }
 })

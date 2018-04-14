@@ -3,7 +3,7 @@
  */
 
 //请求Url
-var requestUrl = 'http://192.168.0.102/';
+var requestUrl = 'http://localhost/';
 // var requestUrl = 'https://pinche.istarmcgames.com/';
 
 //学校信息配置

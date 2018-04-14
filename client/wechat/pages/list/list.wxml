@@ -9,7 +9,15 @@
       <view class="item-date">出发时间：{{item.date}} {{item.time}}</view>
       <view class="item-seat">剩余座位：{{item.seat}}</view>
     </view>
+    
+    <view class="weui-loadmore weui-loadmore_line" style="display: {{loadedList.length == 0 ? 'none' : 'block'}}" wx:if="{{!isLoading}}" bindtap="onReachBottom">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line load-more">{{loadMoreText}}</view>
+    </view>
 
-    <view class="loading-icon" wx:if="{{isLoading}}">加载中。。。</view>
+    <view class="weui-loadmore" wx:if="{{isLoading}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+
   </view>
 </view>

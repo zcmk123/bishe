@@ -4,13 +4,36 @@
   flex-direction: column;
 }
 .content {
-  width: 100%; 
+  width: 90vw;
+  margin-top: 40rpx;
+  padding-bottom: 6rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+  box-shadow: 0 0 20rpx #bbb;
+  overflow: hidden;
 }
+.weui-cells_after-title {
+  margin-top: 0;
+}
+.weui-btn-area {
+  width: 90vw;
+  margin-top: 10rpx;
+}
+#loc-btn, #dest-btn {
+  display: inline-block;
+  margin: 0;
+  width: 60rpx;
+  height:74rpx;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+/* 废弃
 .hr {
   padding: 10rpx 0 10rpx 10rpx;
   font-size: 14px;
-  border-left: 10rpx solid #1171a4;
-  color: #666;
+  border-left: 10rpx solid #1296db;
+  color: #8d8d8d;
   background-color: #eee;
 }
 .content-item {
@@ -19,6 +42,9 @@
   margin: 10rpx 40rpx 0 40rpx;
   border-bottom: 1px solid #ccc;
   line-height: 50rpx;
+}
+.content-item:nth-child(3), .content-item:nth-last-child(1) {
+  border: 0;
 }
 .content-item label {
   padding: 10rpx 0;
@@ -45,7 +71,7 @@
   width: 60rpx;
   height:74rpx;
   box-sizing: border-box;
-  vertical-align: top;
+  vertical-align: middle;
 }
 #loc-btn image, #dest-btn image {
   width: 100%;
@@ -57,4 +83,4 @@
 }
 .content-bottom .rules {
   margin-bottom: 10rpx;
-}
+} */

@@ -2,16 +2,31 @@
 <view class="container">
   <view class='title'>
     <view class="title-box">
-    <picker bindchange="bindChangeSchool" value="{{selectSchool}}" range="{{schoolList}}">
+    <picker bindchange="bindChangeSchool" value="{{selectSchool}}" range="{{schoolList}}" bindtap="bindTapPicker">
       <image class="logo" src="{{schoolLogoArr[selectSchool]}}" mode="aspectFit"></image>
       <view class="logo-aside"><image src="/images/icon/enter.png" mode="aspectFit"></image></view>
     </picker>
     </view>
   </view>
-  <view class="item" bindtap="toPostPage">
-   发布拼车信息 
+
+  <view class="body">
+    <view class="item" bindtap="toPostPage">
+    <view id="post">
+      <image src="../../images/icon/fabu.png" mode="aspectFit"></image>
+      <view style="color: #bbb; font-size: 40rpx;">发布拼车</view>
+    </view>
+    </view>
+    <view class="item" bindtap="toListPage">
+    <view id="pin">
+      <image src="../../images/icon/pinche.png" mode="aspectFit"></image>
+      <view style="color: #bbb; font-size: 40rpx;">我要拼车</view>
+    </view>
+ 
+    </view>
   </view>
-  <view class="item" bindtap="toListPage">
-   我要搭顺风车 
+
+  <view class="footer">
+    留言板区域
   </view>
+
 </view>

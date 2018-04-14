@@ -9,46 +9,60 @@ Page({
   data: {
     genderArr: ['女', '男'],
     // 微信获取到的用户信息
-    userInfo: {},
+    userInfo: {
+      nickName: '你怎么就不听话，同意我获取你的信息呢', //默认提示
+      avatarUrl: '/images/img/testAvatar.jpg'  //默认头像
+    },
     // 后端传来的用户信息
-    uInfo: {
-      credit: 500,
+    uInfo: {  // 默认信息
+      credit: 0,
       gender: 1,
-      school: "桂林电子科技大学",
-      phone: "18577361464",
+      school: "",
+      phone: "",
       driver: false
     },
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   /**
+   * 跳转设置权限页面
+   */
+  bindToSetting: function () {
+    wx.openSetting({});
+  },
+  /**
    * 跳转到司机验证/信息页面
    */
   bindToDriverInfo: function () {
-    var driverInfo = app.globalData.uInfo;
-    
-    if (util.isDriver(driverInfo)) {
-      wx.navigateTo({
-        url: '/pages/driver-info/driver-info'
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '你还没有完成司机认证，现在就认证吗？',
-        success: function (res) {
-          if (res.confirm) {
-            wx.navigateTo({
-              url: '/pages/driver-info/driver-info'
-            })
+    app.checkAuth(function () {
+      var driverInfo = app.globalData.uInfo;
+      if (util.isDriver(driverInfo)) {
+        wx.navigateTo({
+          url: '/pages/driver-info/driver-info'
+        })
+      } else {
+        wx.showModal({
+          title: '提示',
+          content: '你还没有完成司机认证，现在就认证吗？',
+          success: function (res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/driver-info/driver-info'
+              })
+            }
           }
-        }
-      })
-    }
+        })
+      }
+    })
   },
   /**
-   * 跳转到我的订单页面
+   * 跳转到我的拼车页面
    */
   bindToOrder: function () {
-
+    app.checkAuth(function () {
+      wx.navigateTo({
+        url: '/pages/my-order/my-order',
+      })
+    })
   },
   bindGenderChange: function (e) {
     var gender = parseInt(e.detail.value);
@@ -99,7 +113,10 @@ Page({
       })
     }
   },
-  setUinfo: function () {
+  /**
+   * 设置服务器获取的用户信息
+   */
+  setUInfo: function () {
     if (app.globalData.uInfo.openid) {
       this.setData({
         uInfo: app.globalData.uInfo
@@ -118,16 +135,9 @@ Page({
    */
   onLoad: function (options) {
     this.setUserInfo();
-    this.setUinfo();
+    this.setUInfo();
+    // console.log(app.globalData)
     
-    
-    // 测试代码
-    // console.log(Object.prototype.toString.call(app.getUInfo));
-    // app.setUInfo({
-    //   ['driver.v_status']: 2
-    // }, function() {
-    //   app.getUInfo();
-    // })
   },
 
   /**
@@ -141,6 +151,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var _this = this;
+    var hasUserInfo = this.data.hasUserInfo;
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo'] && !hasUserInfo) {  //有权限但是没有userInfo
+          // 尝试更新用户信息
+          console.log('尝试更新用户信息。。。');
+          // TODO 更新失败处理
+          app.getUserInfo();
+          app.getUInfo();
+          // console.log(app.globalData);
+        }
+      }
+    })
 
   },
 

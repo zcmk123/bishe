@@ -7,6 +7,7 @@ map {
 }
 map, .loc-list {
    width: 100%;
+   background-color: #fff;
 }
 .loc-list .loc-item {
   width: 100%;

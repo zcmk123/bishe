@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    postInfo: {},   // 需要提交的数据
     subBtnProp: {
       subBtnText: '提交审核',
       subBtnStatus: true

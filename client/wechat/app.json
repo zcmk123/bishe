@@ -8,7 +8,8 @@
     "pages/info/info",
     "pages/driver-info/driver-info",
     "pages/my-order/my-order",
-    "pages/template/list-item-template"
+    "pages/template/list-item-template",
+    "pages/template/order-list-template"
   ],
   "tabBar": {
     "selectedColor": "#1296db",

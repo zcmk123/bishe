@@ -1,7 +1,7 @@
 // pages/map/map.js
 const app = getApp();
-var amapFile = require('../../libs/amap-wx.js');
-var AMap;
+// var amapFile = require('../../libs/amap-wx.js');
+// var AMap;
 
 Page({
   /**
@@ -44,7 +44,7 @@ Page({
     var _this = this;
     var selectSchool = app.globalData.selectSchool;
     var selectSchoolInfo = app.globalData.schoolInfoList[selectSchool];
-    AMap = new amapFile.AMapWX({ key: '1ca82aa6df3bef576bd9954d899f3cd5' });
+    // AMap = new amapFile.AMapWX({ key: '1ca82aa6df3bef576bd9954d899f3cd5' });
     // 初始化位置
     _this.initLocation(selectSchool);
     _this.locToMarkers(selectSchoolInfo);

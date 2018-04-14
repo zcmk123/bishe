@@ -1,6 +1,7 @@
 <!--pages/info/info.wxml-->
 <view class="container-a">
   <view class="user-info">
+    <image id="setting-icon" src="/images/icon/setting.png" bindtap="bindToSetting"></image>
     <view class="info-top">
       <image class="user-info-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
       <view class="user-info-name">

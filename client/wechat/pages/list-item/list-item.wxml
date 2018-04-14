@@ -1,6 +1,5 @@
 <!--pages/list-item/list-item.wxml-->
 <import src="/pages/template/list-item-template.wxml"/>
-<import src="/pages/template/list-item-template.js"/>
 
 <view class="container">
   <template is="list-item-template" data="{{...itemData}}"/>

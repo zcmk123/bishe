@@ -8,6 +8,7 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } */
+@import './libs/weui.wxss';    /*weui 样式*/
 page {
   font-size: 14px;
   background-color: #f0f0f0;
@@ -28,4 +29,14 @@ page {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+}
+
+/*个性化weui样式  */
+.weui-cells__title {
+  color: #666;
+  font-size: 18px;
+}
+.weui-cell__hd .weui-label {
+  color: #8d8d8d;
+  font-size: 14px;
 }

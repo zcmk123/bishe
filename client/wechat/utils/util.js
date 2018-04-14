@@ -20,9 +20,23 @@ const formatNumber = n => {
 }
 
 /**
- * UTC时间转化为本地时间字符串
+ * 评分转换
  */
-function formatDate (data) {
+function ratingConvert (rating, cplorders) {
+  var rateScore = rating / cplorders;
+  if (Number.isNaN(rateScore)) {
+    return 0;
+  } else {
+    return rateScore;
+  }
+}
+
+/**
+ * 显示信息转换
+ * 1、UTC时间转化为本地时间字符串
+ * 2、司机评分转换
+ */
+function formatData (data) {
   var dataType = Object.prototype.toString.call(data);
   // 判断data为对象还是数组
 
@@ -35,7 +49,9 @@ function formatDate (data) {
     break;
     case '[object Object]': //为对象，直接转换
       var tempDate = new Date(data.date);
-      data.date = formatTime(tempDate);
+      var driverInfo = data.driver.isdriver;
+      data.date = formatTime(tempDate); // 转换时间
+      driverInfo.rating = ratingConvert(driverInfo.rating, driverInfo.cplorders);  // 转换评分
     break;
   }
   return data;
@@ -51,6 +67,6 @@ function isDriver (uInfo) {
 
 module.exports = {
   formatTime: formatTime,
-  formatDate: formatDate,
+  formatData: formatData,
   isDriver: isDriver
 }

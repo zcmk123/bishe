@@ -26,6 +26,12 @@ function connect(callback) {
  * 暴露给外界的方法
 */
 var dbUtil = {
+    /**
+     * 插入一条数据
+     * @param {string} collectionName 集合名字
+     * @param {object} obj 要插入的数据
+     * @param {function} callback 回调函数
+     */
     insert: function (collectionName, obj, callback) {
         connect(function (err, db) {
             db.collection(collectionName).insertOne(obj, function (error, res) {
@@ -49,18 +55,41 @@ var dbUtil = {
         // 更新
         connect(function (err, db) {
             db.collection(collectionName).updateOne(filter, obj, function (error, result) {
-                if(callback) {
+                if (callback) {
                     callback(result);
                 }
             })
         })
     },
-    find: function (collectionName, obj, callback) {
+    /**
+     * 查询数据(返回数组)
+     * @param {string} collectionName 集合名称
+     * @param {object} filter 查询条件
+     * @param {object} obj 要修改的数据
+     * @param {function} callback 回调函数
+     */
+    find: function (collectionName, filter, obj, callback) {
         // 查找
         connect(function (err, db) {
-            db.collection(collectionName).find(obj).toArray(function (error, result) {
+            db.collection(collectionName).find(obj, filter).toArray(function (error, result) {
                 if (callback) {
                     callback(result.length, result);
+                }
+            })
+        })
+    },
+    /**
+     * 查询并修改数据(原子操作)
+     * @param {string} collectionName 集合名称
+     * @param {object} filter 查询条件
+     * @param {object} obj 要修改的数据
+     * @param {function} callback 回调函数
+     */
+    findAndModify: function (collectionName, filter, obj, callback) {
+        connect(function (err, db) {
+            db.collection(collectionName).findOneAndUpdate(filter, obj, function (error, result) {
+                if(callback) {
+                    callback(result);
                 }
             })
         })

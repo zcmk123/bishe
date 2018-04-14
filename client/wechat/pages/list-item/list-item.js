@@ -20,12 +20,12 @@ Page({
       title: '确认拼车',
       content: '确定要拼车吗？',
       success: function (res) {
-        if(res.confirm) {
+        if (res.confirm) {
           sendInfo();
         }
       }
     })
-    function sendInfo () {
+    function sendInfo() {
       var passengerId = app.globalData.uInfo._id;
       var itemId = _this.data.itemId;
       //发请求添加乘客到拼车中
@@ -63,12 +63,12 @@ Page({
         //后端传回的数据设置到页面
         _this.setData({
           itemId: itemId,
-          itemData: util.formatDate(data.data)
+          itemData: util.formatData(data.data)
         })
-        //转换rating评分为图标显示
-        _this.converRating();
         //检查乘客是否能拼车
         _this.checkPassenger();
+        //转换rating评分为图标显示
+        _this.converRating();
       }
     })
   },
@@ -76,27 +76,28 @@ Page({
    * 转换评分变成对应分数的图片
    */
   converRating: function () {
-    var rating = this.data.itemData.driver.isdriver.rating;
+    var driver = this.data.itemData.driver.isdriver;
+    var rateScore = driver.rating;
     var starClass = '';
-    if (rating >= 0 && rating < 0.5) {
+    if (rateScore >= 0 && rateScore < 0.5) {
       starClass = 'star00';
-    } else if (rating >= 0.5 && rating < 1.0) {
+    } else if (rateScore >= 0.5 && rateScore < 1.0) {
       starClass = 'star05';
-    } else if (rating >= 1.0 && rating < 1.5) {
+    } else if (rateScore >= 1.0 && rateScore < 1.5) {
       starClass = 'star10';
-    } else if (rating >= 1.5 && rating < 2.0) {
+    } else if (rateScore >= 1.5 && rateScore < 2.0) {
       starClass = 'star15';
-    } else if (rating >= 2.0 && rating < 2.5) {
+    } else if (rateScore >= 2.0 && rateScore < 2.5) {
       starClass = 'star20';
-    } else if (rating >= 2.5 && rating < 3.0) {
+    } else if (rateScore >= 2.5 && rateScore < 3.0) {
       starClass = 'star25';
-    } else if (rating >= 3.0 && rating < 3.5) {
+    } else if (rateScore >= 3.0 && rateScore < 3.5) {
       starClass = 'star30';
-    } else if (rating >= 3.5 && rating < 4.0) {
+    } else if (rateScore >= 3.5 && rateScore < 4.0) {
       starClass = 'star35';
-    } else if (rating >= 4.0 && rating < 4.5) {
+    } else if (rateScore >= 4.0 && rateScore < 4.5) {
       starClass = 'star40';
-    } else if (rating >= 4.5 && rating < 5.0) {
+    } else if (rateScore >= 4.5 && rateScore < 5.0) {
       starClass = 'star50';
     }
     this.setData({
@@ -106,13 +107,15 @@ Page({
   /**
    * 检查乘客是否能拼车
    * 司机/已在此次拼车中的乘客  不能点击确定拼车按钮
+   * 座位为0不能拼车
    */
   checkPassenger: function () {
     var selfId = app.globalData.uInfo._id;
     var driverId = this.data.itemData.driver._id;
     var passengerArr = this.data.itemData.passenger;
+    var seat = this.data.itemData.seat
     //判断乘客是否已经在这次拼车中，如果在则不允许再点击拼车按钮
-    if ((selfId != driverId) && (passengerArr.indexOf(selfId) == -1)) {//司机自己不能再次参加自己的拼车
+    if ((selfId != driverId) && (passengerArr.indexOf(selfId) == -1) && (seat > 0)) {//司机自己不能再次参加自己的拼车
       this.setData({
         subBtnStatus: true
       })
@@ -125,59 +128,54 @@ Page({
     console.log(util.formatTime(new Date()));
     var itemId = options.itemId;
     this.itemPageInit(itemId);
-    
-    // TODO 设置评分星级的图片位置
-    // this.setData({
-    //   ['itemData.ratingStar']: 25
-    // })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

@@ -1,11 +1,22 @@
 /* pages/info/info.wxss */
+page {
+  background-color: #fff;
+}
 .user-info {
+  position: relative;
   width: 100%;
 }
 .info-top {
   padding: 40rpx;
   text-align: center;
   background-color: #1296db;
+}
+#setting-icon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 40rpx;
 }
 .user-info-avatar {
   width: 200rpx;

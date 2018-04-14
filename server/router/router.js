@@ -43,7 +43,7 @@ router.get('/getopenid', function (req, res) {
  */
 router.get('/getuinfo', function (req, res) {
     var oid = url.parse(req.url, true).query.openid;
-    info.getUInfo(oid, res);
+    info.getUInfo(oid ,res);
 })
 
 /**
@@ -97,6 +97,14 @@ router.get('/loadlist', function (req, res) {
     var itemId = url.parse(req.url, true).query.itemId;
     var passengerId = url.parse(req.url, true).query.passengerId;
     pinche.addPassenger(itemId, passengerId, res);
+ })
+
+ /**
+  * 请求我参与的拼车信息
+  */
+ router.get('/order/myorder', function (req, res) {
+    console.log('进来了');
+    res.end('end');
  })
 
 module.exports = router;

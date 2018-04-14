@@ -9,8 +9,9 @@
   color: #8d8d8d;
 }
 .item-box .item {
+  display: flex;
+  justify-content: space-between;
   padding: 20rpx 10rpx;
-  margin-bottom: 10rpx;
 }
 .item-box .item-title {
   border-bottom: 1px solid #ccc;

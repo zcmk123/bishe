@@ -58,25 +58,31 @@ var info = {
                     phone: '',                                 //电话号码
                     avatarUrl: userInfo.avatarUrl,      //头像地址
                     rating: 0.0,                              //乘客评分
+                    cplorders: 0,                           //完成订单总数
+                    myorder: [],                            //存储我参与的订单，订单条数在百条数量级，以ObjectId存储
+                    postorder: [],                        //存储我发布的订单，订单条数在百条数量级，以ObjectId存储
                     isdriver: {
                         v_status: 0,                         //司机认证情况  0未认证  1认证中   2已认证
                         car: '',                                //车型
                         carpic: '',                             //车图片
-                        rating: 0.0                           //司机评分
+                        rating: 0.0,                           //司机评分
+                        cplorders: 0                         //完成订单总数
                     }
                 };
+
                 // 不存在，添加默认记录
                 dbUtil.insert('user', userDefaultObj, function (res) {
                     userDefaultObj._id = res.insertedId;
-                    resp.jsonp([userDefaultObj]);
+                    resp.jsonp(userDefaultObj);
                     resp.end();
                 });
             } else {
                 // 如果存在，直接把查询结果返回
-                resp.jsonp(results);
+                resp.jsonp(results[0]);
                 resp.end();
             }
         })
+
     },
     /**
      * 查询用户信息并返回
@@ -86,7 +92,12 @@ var info = {
      */
     getUInfo: function (oid, resp, callback) {
         //去数据库中查找oid对应的用户
-        dbUtil.find('user', { openid: oid }, function (len, results) {
+        dbUtil.find('user', {
+            projection: {
+                'myorder': 0,                   // 查询用户信息时订单字段不返回
+                'postorder': 0       // 查询用户信息时订单字段不返回
+            }
+        }, { openid: oid }, function (len, results) {
             if (resp) {
                 //返回一条数据
                 resp.jsonp(results[0]);
