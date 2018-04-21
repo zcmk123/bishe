@@ -1,8 +1,9 @@
 var fs = require('fs');
+var url = require('url');
 
 var http = require('http');
 var https = require('https');
-var ws = require("nodejs-websocket");
+var WebSocketServer = require('ws').Server;
 
 var bodyParser = require('body-parser');
 
@@ -18,7 +19,7 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 app.use(express.static('static'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require('./router/router'));
 
@@ -30,42 +31,33 @@ httpsServer.listen(443, function () {
     console.log('HTTPS Server is running on: https://localhost:443');
 });
 
-// webSocket 测试服务器
-// var userA = null, userB = null , userAReady = false , userBReady = false;
-// var wsServer = ws.createServer(function(conn){
-//     conn.on("text", function (str) {
-//         /*
-//             客户端A传过来（发起者）
-//             {
-//                 selfID: 自己的id
-//                 targetID: 目标id
-//             }
-//             if selfID 存在，说明userA准备完成
-//         */
-//         // console.log("收到的信息为:"+str)
-//         if(str==="userA"){
-//             userA = conn;
-//             userAReady = true;
-//             conn.sendText("success");
-//         }
-//         if(str==="userB"){
-//             userB = conn;
-//             userBReady = true;
-//         }
-//         if(userAReady&&userBReady){
-//             //把str推送给userB
-//             userB.sendText(str);
-//         }
-//         conn.sendText(str)
-//     })
-//     conn.on("close", function (code, reason) {
-//         console.log("关闭连接")
-//     });
-//     conn.on("error", function (code, reason) {
-//         console.log("异常关闭")
-//     });
-// }).listen(80,'127.0.0.1')
-// console.log("WebSocket建立完毕")
+
+// ------------------------------------------------------------
+var socket = require('./model/websocket');
+var wss = new WebSocketServer({     // websocket服务器
+    server: httpsServer
+});
+
+var userSet = {};
+
+wss.on('connection', function connection(ws, req) {
+    var userId = url.parse(req.url, true).query.userId;
+    // console.log(url.parse(req.url, true).query.userId)
+    userSet[userId] = ws;   // 连接之后push到用户数组
+
+    // console.log(userSet);
+
+    ws.on('message', function incoming(message) {
+        // console.log('received: %s', message);
+        socket.consoleMsg(message);
+    });
+
+    ws.on('close', function close(code, reason) {
+        console.log('disconnected ' + reason);
+    });
+
+    ws.send('连接成功！');
+});
 
 // // 没有挂载路径的中间件，通过该路由的每个请求都会执行该中间件
 // router.use('/', function (req, res, next) {

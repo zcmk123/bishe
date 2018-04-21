@@ -15,7 +15,6 @@ var pinche = require('../model/pinche');
 // 路由
 
 router.get('/getinfo', function (req, res) {
-    // var employees = info.getInfo();
     res.jsonp(info.getTime());
     res.end();
 })
@@ -35,7 +34,6 @@ router.post('/uploadpic', upload.single('file'), function(req, res){
 router.get('/getopenid', function (req, res) {
     var jsCode = url.parse(req.url, true).query.jsCode;
     info.getOpenId(jsCode, res);
-    // res.jsonp(openid);
 })
 
 /**

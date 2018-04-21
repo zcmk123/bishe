@@ -1,0 +1,4 @@
+<!--pages/test/test.wxml-->
+<input id='send' style='border: 1px solid black' bindinput="msgChange"/>
+<button id='btn-send' bindtap="sendMsg">发送</button>
+<button bindtap="closeConn">关闭连接</button>
