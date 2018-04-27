@@ -2,17 +2,28 @@
 <template name="order-list-template">
 
   <view class="post-list">
-    <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:for="{{listData}}" bindtap="bindItemTap">
-      <view class="item-title">标题:{{item.title}}</view>
+    <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:for="{{listData.list}}" bindtap="bindItemTap">
+      <view class="item-title weui-select">
+        <text style="float: left;">标题:{{item.title}}</text>
+        <view class="item-status">{{item.status}}</view>
+      </view>
       <view class="item-start">
         <image class="icon-dot" src="/images/icon/startdot.png" mode="aspectFit"></image>出发地：{{item.startLoc.name}}          </view>
       <view class="item-dest">
         <image class="icon-dot" src="/images/icon/destdot.png" mode="aspectFit"></image>目的地：{{item.destLoc.name}}           </view>
       <view class="item-date">出发时间：{{item.date}} {{item.time}}</view>
-      <view class="item-seat">剩余座位：{{item.seat}}</view>
+      <!-- <view class="item-seat">剩余座位：{{item.seat}}</view> -->
     </view>
-    
-  </view>
 
+    <view class="no-order" wx-if="{{listData.list.length == 0}}">暂无订单</view>
+    <view class="weui-loadmore weui-loadmore_line" style="display: {{listData.list.length == 0 ? 'none' : 'block'}}" wx:if="{{!listData.isLoading}}" bindtap="onReachBottom">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line load-more">{{listData.loadMoreText}}</view>
+    </view>
+
+    <view class="weui-loadmore" wx:if="{{listData.isLoading}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </view>
 
 </template>

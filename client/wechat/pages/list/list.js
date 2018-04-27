@@ -71,7 +71,6 @@ Page({
       page: 1       // 重置page
     })
     this.loadList();
-    var _this = this;
     this.setData({
       loadMoreText: '下拉加载更多'
     })
@@ -117,7 +116,6 @@ Page({
       success: function (data) {
         // 拉取信息成功
         if(data.data == 'end') {  // 没有更多数据了
-          clearInterval(_this.data.loadingTimer);  // 清除旋转动画的定时器
           _this.setData({
             loadMoreText: '没有更多拼车信息了',
             isLoading: false

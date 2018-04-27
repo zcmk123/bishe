@@ -122,6 +122,34 @@ var info = {
             resp.jsonp('success');
             resp.end();
         })
+    },
+    /**
+     * 返回用户订单
+     */
+    findMyOrder: function (userId, page, resp) {
+        dbUtil.find('user', { projection: { 'myorder': 1 } }, { _id: ObjectId(userId) }, function (len, results) {
+            var myOrder = results[0].myorder;
+            dbUtil.findByPage(page, { _id: { $in: myOrder } }, function (results) {
+                if (results.length == 0) {
+                    resp.jsonp('end');
+                } else {
+                    resp.jsonp(results);
+                }
+                resp.end();
+            });
+        });
+    },
+    /**
+    * 返回发布订单
+    */
+    findPostOrder: function (userId, page, resp) {
+        dbUtil.find('user', { projection: { 'postorder': 1 } }, { _id: ObjectId(userId) }, function (len, results) {
+            var postOrder = results[0].postorder;
+            dbUtil.findByPage(page, { _id: { $in: postOrder } }, function (results) {
+                resp.jsonp(results);
+                resp.end();
+            });
+        });
     }
 }
 

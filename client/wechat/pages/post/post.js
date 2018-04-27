@@ -8,7 +8,8 @@ Page({
    */
   data: {
     postInfo: {
-      passenger: []
+      passenger: [],
+      seat: 1
     },
     seatArr: [1, 2, 3, 4, 5, 6],
     date: '',
@@ -27,13 +28,13 @@ Page({
     })
   },
   bindDateChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    console.log('picker发送选择改变，携带值为', e.detail.value);
     this.setData({
       date: e.detail.value
     })
   },
   bindTimeChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    console.log('picker发送选择改变，携带值为', e.detail.value);
     this.setData({
       time: e.detail.value
     })
@@ -119,12 +120,12 @@ Page({
     var _this = this;
     var targetId = e.target.id;
     var actionStr = '';
-    if (targetId == 'content-loc') {
+    if (targetId == 'startLoc') {
       actionStr = 'startLoc';
       wx.navigateTo({
         url: '../map/map',
       })
-    } else if (targetId == 'content-dest') {
+    } else if (targetId == 'destLoc') {
       actionStr = 'destLoc';
       wx.chooseLocation({
         success: function (res) {

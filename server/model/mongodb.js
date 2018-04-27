@@ -64,8 +64,8 @@ var dbUtil = {
     /**
      * 查询数据(返回数组)
      * @param {string} collectionName 集合名称
-     * @param {object} filter 查询条件
-     * @param {object} obj 要修改的数据
+     * @param {object} filter 过滤查询结果
+     * @param {object} obj 查询条件
      * @param {function} callback 回调函数
      */
     find: function (collectionName, filter, obj, callback) {
@@ -111,11 +111,11 @@ var dbUtil = {
     /**
      * 通过页数查询
      */
-    findByPage: function (page, callback) {
+    findByPage: function (page, filter, callback) {
         var pageSize = 5;
         var skip = (page - 1) * pageSize;
         connect(function (err, db) {
-            db.collection('list').find({}, {
+            db.collection('list').find(filter, {
                 limit: pageSize,    //分页，每页多少条
                 skip: skip, //从第几条开始
                 projection: {//指定输出哪些字段
@@ -125,7 +125,8 @@ var dbUtil = {
                     'time': 1,
                     'seat': 1,
                     'startLoc.name': 1,
-                    'destLoc.name': 1
+                    'destLoc.name': 1,
+                    'status': 1
                 }
             }).toArray(function (error, results) {
                 if (callback) {

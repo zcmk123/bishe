@@ -37,7 +37,7 @@ Page({
         },
         success: function (data) {
           wx.showToast({
-            title: '成功！',
+            title: '加入成功！',
             icon: "success",
             success: function () {
               //返回上一页

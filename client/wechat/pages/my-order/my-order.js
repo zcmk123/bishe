@@ -1,14 +1,18 @@
 // pages/my-order/my-order.js
 const app = getApp();
 var config = require('../../config/config');
+var util = require('../../utils/util');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    currentTab: 0,
-    listData: []    // 后台接收的数据
+    page: 1,
+    currentTab: 0,// 判断是哪个页面 0---我加入的  1---我发布的
+    listData: {    // 后台接收的数据
+      isLoading: false
+    }
   },
   /**
    * 点击切换加载内容
@@ -17,39 +21,59 @@ Page({
     var _this = this;
     var clickTab = e.target.dataset.current;
     if (this.data.currentTab != clickTab) { // 点击的就是当前页面，不做处理
-
-      if (clickTab == 1) {  // 我发布的Tab
+      if (clickTab == 0) {  // 我加入的Tab
         _this.setData({
-          currentTab: clickTab,
-          listData: [{
-            title: 'zhouchenminkun',
-            ['startLoc.name']: '186454321434'
-          }]
+          currentTab: clickTab
         })
-      } else if (clickTab == 0) {  // 我加入的Tab
+        _this.requestOrder('myorder');
+      } else if (clickTab == 1) {  // 我发布的Tab
         _this.setData({
-          currentTab: clickTab,
-          listData: [{
-            title: 'sadasdasda1',
-            ['startLoc.name']: '6+546646464'
-          }]
+          currentTab: clickTab
         })
+        this.requestOrder('postorder');
       }
 
     }
   },
   /**
+   * 到订单详情页
+   */
+  bindItemTap: function (e) {
+    var _this = this;
+    var itemId = e.currentTarget.dataset.id;
+    //带参数跳转
+    wx.navigateTo({
+      url: '/pages/order-info/order-info?itemId=' + itemId + '&tab=' + _this.data.currentTab
+    })
+  },
+  /**
    * 初始化页面
    */
   initPage: function () {
+    var currentPage = this.data.currentTab == 0 ? 'myorder' : 'postorder';
+    this.requestOrder(currentPage);
+  },
+  /**
+   * 请求postorder或者myorder
+   */
+  requestOrder: function (action) {
+    var _this = this;
     var userId = app.globalData.uInfo._id;
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.request({
-      url: config.requestUrl + 'order/myorder',   // 请求我的订单
+      url: config.requestUrl + 'order/' + action,   // 请求我的订单
       data: {
-        userId: userId
+        userId: userId,
+        page: this.data.page
       },
       success: function (res) {
-        console.log(res);
+        _this.setData({
+          ['listData.list']: util.formatData(res.data),
+          ['listData.loadMoreText']: '下拉加载更多'
+        })
+        wx.hideLoading();
       }
     })
   },
@@ -57,8 +81,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  // TODO 加载我加入的拼车
-  this.initPage();
+  
   },
 
   /**
@@ -72,7 +95,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      page: 1       // 重置page
+    })
+    this.initPage();
   },
 
   /**
@@ -100,7 +126,37 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var _this = this;
+    console.log('触底操作');
+    var isLoading = this.data.isLoading;
+    isLoading = isLoading ? false : true;
+    _this.setData({ isLoading: isLoading });
+    var userId = app.globalData.uInfo._id;
+    // 向后台发送请求拉取数据
+    wx.request({
+      url: config.requestUrl + 'order/myorder',
+      data: {
+        userId: userId,
+        page: _this.data.page + 1
+      },
+      success: function (data) {
+        // 拉取信息成功
+        if (data.data == 'end') {  // 没有更多数据了
+          _this.setData({
+            ['listData.loadMoreText']: '没有更多订单',
+            ['listData.isLoading']: false
+          })
+        } else {
+          var resData = util.formatData(data.data);
+          var newLoadedList = _this.data.listData.list.concat(resData);
+          _this.setData({
+            ['listData.list']: newLoadedList,
+            ['listData.isLoading']: false
+          })
+          _this.data.page++;
+        }
+      }
+    })
   },
 
   /**

@@ -1,0 +1,24 @@
+<!--pages/order-info/order-info.wxml-->
+<import src="/pages/template/list-item-template.wxml"/>
+<view class="container">
+  <template is="list-item-template" data="{{...itemData}}"/>
+
+<!--双方都能看到的按钮  -->
+  <view style="margin-top: 0;" class="weui-btn-area" wx:if="{{itemData.status == 0}}">
+    <view class="page__desc" style="width: 90vw;">*发车前30分钟不能取消订单</view>
+    <button style="margin-top: 0;" class="weui-btn" type="primary" bindtap="bindCancel" disabled="{{!canCancel}}">取消订单</button>
+    <button style="margin-top: 0; margin-left: 20rpx;" class="weui-btn" type="primary" bindtap="bindRTPMap" wx:if="{{itemData.status == 0}}">实时定位</button>
+  </view>
+<!-- wx:if="itemData.status != 0" -->
+<!--乘客才能看到的按钮  -->
+  <view class="weui-btn-area" wx:if="{{itemData.status == 1 && itemData.fromOrder.fromMyOrder}}">
+    <button class="weui-btn" style="margin-top: 0;" type="primary" bindtap="bindComment">评价拼车</button>
+    <button class="weui-btn" style="margin-top: 0; margin-left: 20rpx;" type="primary" bindtap="bindThumbUp">打赏司机</button>
+  </view>
+
+<!--司机才能看到的按钮  -->
+  <view style="margin-top: 0;" class="weui-btn-area" wx:if="{{itemData.status == 0 && itemData.fromOrder.fromPost}}">
+    <button class="weui-btn" type="primary" bindtap="bindComplete">确认行程完成</button>
+  </view>
+
+</view>

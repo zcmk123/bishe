@@ -101,8 +101,23 @@ router.get('/loadlist', function (req, res) {
   * 请求我参与的拼车信息
   */
  router.get('/order/myorder', function (req, res) {
-    console.log('进来了');
-    res.end('end');
+    var userId = url.parse(req.url, true).query.userId;
+    var page = url.parse(req.url, true).query.page;
+    info.findMyOrder(userId, page, res);
+ })
+
+ /**
+  * 请求我发布的拼车信息
+  */
+ router.get('/order/postorder', function (req, res) {
+    var userId = url.parse(req.url, true).query.userId;
+    var page = url.parse(req.url, true).query.page;
+    info.findPostOrder(userId, page, res);
+ })
+
+ router.delete('/order/cancelorder', function (req, res) {
+    var postData = req.body;
+    pinche.removePassenger(postData, res);
  })
 
 module.exports = router;

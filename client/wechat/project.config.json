@@ -3,7 +3,7 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
-		"postcss": false,
+		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
@@ -30,12 +30,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
 					"name": "test",
-					"pathName": "pages/test/test",
+					"pathName": "pages/order-info/order-info",
 					"query": ""
 				}
 			]

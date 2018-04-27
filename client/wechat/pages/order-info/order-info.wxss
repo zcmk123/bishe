@@ -1,0 +1,13 @@
+/* pages/order-info/order-info.wxss */
+@import '../template/list-item-template.wxss';
+/* .weui-btn {
+  width: 90vw;
+} */
+.weui-btn-area {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90vw;
+}
+.weui-btn-area button {
+  flex-grow: 1;
+}

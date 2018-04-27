@@ -4,7 +4,9 @@
 
 //请求Url
 var requestUrl = 'http://localhost/';
+var socketUrl = 'ws://localhost:8000/';
 // var requestUrl = 'https://pinche.istarmcgames.com/';
+// var socketUrl = 'wss://pinche.istarmcgames.com/';
 
 //学校信息配置
 var schoolList = [{
@@ -60,6 +62,7 @@ var v_statusArr = ['unverified', 'verifying', 'verified'];
 
 module.exports = {
   requestUrl: requestUrl,
+  socketUrl: socketUrl,
   schoolList: schoolList,
   schoolLogoArr: schoolLogoArr,
   v_statusArr: v_statusArr

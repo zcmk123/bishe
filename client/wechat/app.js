@@ -4,6 +4,11 @@ App({
   onLaunch: function () {
     var _this = this;
 
+    // 向用户请求授权
+    wx.authorize({
+      scope: 'scope.userInfo'
+    })
+
     //加载学校信息到全局
     this.globalData.schoolInfoList = config.schoolList;
 
@@ -34,7 +39,7 @@ App({
       } else {
         // 获取微信端用户信息 (头像、名字等)
         return new Promise(function (resolve, reject) {
-          wx.getUserInfo({
+          wx.getUserInfo({    // api要修改
             withCredentials: true,
             success: res => { resolve(res) },
             fail: res => { reject('getUserInfo失败：' + res.errMsg) }
@@ -72,79 +77,6 @@ App({
     }).catch(function (error) { // 处理错误
       console.error(error);
     })
-
-    // 向用户请求授权
-    wx.authorize({
-      scope: 'scope.userInfo'
-    })
-
-    // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //     console.log(res.code);
-    //     var _this = this;
-    //     wx.request({
-    //       url: config.requestUrl + 'getopenid',
-    //       data: {
-    //         jsCode: res.code
-    //       },
-    //       success: function (data) {
-    //         _this.globalData.openId = data.data.openid;
-    //         // console.log(data)
-    //         // var errcode = data.errcode || true;
-    //         if (data.errcode) {
-    //           console.log('重复请求登陆');
-    //         } else {
-
-    //           // 获取微信端用户信息 (头像、名字等)
-    //           wx.getUserInfo({
-    //             withCredentials: true,
-    //             success: function (res) {
-
-    //               _this.globalData.userInfo = res.userInfo;
-    //               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //               // 所以此处加入 callback 以防止这种情况
-    //               if (_this.userInfoReadyCallback) {
-    //                 _this.userInfoReadyCallback(res);
-    //               }
-    //               // 发请求给服务器存openid、及用户其他数据, 取回用户信息
-    //               wx.request({
-    //                 method: 'POST',
-    //                 url: config.requestUrl + 'setopenid',
-    //                 data: {
-    //                   openid: _this.globalData.openId,
-    //                   userInfo: _this.globalData.userInfo
-    //                 },
-    //                 success: function (data) {
-    //                   var uInfo = data.data[0];
-    //                   _this.globalData.uInfo = uInfo;
-    //                   console.log(_this.globalData.uInfo);
-    //                   // 回调以解决不同步问题
-    //                   if (_this.uInfoCallback) {
-    //                     _this.uInfoCallback(uInfo);
-    //                   }
-    //                 },
-    //                 fail: function (res) {
-    //                   //setoid请求失败
-    //                   console.error('setoid请求失败' + res);
-    //                 }
-    //               })
-    //             },
-    //             fail: function (res) {
-    //               //getUserInfo请求失败
-    //               console.error('getUserInfo请求失败' + res);
-    //             }
-    //           })
-    //         }
-    //       },
-    //       fail: function (res) {
-    //         //getopenid请求失败
-    //         console.error('getopenid请求失败' + res);
-    //       }
-    //     })
-    //   }
-    // })
 
   },
   /**

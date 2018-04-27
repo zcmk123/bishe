@@ -35,28 +35,37 @@ httpsServer.listen(443, function () {
 // ------------------------------------------------------------
 var socket = require('./model/websocket');
 var wss = new WebSocketServer({     // websocket服务器
-    server: httpsServer
+    server: httpsServer,
+    port: 8000
 });
 
 var userSet = {};
 
 wss.on('connection', function connection(ws, req) {
-    var userId = url.parse(req.url, true).query.userId;
-    // console.log(url.parse(req.url, true).query.userId)
-    userSet[userId] = ws;   // 连接之后push到用户数组
+    var userId = url.parse(req.url, true).query.myId;
+    var driverId = url.parse(req.url, true).query.driverId;
+    console.log(userId);
+    userSet[userId] = ws;   // 连接之后增加到用户集合
 
     // console.log(userSet);
 
     ws.on('message', function incoming(message) {
         // console.log('received: %s', message);
-        socket.consoleMsg(message);
+        // socket.consoleMsg(message);
+        var recObj = JSON.parse(message);
+        var target = recObj.target;
+
+        if (userSet[target]) {
+            userSet[target].send(message);
+        }
+
     });
 
     ws.on('close', function close(code, reason) {
         console.log('disconnected ' + reason);
     });
 
-    ws.send('连接成功！');
+    // ws.send('连接成功！');
 });
 
 // // 没有挂载路径的中间件，通过该路由的每个请求都会执行该中间件

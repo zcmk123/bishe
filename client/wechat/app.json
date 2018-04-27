@@ -8,6 +8,8 @@
     "pages/info/info",
     "pages/driver-info/driver-info",
     "pages/my-order/my-order",
+    "pages/order-info/order-info",
+    "pages/rtp-map/rtp-map",
     "pages/test/test",
     "pages/template/list-item-template",
     "pages/template/order-list-template"

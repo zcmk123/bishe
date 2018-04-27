@@ -11,12 +11,19 @@ const formatTime = date => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':')
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
 }
 
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
+}
+
+/**
+ * 计算时间差--相隔多少分钟
+ */
+function timeDiff (t1, t2) {
+  return parseInt(t1 - t2) / 1000 / 60;
 }
 
 /**
@@ -29,6 +36,13 @@ function ratingConvert (rating, cplorders) {
   } else {
     return rateScore;
   }
+}
+
+/**
+ * 订单状态转换
+ */
+function statusConvert (status) {
+  return status == 0 ? '进行中' : '已完成';
 }
 
 /**
@@ -45,6 +59,7 @@ function formatData (data) {
       data.forEach(function (ele, index) {
         var tempDate = new Date(ele.date);
         ele.date = formatTime(tempDate);
+        ele.status = statusConvert(ele.status);
       })
     break;
     case '[object Object]': //为对象，直接转换
@@ -68,5 +83,6 @@ function isDriver (uInfo) {
 module.exports = {
   formatTime: formatTime,
   formatData: formatData,
-  isDriver: isDriver
+  isDriver: isDriver,
+  timeDiff: timeDiff
 }
