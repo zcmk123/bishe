@@ -1,0 +1,18 @@
+/* pages/comment/comment.wxss */
+@import '../post/post.wxss';
+.container {
+  padding: 0;
+}
+.star-image{
+  position: relative;
+  /* margin-left: 65rpx; */
+  width: 65rpx;
+  height: 60rpx;
+  src: "../../images/no-star.png";
+}
+.item{
+  position: absolute;
+  top: 0;
+  width: 33rpx;
+  height: 60rpx;
+}

@@ -1,4 +1,5 @@
 // pages/rtp-map/rtp-map.js
+const app = getApp();
 var config = require('../../config/config');
 Page({
 
@@ -7,18 +8,7 @@ Page({
    */
   data: {
     socketOpen: false,
-    target_Latitude: null,
-    target_Longitude: null,
-    markers: [
-      {
-        iconPath: "/images/icon/marker.png",
-        width: 16,
-        height: 20,
-        id: 0,
-        latitude: 25.4097,
-        longitude: 110.32552,
-      }
-    ]
+    markers: []
   },
   /**
    * 定时发送位置
@@ -26,17 +16,21 @@ Page({
   sendLocation: function () {
     var _this = this;
     var timeGap = 5000; // 时间间隔
+    var itemData = _this.data.itemData;
+    var targetArr = itemData.fromOrder.fromPost ? allPassenger(itemData.passenger) : [itemData.driver._id];
+    
     var locationTimer = setInterval(function () {
-      
+
       wx.getLocation({
-        success: function(res) {
+        success: function (res) {
           var latitude = res.latitude;
           var longitude = res.longitude;
 
           var sendJSON = {
             source: _this.data.myId,
-            target: _this.data.driverId,
+            target: targetArr,  // 数组
             location: {
+              nickName: app.globalData.uInfo.nickname,
               latitude: latitude,
               longitude: longitude
             }
@@ -55,6 +49,14 @@ Page({
     _this.setData({
       locationTimer: locationTimer
     })
+
+    function allPassenger (passengers) {
+      var tempArr = [];
+        passengers.forEach(function (ele, index) {
+          tempArr.push(ele._id);
+        })
+      return tempArr;
+    }
   },
   /**
    * 初始化页面
@@ -62,9 +64,13 @@ Page({
   initPage: function (options) {
     var _this = this;
 
+    var itemData = wx.getStorageSync('CACHE.itemData');
+
     this.setData({
+      itemData: itemData,
       myId: options.myId,
-      driverId: options.driverId
+      driverId: itemData.driver._id,
+      itemId: itemData._id
     })
 
     // 初始化socket
@@ -91,20 +97,69 @@ Page({
     // 接收的内容
     wx.onSocketMessage(function (res) {
       // 接收到的信息
-      var recObj = JSON.parse(res.data);
+      var locationArr = JSON.parse(res.data).data;
+      
+      // locationArr转换成markers数组
+      var markers = _this.convertToMarkers(locationArr);
+
       _this.setData({
-        target_Latitude: recObj.location.latitude,
-        target_Longitude: recObj.location.longitude
+        markers: markers,
       })
-      console.log('收到服务器内容：' + res.data)
+      // console.log('收到服务器内容：' + res.data);
+    })
+  },
+  /**
+   * locationArr转换成markers数组
+   */
+  convertToMarkers: function (locationArr) {
+    var markers = [];
+
+    locationArr.forEach(function (ele, index) {
+      var markersItem = {
+        iconPath: "/images/icon/marker.png",
+        width: 16,
+        height: 20,
+        latitude: ele.latitude,
+        longitude: ele.longitude,
+        label: {
+          content: ele.nickName,
+          x: ele.nickName.length * -6
+        }
+      };
+
+      markers.push(markersItem);
     })
 
+    return markers;
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initPage(options);
+    var _this = this;
+
+    wx.getLocation({
+      success: function (res) {
+        _this.setData({
+          tLatitude: res.latitude,
+          tLongitude: res.longitude
+        })
+
+        _this.initPage(options);
+      },
+      fail: function () {
+        // console.log('失败');
+        // 没有权限
+        wx.showModal({
+          title: '提示',
+          content: '您禁止了微信获取您的地理位置信息，在“我的”页面右上角的设置按钮中可以重新开启授权。未授权不能使用实时定位。',
+          showCancel: false,
+          confirmText: '知道了'
+        })
+      }
+    })
+
+
   },
 
   /**
@@ -132,11 +187,12 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.closeSocket({
-      reason: '客户端主动断开'
-    });
-
-    clearInterval(this.data.locationTimer);
+    if (this.data.socketOpen) {
+      wx.closeSocket({
+        reason: '客户端主动断开'
+      });
+      clearInterval(this.data.locationTimer);
+    }
   },
 
   /**

@@ -1,6 +1,9 @@
+<zan-toptips
+  id="zan-toptips"
+  contetn="{{ content }}"
+/>
 <view class="container">
   <!--第一部分  -->
-
   <view class="weui-cells content">
     <view class="weui-cells__title">基本信息</view>
     <view class="weui-cell weui-cells_after-title weui-cell_input">
@@ -79,7 +82,6 @@
       </view>
     </view>
 
-
     <view class="weui-cell weui-cell_input" style="padding-right: 0;">
       <view class="weui-cell__hd">
         <view class="weui-label">座位</view>
@@ -107,6 +109,6 @@
   </checkbox-group>
   <!--确定按钮  -->
   <view class="weui-btn-area">
-    <button class="weui-btn" type="primary" bindtap="bindPostInfo">发布信息</button>
+    <zan-button type="primary" bindtap="bindPostInfo">发布信息</zan-button>
   </view>
 </view>

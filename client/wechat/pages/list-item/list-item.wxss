@@ -1,8 +1,7 @@
 /* pages/list-item/list-item.wxss */
 @import '../template/list-item-template.wxss';
-.container {
-  height: 100vh;
-  flex-direction: column;
+.container-a {
+  margin-top: 40rpx;
 }
 .sub-btn {
   width: 90vw;

@@ -2,6 +2,7 @@
 const app = getApp();
 var config = require('../../config/config');
 var util = require('../../utils/util');
+const Toptips = require('../../libs/zanui/toptips/index');
 Page({
   /**
    * 页面的初始数据
@@ -99,18 +100,15 @@ Page({
             }
           })
         } else {// 未同意规则
-          wx.showModal({
-            title: '提示',
-            content: '必须同意xxx规则',
-            showCancel: false
-          })
+        Toptips('请阅读并同意相关条款，否则不能发布信息');
       }
     } else {// 未将信息填写完整
-      wx.showModal({
-        title: '提示',
-        content: '请将信息填写完整',
-        showCancel: false
-      })
+      // wx.showModal({
+      //   title: '提示',
+      //   content: '请将信息填写完整',
+      //   showCancel: false
+      // })
+      Toptips('请将信息填写完整');
     }
   },
   /**

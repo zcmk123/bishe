@@ -20,6 +20,14 @@ router.get('/getinfo', function (req, res) {
 })
 
 /**
+ * 微信登录
+ */
+router.post('/wechatlogin', function (req, res) {
+    var postData = req.body;
+    info.wechatLogin(postData, res);
+})
+
+/**
  * 上传车的图片处理
  */
 router.post('/uploadpic', upload.single('file'), function(req, res){
@@ -115,9 +123,36 @@ router.get('/loadlist', function (req, res) {
     info.findPostOrder(userId, page, res);
  })
 
+ /**
+  * 取消拼车
+  */
  router.delete('/order/cancelorder', function (req, res) {
     var postData = req.body;
     pinche.removePassenger(postData, res);
+ })
+
+ /**
+  * 评价拼车
+  */
+ router.post('/order/comment', function (req, res) {
+    var postData = req.body;
+    pinche.comment(postData, res);
+ })
+
+ /**
+  * 获取评论
+  */
+ router.get('/order/getcomment', function (req, res) {
+    var itemId = url.parse(req.url, true).query.itemId;
+    pinche.getComment(itemId, res);
+ })
+
+ /**
+  * 完成订单
+  */
+ router.get('/order/completorder', function (req, res) {
+    var itemId = url.parse(req.url, true).query.itemId;
+    pinche.completOrder(itemId, res);
  })
 
 module.exports = router;

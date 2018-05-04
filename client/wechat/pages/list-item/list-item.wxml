@@ -1,10 +1,8 @@
 <!--pages/list-item/list-item.wxml-->
 <import src="/pages/template/list-item-template.wxml"/>
 
-<view class="container">
+<view class="container-a">
   <template is="list-item-template" data="{{...itemData}}"/>
-  <view>
-    <button class="sub-btn" type="primary" disabled="{{!subBtnStatus}}" bindtap="bindPinChe">确定拼车</button>
-  </view> 
+  <zan-button type="primary" class="sub-btn" disabled="{{!subBtnStatus}}" bindtap="bindPinChe">确定拼车</zan-button>
   
 </view>

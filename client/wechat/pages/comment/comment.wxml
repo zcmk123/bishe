@@ -1,0 +1,39 @@
+<!--pages/comment/comment.wxml-->
+<zan-toptips
+  id="zan-toptips"
+  contetn="{{ content }}"
+/>
+<view class="container">
+
+  <view class="weui-cells content">
+    <view class="weui-cells__title">给司机打分</view>
+    <view class="weui-cell weui-cells_after-title" style="width: 90vw;">
+      <view class="weui-cell__hd" style="align-self:flex-start;">
+        <view class="weui-label" style="line-height: 60rpx;">打分</view>
+      </view>
+      <view class="weui-cell__bd">
+        <block wx:for="{{stars}}">
+          <image class="star-image" src="{{key > item ?(key-item == 0.5?halfSrc:selectedSrc) : normalSrc}}">
+            <view class="item" style="left:0rpx" data-key="{{item+0.5}}" bindtap="selectLeft"></view>
+            <view class="item" style="left:32rpx" data-key="{{item+1}}" bindtap="selectRight"></view>
+          </image>
+        </block>
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cells_after-title">
+      <view class="weui-cell__hd" style="align-self:flex-start;">
+        <view class="weui-label">评价</view>
+      </view>
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" placeholder="请输入评价" style="height: 4.3em" bindinput="bindiCommentChange" />
+      </view>
+    </view>
+
+
+  </view>
+
+  <view class="weui-btn-area" style="margin-top: 40rpx;">
+    <zan-button type="primary" bindtap="startRating">确认评价</zan-button>
+  </view>
+</view>

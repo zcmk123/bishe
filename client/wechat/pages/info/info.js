@@ -7,10 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    login: false,
     genderArr: ['女', '男'],
     // 微信获取到的用户信息
     userInfo: {
-      nickName: '你怎么就不听话，同意我获取你的信息呢', //默认提示
+      nickName: '用户昵称', //默认提示
       avatarUrl: '/images/img/testAvatar.jpg'  //默认头像
     },
     // 后端传来的用户信息
@@ -20,8 +21,41 @@ Page({
       school: "",
       phone: "",
       driver: false
-    },
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    }
+  },
+  userInfoHandler: function (e) { // 手动登录
+    console.log(e.detail);
+    var _this = this;
+    var userInfo = e.detail.userInfo; // 微信的用户信息
+    var openId = app.globalData.openId || app.globalData.uInfo.openid;
+    if (e.detail.errMsg == 'getUserInfo:ok') {
+      wx.request({
+        method: 'POST',
+        url: config.requestUrl + 'wechatlogin',
+        data: {
+          openId: openId,
+          avatarUrl: userInfo.avatarUrl,
+          nickname: userInfo.nickName,
+          gender: userInfo.gender
+        },
+        success: function (res) {
+          _this.setData({
+            login: true,
+            userInfo: {
+              nickName: res.data.nickname,
+              avatarUrl: res.data.avatarUrl
+            },
+            hasUserInfo: true
+          })
+          app.globalData.uInfo = res.data; // 更新用户信息到全局变量
+          app.globalData.login = true;
+          wx.showToast({
+            title: '登录成功！',
+            icon: 'none'
+          })
+        }
+      })
+    }
   },
   /**
    * 跳转设置权限页面
@@ -86,30 +120,14 @@ Page({
    * 获取、设置用户信息到Data
    */
   setUserInfo: function () {
-    if (app.globalData.userInfo) {
+    if (app.globalData.login) { // 如果已经登录
       this.setData({
-        userInfo: app.globalData.userInfo,
+        userInfo: {
+          nickName: app.globalData.uInfo.nickname,
+          avatarUrl: app.globalData.uInfo.avatarUrl
+        },
+        login: true,
         hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
       })
     }
   },
@@ -117,6 +135,7 @@ Page({
    * 设置服务器获取的用户信息
    */
   setUInfo: function () {
+    console.log(app.globalData)
     if (app.globalData.uInfo.openid) {
       this.setData({
         uInfo: app.globalData.uInfo
@@ -137,7 +156,7 @@ Page({
     this.setUserInfo();
     this.setUInfo();
     // console.log(app.globalData)
-    
+
   },
 
   /**
@@ -159,7 +178,7 @@ Page({
           // 尝试更新用户信息
           console.log('尝试更新用户信息。。。');
           // TODO 更新失败处理
-          app.getUserInfo();
+          // app.getUserInfo();
           app.getUInfo();
           // console.log(app.globalData);
         }

@@ -2,7 +2,7 @@
 <template name="order-list-template">
 
   <view class="post-list">
-    <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:for="{{listData.list}}" bindtap="bindItemTap">
+    <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:if="{{listData.list != 'end'}}" wx:for="{{listData.list}}" bindtap="bindItemTap">
       <view class="item-title weui-select">
         <text style="float: left;">标题:{{item.title}}</text>
         <view class="item-status">{{item.status}}</view>

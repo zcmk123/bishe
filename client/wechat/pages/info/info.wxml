@@ -5,9 +5,10 @@
     <view class="info-top">
       <image class="user-info-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
       <view class="user-info-name">
-        <text>{{userInfo.nickName}}</text>
-        <image class="id-icon" wx:if="{{uInfo.isdriver.v_status == 2}}" src="../../images/icon/id.png" mode="aspectFit"></image>
-        <image class="id-icon" wx:else src="../../images/icon/unid.png" mode="aspectFit"></image>
+        <text wx:if="{{login}}">{{userInfo.nickName}}</text>
+        <button style="width: 250rpx;" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" wx:if="{{!login}}">微信登录</button>
+        <image class="id-icon" wx:if="{{uInfo.isdriver.v_status == 2 && login}}" src="../../images/icon/id.png" mode="aspectFit"></image>
+        <image class="id-icon" wx:elif="{{uInfo.isdriver.v_status != 2 && login}}" src="../../images/icon/unid.png" mode="aspectFit"></image>
       </view>
       
     </view>
@@ -46,6 +47,5 @@
     </view>
   </view>
   
-  <button class="edit-info-btn" type="primary">修改个人信息</button>
-
+  <zan-button type="primary" class="edit-info-btn">修改个人信息</zan-button>
 </view>

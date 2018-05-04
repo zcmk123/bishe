@@ -9,7 +9,54 @@ Page({
    */
   data: {
     itemData: null,
-    canCancel: false
+    canCancel: false,
+    canComment: false,
+    canComplet: false
+  },
+  bindComplete: function () {
+    var itemId = this.data.itemData._id;
+    wx.showModal({
+      title: '完成行程',
+      content: '确定完成行程吗？',
+      success: function (res) {
+        if (res.confirm) {
+          completOrder();
+        }
+      }
+    })
+
+    function completOrder() {
+      wx.showLoading({
+        title: '确认中',
+      })
+      wx.request({
+        url: config.requestUrl + 'order/completorder',
+        data: {
+          itemId: itemId
+        },
+        success: function (res) {
+          if (res.data == 'success') {
+            wx.hideLoading();
+            wx.showToast({
+              title: '确认成功！',
+              icon: "success",
+              success: function () {
+                setTimeout(wx.navigateBack, 1500);
+              }
+            })
+          }
+        }
+      })
+    }
+  },
+  /**
+   * 跳转到评价页面
+   */
+  bindComment: function () {
+    wx.setStorageSync('CACHE.itemData', this.data.itemData);
+    wx.navigateTo({
+      url: '/pages/comment/comment',
+    })
   },
   /**
    * 取消按钮
@@ -60,9 +107,11 @@ Page({
    */
   bindRTPMap: function () {
     var myId = app.globalData.uInfo._id;  //我的(乘客)id
-    var driverId = this.data.itemData.driver._id;   //司机id
+
+    wx.setStorageSync('CACHE.itemData', this.data.itemData);
+
     wx.navigateTo({
-      url: '/pages/rtp-map/rtp-map?myId=' + myId + '&driverId=' + driverId,
+      url: '/pages/rtp-map/rtp-map?myId=' + myId,
     })
   },
   /**
@@ -130,10 +179,46 @@ Page({
         // 检查能否取消订单
         _this.checkCancel();
 
+        // 检查能否评论
+        _this.checkCanComment();
+
+        if (fromPost) {
+          _this.setData({
+            canComplet: _this.checkCanComplet()
+          })
+        }
+
         wx.hideLoading();
         console.log(res);
       }
     })
+
+  },
+  checkCanComplet: function () {
+    var itemData = this.data.itemData;
+    return new Date() - new Date(itemData.date) > 0;
+  },
+  checkCanComment: function () {
+    var _this = this;
+    var itemData = _this.data.itemData;
+    // 检查能否评论
+    if (itemData.status == 1) {
+      wx.request({
+        url: config.requestUrl + 'order/getComment',
+        data: {
+          itemId: itemData._id
+        },
+        success: function (res) {
+          var uid_list = res.data.uid_list;
+          var userId = app.globalData.uInfo._id;
+          if (uid_list.indexOf(userId) == -1) {
+            _this.setData({
+              canComment: true
+            })
+          }
+        }
+      })
+    }
   },
   /**
    * 检查是否可以取消订单
@@ -181,7 +266,10 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorage({
+      key: 'CACHE.itemData',
+      success: function (res) { },
+    })
   },
 
   /**

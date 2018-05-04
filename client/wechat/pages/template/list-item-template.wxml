@@ -30,8 +30,8 @@
 
   <view class="item-box" wx:if="{{fromOrder.fromPost}}">
     <view class="item item-title">乘客</view>
-
-    <scroll-view scroll-y style="height: 280rpx;">
+    <view wx:if="{{passenger.length == 0}}">暂无乘客</view>
+    <scroll-view scroll-y style="height: 280rpx;" wx:if="{{passenger.length != 0}}">
       <view class="item-driver-info" wx:if="{{passenger.length != 0}}" wx:for="{{passenger}}">
         <image class="driver-avatar-img" src="{{item.avatarUrl}}" mode="aspectFit"></image>
         <view class="driver-info">

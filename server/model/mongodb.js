@@ -87,7 +87,7 @@ var dbUtil = {
      */
     findAndModify: function (collectionName, filter, obj, callback) {
         connect(function (err, db) {
-            db.collection(collectionName).findOneAndUpdate(filter, obj, function (error, result) {
+            db.collection(collectionName).findOneAndUpdate(filter, obj, {returnNewDocument: true},function (error, result) {
                 if(callback) {
                     callback(result);
                 }

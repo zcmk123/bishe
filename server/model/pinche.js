@@ -19,35 +19,28 @@ var pinche = {
         // 时间做处理，以Date格式存入
         // 时间以UTC存储取到客户端需要转换
         postInfoObj.date = new Date(postInfoObj.date);
+        postInfoObj.driver = ObjectId(postInfoObj.driver);
         // 添加拼车默认状态
         postInfoObj.status = 0;         // 0 未开始   1 已完成(司机手动确认完成)
+
         updateListItem()
             .then(function (itemId) {
-                return updateMyOrder(itemId)
+                return Promise.all([updateMyOrder(itemId), createComment(itemId)])
             })
             .then(function (res) {
-                if (res == 'success') {
+                if (res[0] == 'success' && res[1] == 'success') {
                     resp.jsonp('success');
                     resp.end();
                 }
             });
 
-
         function updateListItem() { // 更新订单列表
             return new Promise(function (resolve, reject) {
-                dbUtil.find('user', {
-                    projection: { 'nickname': 1, 'phone': 1, 'avatarUrl': 1, 'isdriver.rating': 1, 'isdriver.cplorders': 1 }
-                }, { _id: ObjectId(driverId) }, function (len, results) {
-                    var driver = results[0];
-                    postInfoObj.driver = driver;
-                    dbUtil.insert('list', postInfoObj, function (res) {
-                        // TODO查询司机信息加入
-                        var itemId = res.insertedId;
-                        console.log('list-item插入数据库成功');
-                        resolve(itemId);
-                    });
+                dbUtil.insert('list', postInfoObj, function (res) {
+                    var itemId = res.insertedId;
+                    console.log('list-item插入数据库成功');
+                    resolve(itemId);
                 });
-
             });
         }
 
@@ -63,6 +56,23 @@ var pinche = {
                         resolve('success');
                     })
             });
+        }
+
+        /**
+         * 创建评论条目
+         */
+        function createComment(itemId) {
+            var insertObj = {   // 要插入的对象
+                itemId: itemId,
+                uid_list: [],   // 用户id列表数组
+                comment_list: []    // 评论列表数组
+            }
+
+            return new Promise(function (resolve, reject) {
+                dbUtil.insert('comments', insertObj, function (res) {
+                    resolve('success');
+                })
+            })
         }
 
     },
@@ -92,16 +102,36 @@ var pinche = {
         }, function (len, results) {
             // 临时变量暂存结果
             var sendObj = results[0];
-            // var driverId = sendObj.driver;
+            var driverId = sendObj.driver;
             var passenger = sendObj.passenger;
 
-            dbUtil.find('user', { projection: { 'myorder': 0, 'postorder': 0, 'isdriver': 0 } }, { _id: { $in: passenger } }, function (length, res) {
-                sendObj.passenger = res;
-                resp.jsonp(sendObj);
-                resp.end();
-            })
+            Promise.all([findPassenger(), findDriver()])
+                .then(function (res) {
+                    if (res[0] == 'success' && res[1] == 'success') {
+                        resp.jsonp(sendObj);
+                        resp.end();
+                    }
+                });
 
+            function findPassenger() {
+                return new Promise(function (resolve, reject) {
+                    dbUtil.find('user', { projection: { 'myorder': 0, 'postorder': 0, 'isdriver': 0 } }, { _id: { $in: passenger } }, function (length, res) {
+                        sendObj.passenger = res;
+                        resolve('success');
+                    })
+                });
+            }
+
+            function findDriver() {
+                return new Promise(function (resolve, reject) {
+                    dbUtil.find('user', { projection: { 'nickname': 1, 'phone': 1, 'avatarUrl': 1, 'isdriver': 1 } }, { _id: driverId }, function (leng, resu) {
+                        sendObj.driver = resu[0];
+                        resolve('success');
+                    })
+                })
+            }
         })
+
     },
     /**
      * 将乘客添加到拼车中，修改拼车信息中的剩余座位数
@@ -174,7 +204,7 @@ var pinche = {
                 }
                 // TODO 有一个失败要回滚
             })
-            
+
         function removeListItem() {
             return new Promise(function (resolve, reject) {
                 dbUtil.findAndModify('list', {
@@ -207,6 +237,74 @@ var pinche = {
                     });
             });
         }
+    },
+    /**
+     * 处理评论、评分
+     */
+    comment: function (postData, resp) {
+        var userId = postData.userId;
+        var driverId = postData.driverId;
+        var itemId = postData.itemId;
+
+        Promise.all([updateRating(), insertComment()])
+            .then(function (res) {
+                if (res[0] == 'success' && res[1] == 'success') {   // 两个都更新成功
+                    resp.jsonp('success');
+                    resp.end();
+                }
+            });
+
+        // 更新总分、评论数量
+        function updateRating() {
+            return new Promise(function (resolve, reject) {
+                dbUtil.findAndModify('user', {
+                    _id: ObjectId(driverId)
+                }, {
+                        $inc: {
+                            'isdriver.rating': postData.postInfo.rating,
+                            'isdriver.cplorders': 1
+                        }
+                    }, function (results) {
+                        resolve('success');
+                    })
+            });
+        }
+
+        // 新增评论到评论集合中
+        function insertComment() {
+            return new Promise(function (resolve, reject) {
+                dbUtil.findAndModify('comments', {
+                    itemId: ObjectId(itemId)
+                }, {
+                        $push: {
+                            uid_list: ObjectId(userId),
+                            comment_list: {
+                                [userId]: postData.postInfo.comment
+                            }
+                        }
+                    }, function (results) {
+                        resolve('success');
+                    })
+            });
+        }
+    },
+    /**
+     * 获取评论列表
+     */
+    getComment: function (itemId, resp) {
+        dbUtil.find('comments', {}, { itemId: ObjectId(itemId) }, function (len, results) {
+            resp.jsonp(results[0]);
+            resp.end();
+        })
+    },
+    /**
+     * 完成订单
+     */
+    completOrder: function (itemId, resp) {
+        dbUtil.findAndModify('list', { _id: ObjectId(itemId) }, { $set: { status: 1 } }, function (result) {
+            resp.send('success');
+            resp.end();
+        })
     },
     /**
      * 上传车辆验证图片

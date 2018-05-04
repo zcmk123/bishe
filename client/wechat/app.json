@@ -9,6 +9,7 @@
     "pages/driver-info/driver-info",
     "pages/my-order/my-order",
     "pages/order-info/order-info",
+    "pages/comment/comment",
     "pages/rtp-map/rtp-map",
     "pages/test/test",
     "pages/template/list-item-template",
@@ -48,5 +49,5 @@
   },
   "networkTimeout": {
     "request": 20000
-  }
+  } 
 }
