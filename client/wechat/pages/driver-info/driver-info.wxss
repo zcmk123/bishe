@@ -40,10 +40,11 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 20rpx;
 }
-.pre-view-box {
+/* .pre-view-box {
   margin-top: 20rpx;
-}
+} */
 #pre-view-img {
   width: 200rpx;
   height: 200rpx;
@@ -57,4 +58,7 @@
 #sub-btn {
   margin-top: 20rpx;
   width: 90vw;
+}
+.red {
+  color: red;
 }

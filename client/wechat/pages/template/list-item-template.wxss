@@ -41,6 +41,13 @@
   top: 0;
   right: 0;
 }
+.button {
+  float: right;
+}
+.button-img {
+  width: 50rpx;
+  height: 50rpx;
+}
 .rating-star {
   display: inline-block;
   width: 55px;

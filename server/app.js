@@ -19,6 +19,7 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 app.use(express.static('static'));
+app.use('/uploadpic', express.static('uploadpic'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require('./router/router'));

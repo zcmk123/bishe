@@ -34,12 +34,20 @@ Page({
     wx.request({
       url: config.requestUrl + 'loadlist',
       data: {
-        page: 1
+        page: 1,
+        school: app.globalData.selectSchool
       },
       success: function (data) {
-        _this.setData({
-          loadedList: util.formatData(data.data)
-        })
+        if (data.data != 'end') {
+          _this.setData({
+            loadedList: util.formatData(data.data)
+          })
+        } else {
+          _this.setData({
+            loadedList: []
+          })
+        }
+
         wx.hideLoading();
       },
       fail: function () {
@@ -111,7 +119,8 @@ Page({
     wx.request({
       url: config.requestUrl + 'loadlist',
       data: {
-        page: _this.data.page + 1
+        page: _this.data.page + 1,
+        school: app.globalData.selectSchool
       },
       success: function (data) {
         // 拉取信息成功

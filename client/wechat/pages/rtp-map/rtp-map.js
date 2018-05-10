@@ -1,5 +1,6 @@
 // pages/rtp-map/rtp-map.js
 const app = getApp();
+const Toptips = require('../../libs/zanui/toptips/index');
 var config = require('../../config/config');
 Page({
 
@@ -8,53 +9,51 @@ Page({
    */
   data: {
     socketOpen: false,
-    markers: []
+    markers: [],
+    markersLength: 0
   },
   /**
    * 定时发送位置
    */
-  sendLocation: function () {
+  sendLocation: function (callback) {
     var _this = this;
-    var timeGap = 5000; // 时间间隔
     var itemData = _this.data.itemData;
     var targetArr = itemData.fromOrder.fromPost ? allPassenger(itemData.passenger) : [itemData.driver._id];
-    
-    var locationTimer = setInterval(function () {
 
-      wx.getLocation({
-        success: function (res) {
-          var latitude = res.latitude;
-          var longitude = res.longitude;
 
-          var sendJSON = {
-            source: _this.data.myId,
-            target: targetArr,  // 数组
-            location: {
-              nickName: app.globalData.uInfo.nickname,
-              latitude: latitude,
-              longitude: longitude
-            }
-          };
+    wx.getLocation({
+      success: function (res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
 
-          if (_this.data.socketOpen) {
-            wx.sendSocketMessage({
-              data: JSON.stringify(sendJSON)
-            })
+        var sendJSON = {
+          source: _this.data.myId,
+          target: targetArr,  // 数组
+          location: {
+            nickName: app.globalData.uInfo.nickname,
+            latitude: latitude,
+            longitude: longitude
           }
-        },
-      })
+        };
 
-    }, timeGap);
-
-    _this.setData({
-      locationTimer: locationTimer
+        if (_this.data.socketOpen) {
+          wx.sendSocketMessage({
+            data: JSON.stringify(sendJSON),
+            success: function () {
+              if (callback) {
+                callback();
+              }
+            }
+          })
+        }
+      },
     })
 
-    function allPassenger (passengers) {
+    function allPassenger(passengers) {
       var tempArr = [];
-        passengers.forEach(function (ele, index) {
-          tempArr.push(ele._id);
-        })
+      passengers.forEach(function (ele, index) {
+        tempArr.push(ele._id);
+      })
       return tempArr;
     }
   },
@@ -91,19 +90,34 @@ Page({
       })
       console.log('WebSocket连接已打开！');
       // 开始间隔发送位置信息
-      _this.sendLocation();
+      _this.sendLocation(function () {
+        var locationTimer = setInterval(_this.sendLocation, 5000);
+        _this.setData({
+          locationTimer: locationTimer
+        })
+      })
     })
 
     // 接收的内容
     wx.onSocketMessage(function (res) {
       // 接收到的信息
       var locationArr = JSON.parse(res.data).data;
-      
+
       // locationArr转换成markers数组
       var markers = _this.convertToMarkers(locationArr);
 
+      if (markers.length > _this.data.markersLength) {
+        Toptips({
+          content: '有人加入了位置共享',
+          backgroundColor: '#44bb00'
+        });
+      } else if (markers.length < _this.data.markersLength) {
+        Toptips('有人离开了位置共享');
+      }
+
       _this.setData({
-        markers: markers,
+        markersLength: markers.length,
+        markers: markers
       })
       // console.log('收到服务器内容：' + res.data);
     })

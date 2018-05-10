@@ -22,26 +22,26 @@ const formatNumber = n => {
 /**
  * 计算时间差--相隔多少分钟
  */
-function timeDiff (t1, t2) {
+function timeDiff(t1, t2) {
   return parseInt(t1 - t2) / 1000 / 60;
 }
 
 /**
  * 评分转换
  */
-function ratingConvert (rating, cplorders) {
+function ratingConvert(rating, cplorders) {
   var rateScore = rating / cplorders;
   if (Number.isNaN(rateScore)) {
     return 0;
   } else {
-    return rateScore;
+    return rateScore.toFixed(2);
   }
 }
 
 /**
  * 订单状态转换
  */
-function statusConvert (status) {
+function statusConvert(status) {
   return status == 0 ? '进行中' : '已完成';
 }
 
@@ -50,7 +50,7 @@ function statusConvert (status) {
  * 1、UTC时间转化为本地时间字符串
  * 2、司机评分转换
  */
-function formatData (data) {
+function formatData(data) {
   var dataType = Object.prototype.toString.call(data);
   // 判断data为对象还是数组
 
@@ -61,21 +61,30 @@ function formatData (data) {
         ele.date = formatTime(tempDate);
         ele.status = statusConvert(ele.status);
       })
-    break;
+      break;
     case '[object Object]': //为对象，直接转换
       var tempDate = new Date(data.date);
       var driverInfo = data.driver.isdriver;
       data.date = formatTime(tempDate); // 转换时间
       driverInfo.rating = ratingConvert(driverInfo.rating, driverInfo.cplorders);  // 转换评分
-    break;
+      break;
   }
   return data;
+}
+
+function checkPhoneNum(phone) {
+  var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+  if (!myreg.test(phone)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 /**
  * 判断是否通过司机认证
  */
-function isDriver (uInfo) {
+function isDriver(uInfo) {
   var v_status = config.v_statusArr[uInfo.isdriver.v_status];
   return v_status == 'verified' ? true : false;
 }
@@ -84,5 +93,6 @@ module.exports = {
   formatTime: formatTime,
   formatData: formatData,
   isDriver: isDriver,
-  timeDiff: timeDiff
+  timeDiff: timeDiff,
+  checkPhoneNum: checkPhoneNum
 }

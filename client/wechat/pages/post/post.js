@@ -58,7 +58,7 @@ Page({
   bindPostInfo: function () {
     var postInfo = this.data.postInfo;
 
-    if (postInfo.title && postInfo.desc && postInfo.startLoc && postInfo.destLoc && postInfo.seat) {
+    if (postInfo.title && postInfo.startLoc && postInfo.destLoc && postInfo.seat) {
       // TODO 标题 备注 为空格的情况处理
 
       // 判断勾选规则checkbox
@@ -69,6 +69,7 @@ Page({
         // 设置时间
         postInfo.driver = app.globalData.uInfo._id;
         postInfo.date = this.data.date + ' ' + this.data.time;
+        postInfo.school = app.globalData.selectSchool;
 
         console.log(postInfo);
 

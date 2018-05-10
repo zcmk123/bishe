@@ -87,7 +87,7 @@ var dbUtil = {
      */
     findAndModify: function (collectionName, filter, obj, callback) {
         connect(function (err, db) {
-            db.collection(collectionName).findOneAndUpdate(filter, obj, {returnNewDocument: true},function (error, result) {
+            db.collection(collectionName).findOneAndUpdate(filter, obj, {returnOriginal: false},function (error, result) {
                 if(callback) {
                     callback(result);
                 }
@@ -114,6 +114,7 @@ var dbUtil = {
     findByPage: function (page, filter, callback) {
         var pageSize = 5;
         var skip = (page - 1) * pageSize;
+        console.log(filter)
         connect(function (err, db) {
             db.collection('list').find(filter, {
                 limit: pageSize,    //分页，每页多少条

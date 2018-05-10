@@ -1,5 +1,5 @@
 const FONT_COLOR = '#fff';
-const BG_COLOR = '#e64340';
+var BG_COLOR = '#e64340';
 
 Component({
   properties: {

@@ -10,6 +10,19 @@ Page({
     itemData: null,
     subBtnStatus: false
   },
+  bindCallPhone: function () {
+    var _this = this;
+    var itemData = _this.data.itemData;
+    wx.makePhoneCall({
+      phoneNumber: itemData.driver.isdriver.phone,
+      fail: function () {
+        wx.showToast({
+          title: '拨打电话失败',
+          icon: 'none'
+        })
+      }
+    })
+  },
   /**
    * 确认拼车，按钮逻辑
    */

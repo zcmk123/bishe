@@ -3,10 +3,10 @@
  */
 
 //请求Url
-// var requestUrl = 'http://localhost/';
-// var socketUrl = 'ws://localhost:8000/';
-var requestUrl = 'https://pinche.istarmcgames.com/';
-var socketUrl = 'wss://pinche.istarmcgames.com/';
+var requestUrl = 'http://localhost/';
+var socketUrl = 'ws://localhost:8000/';
+// var requestUrl = 'https://pinche.istarmcgames.com/';
+// var socketUrl = 'wss://pinche.istarmcgames.com/';
 
 //学校信息配置
 var schoolList = [{

@@ -13,6 +13,19 @@ Page({
     canComment: false,
     canComplet: false
   },
+  bindCallPhone: function () {
+    var _this = this;
+    var itemData = _this.data.itemData;
+    wx.makePhoneCall({
+      phoneNumber: itemData.driver.isdriver.phone,
+      fail: function () {
+        wx.showToast({
+          title: '拨打电话失败',
+          icon: 'none'
+        })
+      }
+    })
+  },
   bindComplete: function () {
     var itemId = this.data.itemData._id;
     wx.showModal({
@@ -206,7 +219,7 @@ Page({
       wx.request({
         url: config.requestUrl + 'order/getComment',
         data: {
-          itemId: itemData._id
+          driverId: itemData.driver._id
         },
         success: function (res) {
           var uid_list = res.data.uid_list;
@@ -238,7 +251,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initPage(options);
+    this.setData({
+      options: options
+    })
   },
 
   /**
@@ -252,7 +267,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      canComment: false
+    })
+    this.initPage(this.data.options);
   },
 
   /**

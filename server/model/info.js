@@ -3,6 +3,7 @@ var https = require('https');
 var dbUtil = require('./mongodb');
 var ObjectId = require('mongodb').ObjectId;
 var request = require('request');
+var fs = require('fs');
 
 var info = {
     getTime: function () {
@@ -209,6 +210,45 @@ var info = {
                 resp.end();
             });
         });
+    },
+    /**
+     * 上传车辆验证图片
+     * @param {string} picName 图片名称
+     * @param {string} filePath 图片路径
+     * @param {res} resp response对象
+     */
+    uploadCarPic: function (picName, filePath, resp) {
+        //上传车的图片
+        fs.rename(filePath, 'uploadpic/car/' + picName + '.jpg', function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log('上传成功!');
+            resp.jsonp('success')
+            resp.end();
+        })
+    },
+    /**
+     * 设置司机信息
+     */
+    setDriverInfo: function (postInfo, resp) {
+        var driverId = postInfo.driverId;
+
+        dbUtil.findAndModify('user',
+            {
+                _id: ObjectId(driverId)
+            }, {
+                $set: {
+                    'isdriver.v_status': 1, // 设置为待审核状态
+                    'isdriver.phone': postInfo.postInfo.phone,
+                    'isdriver.car': postInfo.postInfo.car,
+                    'isdriver.carid': postInfo.postInfo.carid,
+                    'isdriver.carpic': 'https://localhost/uploadpic/car/' + driverId + '.jpg'
+                }
+            }, function (results) {
+                resp.jsonp('success');
+                resp.end();
+            })
     }
 }
 

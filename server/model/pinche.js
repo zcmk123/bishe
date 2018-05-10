@@ -6,7 +6,6 @@
 
 var dbUtil = require('./mongodb');
 var ObjectId = require('mongodb').ObjectId;
-var fs = require('fs');
 
 var pinche = {
     /**
@@ -20,15 +19,16 @@ var pinche = {
         // 时间以UTC存储取到客户端需要转换
         postInfoObj.date = new Date(postInfoObj.date);
         postInfoObj.driver = ObjectId(postInfoObj.driver);
+        postInfoObj.school = parseInt(postInfoObj.school);
         // 添加拼车默认状态
         postInfoObj.status = 0;         // 0 未开始   1 已完成(司机手动确认完成)
 
         updateListItem()
             .then(function (itemId) {
-                return Promise.all([updateMyOrder(itemId), createComment(itemId)])
+                return Promise.all([updateMyOrder(itemId), createComment(driverId)])
             })
             .then(function (res) {
-                if (res[0] == 'success' && res[1] == 'success') {
+                if (res[0] == 'success') {
                     resp.jsonp('success');
                     resp.end();
                 }
@@ -58,31 +58,38 @@ var pinche = {
             });
         }
 
+                
         /**
          * 创建评论条目
          */
-        function createComment(itemId) {
+        function createComment(driverId) {
             var insertObj = {   // 要插入的对象
-                itemId: itemId,
+                driverId: ObjectId(driverId),
                 uid_list: [],   // 用户id列表数组
                 comment_list: []    // 评论列表数组
             }
 
             return new Promise(function (resolve, reject) {
-                dbUtil.insert('comments', insertObj, function (res) {
-                    resolve('success');
+                dbUtil.find('comments', {}, { driverId: ObjectId(driverId) }, function (len, results) {
+                    if(len == 0) {
+                        dbUtil.insert('comments', insertObj, function (res) {
+                            resolve('success');
+                        })
+                    } else {
+                        resolve('success');
+                    }
                 })
-            })
+            });
         }
-
     },
     /**
      * 加载拼车信息列表
      * @param {number} page 信息列表页数
      * @param {res} resp response对象
      */
-    loadList: function (page, resp) {
-        dbUtil.findByPage(page, {}, function (results) {
+    loadList: function (page, school, resp) {
+        var filter = school == null ? {} : { school: parseInt(school) };
+        dbUtil.findByPage(page, filter, function (results) {
             if (results.length == 0) {
                 resp.jsonp('end');
             } else {
@@ -246,9 +253,9 @@ var pinche = {
         var driverId = postData.driverId;
         var itemId = postData.itemId;
 
-        Promise.all([updateRating(), insertComment()])
+        Promise.all([updateRating(), insertComment(), updateCredit()])
             .then(function (res) {
-                if (res[0] == 'success' && res[1] == 'success') {   // 两个都更新成功
+                if (res[0] == 'success' && res[1] == 'success' && res[2] == 'success') {   // 两个都更新成功
                     resp.jsonp('success');
                     resp.end();
                 }
@@ -270,16 +277,32 @@ var pinche = {
             });
         }
 
+        //更新积分
+        function updateCredit() {
+            return new Promise(function (resolve, reject) {
+                dbUtil.findAndModify('user', {
+                    _id: ObjectId(userId)
+                }, {
+                        $inc: {
+                            credit: 50
+                        }
+                    }, function (results) {
+                        resolve('success');
+                    })
+            });
+        }
+
         // 新增评论到评论集合中
         function insertComment() {
             return new Promise(function (resolve, reject) {
                 dbUtil.findAndModify('comments', {
-                    itemId: ObjectId(itemId)
+                    driverId: ObjectId(driverId)
                 }, {
                         $push: {
                             uid_list: ObjectId(userId),
                             comment_list: {
-                                [userId]: postData.postInfo.comment
+                                [userId]: postData.postInfo.comment,
+                                orderId: ObjectId(itemId)
                             }
                         }
                     }, function (results) {
@@ -291,8 +314,8 @@ var pinche = {
     /**
      * 获取评论列表
      */
-    getComment: function (itemId, resp) {
-        dbUtil.find('comments', {}, { itemId: ObjectId(itemId) }, function (len, results) {
+    getComment: function (driverId, resp) {
+        dbUtil.find('comments', {}, { driverId: ObjectId(driverId) }, function (len, results) {
             resp.jsonp(results[0]);
             resp.end();
         })
@@ -305,23 +328,6 @@ var pinche = {
             resp.send('success');
             resp.end();
         })
-    },
-    /**
-     * 上传车辆验证图片
-     * @param {string} picName 图片名称
-     * @param {string} filePath 图片路径
-     * @param {res} resp response对象
-     */
-    uploadCarPic: function (picName, filePath, resp) {
-        //上传车的图片
-        fs.rename(filePath, 'uploadpic/car/' + picName + '.jpg', function (err) {
-            if (err) {
-                throw err;
-            }
-            console.log('上传成功!');
-        })
-        resp.jsonp('success')
-        resp.end();
     }
 }
 

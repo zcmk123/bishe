@@ -49,6 +49,8 @@ App({
           data: true,
         })
       })
+    }else {
+      _this.getUInfo();
     }
     // if (upperData.errcode) {
     //   console.log('重复请求登陆');
@@ -154,7 +156,7 @@ App({
   /**
    * 获取服务器端用户信息
    */
-  getUInfo: function () {
+  getUInfo: function (callback) {
     var _this = this;
     console.log(_this.globalData);
 
@@ -168,9 +170,19 @@ App({
       success: function (data) {
         var uInfo = data.data;
         _this.globalData.uInfo = uInfo;
-        if (_this.uInfoCallback) {
-          _this.uInfoCallback(uInfo);
+        wx.setStorage({
+          key: 'CACHE.uInfo',
+          data: uInfo,
+        })
+        if (callback) {
+          callback(uInfo);
         }
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '连接服务器失败: ' + res.errMsg,
+          icon: 'none'
+        })
       }
     })
   },
@@ -198,7 +210,6 @@ App({
     userInfo: null,
     selectSchool: 0,
     schoolInfoList: [],
-    openId: null,
     uInfo: {}
   }
 })

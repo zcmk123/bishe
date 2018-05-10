@@ -1,1 +1,6 @@
-{}
+{
+  "usingComponents": {
+    "zan-toptips": "/libs/zanui/toptips/index",
+    "zan-noticebar": "/libs/zanui/noticebar/index"
+  }
+}

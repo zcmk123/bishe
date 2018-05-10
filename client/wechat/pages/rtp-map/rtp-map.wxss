@@ -1,4 +1,1 @@
 /* pages/rtp-map/rtp-map.wxss */
-.container {
-  padding: 0;
-}

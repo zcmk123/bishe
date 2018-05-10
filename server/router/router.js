@@ -33,7 +33,15 @@ router.post('/wechatlogin', function (req, res) {
 router.post('/uploadpic', upload.single('file'), function(req, res){
     var picName = req.body.id;
     var filePath = req.file.path;
-    pinche.uploadCarPic(picName, filePath, res);
+    info.uploadCarPic(picName, filePath, res);
+})
+
+/**
+ * 司机信息验证
+ */
+router.post('/setdriverinfo', function (req, res) {
+    var postInfo = req.body;
+    info.setDriverInfo(postInfo, res);
 })
 
 /**
@@ -85,7 +93,8 @@ router.post('/postinfo', function (req, res) {
  */
 router.get('/loadlist', function (req, res) {
     var page = url.parse(req.url, true).query.page;
-    pinche.loadList(page, res);
+    var school = url.parse(req.url, true).query.school || null;
+    pinche.loadList(page, school, res);
 })
 
 /**
@@ -143,8 +152,8 @@ router.get('/loadlist', function (req, res) {
   * 获取评论
   */
  router.get('/order/getcomment', function (req, res) {
-    var itemId = url.parse(req.url, true).query.itemId;
-    pinche.getComment(itemId, res);
+    var driverId = url.parse(req.url, true).query.driverId;
+    pinche.getComment(driverId, res);
  })
 
  /**

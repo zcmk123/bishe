@@ -8,6 +8,6 @@
   flex-wrap: wrap;
   width: 90vw;
 }
-.weui-btn-area button {
+.weui-btn-area zan-button {
   flex-grow: 1;
 }

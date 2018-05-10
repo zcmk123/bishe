@@ -1,28 +1,46 @@
 <!--pages/driver-info/driver-info.wxml-->
+<zan-toptips
+  id="zan-toptips"
+  contetn="{{ content }}"
+/>
 <view class="container">
   <view class="wrapper">
     <view class="item item-title">
       <text>司机信息</text>
     </view>
+    <!-- <view class="item">
+      <label for="real-name">真实姓名<text class="red">*</text></label><input id="real-name"></input>
+    </view> -->
     <view class="item">
-      <label for="real-name">真实姓名</label><input id="real-name"></input>
+      <label for="car">车型<text class="red">*</text></label><input id="car" bindinput="bindCarChange" value="{{showData.car}}"></input>
     </view>
     <view class="item">
-      <label for="car">车型</label><input id="car"></input>
+      <label for="car-id">车牌号码<text class="red">*</text></label><input id="car-id" bindinput="bindCarIdChange" value="{{showData.carid}}"></input>
     </view>
-    
+    <view class="item">
+      <label for="phone">手机号码<text class="red">*</text></label><input id="phone" bindinput="bindPhoneChange" value="{{showData.phone}}"></input>
+    </view>
     <view class="item">
       <view class="upload-item">
-        <label for="upload-img">上传图片</label><input id="upload-img" disabled="true" bindtap="uploadPic"></input>
+        <label for="upload-img">上传图片<text class="red">*</text></label>
+        <!-- <input id="upload-img" disabled="true" bindtap="uploadPic"></input> -->
       </view>
-       <view class="pre-view-box" style="display: {{carImgSrc == '' ? 'none' : 'block'}}">
-        <image id="pre-view-img" src="{{carImgSrc}}" mode="aspectFit"></image>
-      </view> 
+       <view class="weui-uploader__input-box" wx:if="{{postInfo.carImgSrc == '' && v_status == 0}}">
+        <view class="weui-uploader__input" bindtap="choosePic"></view>
+       </view>
+       <view class="weui-uploader__file" style="display: {{postInfo.carImgSrc == '' ? 'none' : 'block'}}">
+        <image class="weui-uploader__img" wx:if="{{v_status == 0}}" src="{{postInfo.carImgSrc}}" mode="aspectFit" bindtap="choosePic"></image>
+       </view>
+
+      <view class="weui-uploader__file">
+        <image class="weui-uploader__img" wx:if="{{v_status == 1}}" src="{{showData.carImgSrc}}" mode="aspectFit"></image>
+        <image class="weui-uploader__img" wx:if="{{v_status == 2}}" src="{{showData.carImgSrc}}" mode="aspectFit" bindtap="choosePic"></image>
+      </view>
     </view>
   </view>
 
   <view class="item sub-item">
-    <button id="sub-btn" type="primary" disabled="{{!subBtnProp.subBtnStatus}}" bindtap="bindSubDriverInfo">{{subBtnProp.subBtnText}}</button>
+    <zan-button id="sub-btn" type="primary" disabled="{{!subBtnProp.subBtnStatus}}" bindtap="bindSubDriverInfo">{{subBtnProp.subBtnText}}</zan-button>
   </view>
   
 </view>
