@@ -1,0 +1,13 @@
+<!--pages/recv-comment/recv-comment.wxml-->
+<view class="container-a">
+  <zan-card card-class="test-card" thumb="{{item.avatarUrl}}" title="{{item.nickname}}" desc="内容：{{item.comment}}" wx:for="{{listData}}">
+  </zan-card>
+
+  <view class="weui-loadmore weui-loadmore_line" style="display: {{listData.length == 0 ? 'none' : 'block'}}" wx:if="{{!isLoading}}" bindtap="onReachBottom">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line load-more">{{loadMoreText}}</view>
+  </view>
+  <view class="weui-loadmore" wx:if="{{isLoading}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</view>

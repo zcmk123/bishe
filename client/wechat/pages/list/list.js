@@ -10,7 +10,6 @@ Page({
     page: 1,// 默认页数
     isLoading: false,
     loadedList: [],
-    loadingAnimationData: {}
   },
   bindItemTap: function (e) {
     app.checkAuth(function () { // 检查用户信息
@@ -134,7 +133,8 @@ Page({
           var newLoadedList = _this.data.loadedList.concat(resData);
           _this.setData({
             loadedList: newLoadedList,
-            isLoading: false
+            isLoading: false,
+            loadMoreText: '下拉加载更多'
           })
           _this.data.page++;
         }

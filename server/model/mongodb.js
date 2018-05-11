@@ -114,7 +114,6 @@ var dbUtil = {
     findByPage: function (page, filter, callback) {
         var pageSize = 5;
         var skip = (page - 1) * pageSize;
-        console.log(filter)
         connect(function (err, db) {
             db.collection('list').find(filter, {
                 limit: pageSize,    //分页，每页多少条
@@ -128,6 +127,24 @@ var dbUtil = {
                     'startLoc.name': 1,
                     'destLoc.name': 1,
                     'status': 1
+                }
+            }).toArray(function (error, results) {
+                if (callback) {
+                    callback(results);
+                }
+            });
+        })
+    },
+    /**
+     * 通过页数查询评论
+     */
+    findCommentByPage: function (page, filter, callback) {
+        var pageSize = 5;
+        var skip = (page - 1) * pageSize;
+        connect(function (err, db) {
+            db.collection('comments').find(filter, {
+                projection: {//指定输出哪些字段
+                    'comment_list': { $slice: [skip, pageSize] }
                 }
             }).toArray(function (error, results) {
                 if (callback) {

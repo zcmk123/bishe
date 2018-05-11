@@ -39,6 +39,27 @@ function ratingConvert(rating, cplorders) {
 }
 
 /**
+ * 转换等级
+ */
+function convertRank (credit) {
+  var rank = null;
+  if (credit >= 0 && credit < 200) {
+    rank = 0;
+  } else if (credit >= 200 && credit < 500) {
+    rank = 1;
+  } else if (credit >= 500 && credit < 1000) {
+    rank = 2;
+  } else if (credit >= 100 && credit < 1500) {
+    rank = 3;
+  } else if (credit >= 1500 && credit < 2000) {
+    rank = 4;
+  } else if (credit >= 2000) {
+    rank = 5;
+  }
+  return rank;
+}
+
+/**
  * 订单状态转换
  */
 function statusConvert(status) {
@@ -92,6 +113,7 @@ function isDriver(uInfo) {
 module.exports = {
   formatTime: formatTime,
   formatData: formatData,
+  convertRank: convertRank,
   isDriver: isDriver,
   timeDiff: timeDiff,
   checkPhoneNum: checkPhoneNum

@@ -16,8 +16,12 @@ Page({
       school: "",
       phone: "",
       driver: false
-    }
+    },
+    vipNum: 0
   },
+  /**
+   * 手动登录逻辑
+   */
   userInfoHandler: function (e) { // 手动登录
     console.log(e.detail);
     var _this = this;
@@ -40,6 +44,8 @@ Page({
               nickName: res.data.nickname,
               avatarUrl: res.data.avatarUrl
             },
+            uInfo: res.data,
+            vipNum: util.convertRank(res.data.credit),
             hasUserInfo: true
           })
           app.globalData.uInfo = res.data; // 更新用户信息到全局变量
@@ -51,6 +57,14 @@ Page({
         }
       })
     }
+  },
+  /**
+   * 跳转评论页面
+   */
+  bindToComment: function () {
+    wx.navigateTo({
+      url: '/pages/recv-comment/recv-comment?userId=' + app.globalData.uInfo._id,
+    })
   },
   /**
    * 跳转设置权限页面
@@ -136,10 +150,12 @@ Page({
    * 设置服务器获取的用户信息
    */
   setUInfo: function () {
+    var _this = this;
     console.log(app.globalData)
-    if (app.globalData.uInfo.openid) {
-      this.setData({
-        uInfo: app.globalData.uInfo
+    if (app.globalData.uInfo.openid && app.globalData.login) {
+      _this.setData({
+        uInfo: app.globalData.uInfo,
+        vipNum: util.convertRank(app.globalData.uInfo.credit)
       })
     }
   },

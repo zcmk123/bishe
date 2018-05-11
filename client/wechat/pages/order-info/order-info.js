@@ -214,17 +214,17 @@ Page({
   checkCanComment: function () {
     var _this = this;
     var itemData = _this.data.itemData;
+    var userId = app.globalData.uInfo._id;
     // 检查能否评论
     if (itemData.status == 1) {
       wx.request({
-        url: config.requestUrl + 'order/getComment',
+        url: config.requestUrl + 'order/checkcomment',
         data: {
-          driverId: itemData.driver._id
+          userId: userId,
+          itemId: itemData._id
         },
         success: function (res) {
-          var uid_list = res.data.uid_list;
-          var userId = app.globalData.uInfo._id;
-          if (uid_list.indexOf(userId) == -1) {
+          if (res.data == 'true') {
             _this.setData({
               canComment: true
             })

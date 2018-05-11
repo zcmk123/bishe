@@ -148,12 +148,22 @@ router.get('/loadlist', function (req, res) {
     pinche.comment(postData, res);
  })
 
+  /**
+  * 评价拼车
+  */
+ router.get('/order/checkcomment', function (req, res) {
+    var userId = url.parse(req.url, true).query.userId;
+    var itemId = url.parse(req.url, true).query.itemId;
+    pinche.checkComment(userId, itemId, res);
+ })
+
  /**
   * 获取评论
   */
- router.get('/order/getcomment', function (req, res) {
-    var driverId = url.parse(req.url, true).query.driverId;
-    pinche.getComment(driverId, res);
+ router.get('/comment/getcomment', function (req, res) {
+    var userId = url.parse(req.url, true).query.userId;
+    var page = url.parse(req.url, true).query.page;
+    pinche.getComment(userId, page, res);
  })
 
  /**

@@ -20,12 +20,12 @@ Page({
     var itemData = _this.data.itemData;
     var targetArr = itemData.fromOrder.fromPost ? allPassenger(itemData.passenger) : [itemData.driver._id];
 
-
     wx.getLocation({
       success: function (res) {
         var latitude = res.latitude;
         var longitude = res.longitude;
-
+        // console.log('纬度: ' + latitude + '\n' + '经度: ' + longitude);
+        // console.log(res)
         var sendJSON = {
           source: _this.data.myId,
           target: targetArr,  // 数组
@@ -133,8 +133,8 @@ Page({
         iconPath: "/images/icon/marker.png",
         width: 16,
         height: 20,
-        latitude: ele.latitude,
-        longitude: ele.longitude,
+        latitude: ele.latitude - 0.0039,  // 修正误差
+        longitude: ele.longitude + 0.0032,  // 修正误差
         label: {
           content: ele.nickName,
           x: ele.nickName.length * -6

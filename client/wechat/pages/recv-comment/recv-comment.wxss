@@ -1,0 +1,9 @@
+/* pages/recv-comment/recv-comment.wxss */
+zan-card {
+  width: 100%;
+  margin-top: 10rpx;
+  background-color: #fff;  
+}
+.load-more {
+  background-color: #f0f0f0;
+}

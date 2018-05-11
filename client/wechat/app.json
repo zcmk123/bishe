@@ -11,7 +11,7 @@
     "pages/order-info/order-info",
     "pages/comment/comment",
     "pages/rtp-map/rtp-map",
-    "pages/test/test",
+    "pages/recv-comment/recv-comment",
     "pages/template/list-item-template",
     "pages/template/order-list-template"
   ],

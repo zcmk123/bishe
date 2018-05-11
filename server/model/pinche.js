@@ -88,7 +88,7 @@ var pinche = {
      * @param {res} resp response对象
      */
     loadList: function (page, school, resp) {
-        var filter = school == null ? {} : { school: parseInt(school) };
+        var filter = school == null ? { status: 0 } : { school: parseInt(school), status: 0 };
         dbUtil.findByPage(page, filter, function (results) {
             if (results.length == 0) {
                 resp.jsonp('end');
@@ -247,7 +247,7 @@ var pinche = {
     },
     /**
      * 处理评论、评分
-     */
+     */ 
     comment: function (postData, resp) {
         var userId = postData.userId;
         var driverId = postData.driverId;
@@ -298,10 +298,11 @@ var pinche = {
                 dbUtil.findAndModify('comments', {
                     driverId: ObjectId(driverId)
                 }, {
+                        $addToSet: { uid_list: ObjectId(userId) },
                         $push: {
-                            uid_list: ObjectId(userId),
                             comment_list: {
-                                [userId]: postData.postInfo.comment,
+                                userId: ObjectId(userId),
+                                comment: postData.postInfo.comment,
                                 orderId: ObjectId(itemId)
                             }
                         }
@@ -312,12 +313,46 @@ var pinche = {
         }
     },
     /**
+     * 检查能否评论
+     */
+    checkComment: function (userId, itemId, resp) {
+        dbUtil.find('comments', {}, {
+            comment_list: { $elemMatch: { userId: ObjectId(userId), orderId: ObjectId(itemId) }}
+        }, function (len, results) {
+            if (len == 0) {
+                resp.jsonp('true');
+            } else {
+                resp.jsonp('false');
+            }
+            resp.end();
+        })
+    },
+    /**
      * 获取评论列表
      */
-    getComment: function (driverId, resp) {
-        dbUtil.find('comments', {}, { driverId: ObjectId(driverId) }, function (len, results) {
-            resp.jsonp(results[0]);
-            resp.end();
+    getComment: function (userId, page, resp) {
+        dbUtil.findCommentByPage(page, {
+            driverId: ObjectId(userId)
+        }, function (results) {
+            var sendObj = results[0];
+            var uid_list = sendObj.uid_list;
+            dbUtil.find('user', {
+                projection: {//指定输出哪些字段
+                    'nickname': 1,
+                    'avatarUrl': 1
+                }
+            }, {
+                _id: { $in: uid_list}
+            }, function (len, res) {
+                if (len != 0) {
+                    sendObj.uid_list = res;
+                } else {
+                    sendObj = [];
+                }
+                resp.jsonp(sendObj);
+                resp.end();
+            })
+
         })
     },
     /**

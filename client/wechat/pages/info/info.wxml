@@ -9,6 +9,7 @@
         <button style="width: 250rpx;" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" wx:if="{{!login}}">微信登录</button>
         <image class="id-icon" wx:if="{{uInfo.isdriver.v_status == 2 && login}}" src="../../images/icon/id.png" mode="aspectFit"></image>
         <image class="id-icon" wx:elif="{{uInfo.isdriver.v_status != 2 && login}}" src="../../images/icon/unid.png" mode="aspectFit"></image>
+        <image wx:if="{{vipNum > 0}}" class="vip-icon" src="../../images/icon/vip{{vipNum}}.png" mode="aspectFit"></image>
       </view>
       
     </view>
@@ -16,6 +17,10 @@
       <view class="middle-item info-driver" hover-class="btn-hover" bindtap="bindToDriverInfo">
         <image class="middle-icon" src="../../images/icon/driver.png" mode="aspectFit"></image>
         <view class="middle-content">司机信息</view>
+      </view>
+      <view class="middle-item info-comment" hover-class="btn-hover" bindtap="bindToComment" wx:if="{{uInfo.isdriver.v_status == 2}}">
+        <image class="middle-icon" src="../../images/icon/comment.png" mode="aspectFit"></image>
+        <view class="middle-content">收到的评论</view>
       </view>
       <view class="middle-item info-order" hover-class="btn-hover" bindtap="bindToOrder">
         <image class="middle-icon" src="../../images/icon/myorder.png" mode="aspectFit"></image>

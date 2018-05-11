@@ -38,12 +38,12 @@ page {
   vertical-align: -26rpx;
 }
 .info-middle {
+  display: flex;
   border-bottom: 1px solid #ccc;
 }
 .info-middle .middle-item {
-  display: inline-block;
+  flex-grow: 1;
   padding: 10rpx 0;
-  width: 50vw;
   text-align: center;
   box-sizing: border-box;
 }
@@ -51,7 +51,7 @@ page {
   background-color: #ccc;
 }
 .info-middle .info-driver {
-  border-right: 1px solid #ccc;
+  /* border-right: 1px solid #ccc; */
 }
 .middle-item .middle-icon {
   width: 80rpx;
@@ -82,6 +82,12 @@ page {
   width: 50rpx;
   height: 50rpx;
   vertical-align: top;
+}
+.vip-icon {
+  margin-left: 10rpx;
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align:-12rpx;
 }
 .edit-info-btn {
   margin-top: 40rpx;

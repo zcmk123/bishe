@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "收到的评论",
+  "usingComponents": {
+    "zan-card": "/libs/zanui/card/index"
+  },
+  "onReachBottomDistance": -80
+}
