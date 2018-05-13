@@ -40,7 +40,7 @@ var info = {
                             var userDefaultObj = {
                                 // nickname: userInfo.nickName,    //微信昵称
                                 openid: oid,                             //用户openid
-                                // gender: userInfo.gender,            //微信性别
+                                gender: 1,            //默认性别
                                 credit: 0,                                 //用户积分
                                 school: '',                                //用户学校
                                 phone: '',                                 //电话号码
@@ -78,15 +78,14 @@ var info = {
      * 微信登录
      */
     wechatLogin: function (postData, resp) {
-        console.log(postData)
+        // console.log(postData)
         dbUtil.findAndModify('user',
             {
                 openid: postData.openId
             }, {
                 $set: {
                     avatarUrl: postData.avatarUrl,
-                    nickname: postData.nickname,
-                    gender: postData.gender
+                    nickname: postData.nickname
                 }
             }, function (results) {
                 // console.log(results);
@@ -178,7 +177,7 @@ var info = {
     setUInfo: function (_id, newInfo, resp) {
         dbUtil.update('user', { _id: ObjectId(_id) }, {
             $set: newInfo
-        }, function () {
+        }, function (result) {
             resp.jsonp('success');
             resp.end();
         })

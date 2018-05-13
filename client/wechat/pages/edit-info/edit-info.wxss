@@ -1,0 +1,26 @@
+/* pages/edit-info/edit-info.wxss */
+@import '../info/info.wxss';
+page {
+  background-color: #f0f0f0;
+}
+.warpper {
+  margin-top: 10rpx;
+  width: 90vw;
+  background-color: #fff;
+  border-radius: 6rpx;
+  box-shadow: 0 0 20rpx #bbb;
+}
+.content-right {
+  width:50vw;
+  text-align:right;
+}
+.content-right input {
+  text-overflow: ellipsis;
+}
+.info-item:last-child {
+  border: 0;
+}
+.btn-area {
+  width: 90vw;
+  margin: 20rpx auto;
+}

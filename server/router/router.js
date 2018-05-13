@@ -149,7 +149,7 @@ router.get('/loadlist', function (req, res) {
  })
 
   /**
-  * 评价拼车
+  * 检查评论
   */
  router.get('/order/checkcomment', function (req, res) {
     var userId = url.parse(req.url, true).query.userId;

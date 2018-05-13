@@ -34,23 +34,19 @@
       </view>
       <view class="info-item">
         <view><image class="info-icon" src="../../images/icon/gender.png" mode="aspectFit"></image><text>性别</text></view>
-        <picker bindchange="bindGenderChange" value="{{uInfo.gender}}" range="{{genderArr}}">
-          <view class="info-content">
-            {{genderArr[uInfo.gender]}}
-          </view>
-        </picker>
+        <view>{{genderArr[uInfo.gender]}}</view>
       </view>
       <view class="info-item">
         <view><image class="info-icon" src="../../images/icon/school.png" mode="aspectFit"></image><text>学校</text></view>
-        <input maxlength="20" value="{{uInfo.school}}" bindinput="bindSchoolChange" />
+        <view>{{uInfo.school}}</view>
       </view>
       <view class="info-item">
         <view><image class="info-icon" src="../../images/icon/phone.png" mode="aspectFit"></image><text>手机</text></view>
-        <input type="number" maxlength="20" value="{{uInfo.phone}}" bindinput="bindPhoneChange" />
+       <view>{{uInfo.phone}}</view>
       </view>
       
     </view>
   </view>
   
-  <zan-button type="primary" class="edit-info-btn">修改个人信息</zan-button>
+  <zan-button type="primary" class="edit-info-btn" bindtap="bindToEditInfo">修改个人信息</zan-button>
 </view>

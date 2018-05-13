@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "修改个人信息",
+  "usingComponents": {
+    "zan-toptips": "/libs/zanui/toptips/index",
+    "zan-button": "/libs/zanui/btn/index"
+  }
+}

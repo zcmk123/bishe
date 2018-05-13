@@ -1,0 +1,46 @@
+<!--pages/edit-info/edit-info.wxml-->
+<zan-toptips
+  id="zan-toptips"
+  contetn="{{ content }}"
+/>
+<view class="container-a">
+  <view class="warpper">
+    <view class="info-item">
+      <view>
+        <image class="info-icon" src="../../images/icon/gender.png" mode="aspectFit"></image>
+        <text>性别</text>
+      </view>
+
+      <view class="content-right">
+        <picker bindchange="bindGenderChange" value="{{Info.gender}}" range="{{genderArr}}">
+          <view class="picker">
+            {{genderArr[Info.gender]}}
+          </view>
+        </picker>
+      </view>
+
+    </view>
+    <view class="info-item">
+      <view>
+        <image class="info-icon" src="../../images/icon/school.png" mode="aspectFit"></image>
+        <text>学校</text>
+      </view>
+      <view class="content-right">
+         <input maxlength="20" value="{{Info.school}}" bindinput="bindSchoolChange" /> 
+      </view>
+    </view>
+    <view class="info-item">
+      <view>
+        <image class="info-icon" src="../../images/icon/phone.png" mode="aspectFit"></image>
+        <text>手机</text>
+      </view>
+      <view class="content-right">
+        <input maxlength="20" value="{{Info.phone}}" bindinput="bindPhoneChange" /> 
+      </view>
+    </view>
+  </view>
+
+  <view class="btn-area">
+    <zan-button class="comfirm-btn" type="primary" bindtap="bindSubmitInfo">确认修改</zan-button>
+  </view>
+</view>

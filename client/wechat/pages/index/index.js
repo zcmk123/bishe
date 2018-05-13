@@ -10,7 +10,12 @@ Page({
     userInfo: {},
     schoolList: [],
     selectSchool: 0,
-    schoolLogoArr: []
+    schoolLogoArr: [],
+    sliderImg: [
+      '../../images/img/guet1.jpg',
+      '../../images/img/guet2.jpg',
+      '../../images/img/guet3.jpg'
+    ]
   },
   /**
    * 改变学校逻辑处理

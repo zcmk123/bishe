@@ -34,15 +34,15 @@ Page({
         data: {
           openId: openId,
           avatarUrl: userInfo.avatarUrl,
-          nickname: userInfo.nickName,
-          gender: userInfo.gender
+          nickname: userInfo.nickName
         },
         success: function (res) {
           _this.setData({
             login: true,
             userInfo: {
               nickName: res.data.nickname,
-              avatarUrl: res.data.avatarUrl
+              avatarUrl: res.data.avatarUrl,
+              gender: res.data.gender
             },
             uInfo: res.data,
             vipNum: util.convertRank(res.data.credit),
@@ -50,6 +50,14 @@ Page({
           })
           app.globalData.uInfo = res.data; // 更新用户信息到全局变量
           app.globalData.login = true;
+          wx.setStorage({
+            key: 'CACHE.uInfo',
+            data: res.data,
+          })
+          wx.setStorage({
+            key: 'CACHE.login',
+            data: true,
+          })
           wx.showToast({
             title: '登录成功！',
             icon: 'none'
@@ -107,22 +115,14 @@ Page({
       })
     })
   },
-  bindGenderChange: function (e) {
-    var gender = parseInt(e.detail.value);
-    this.setData({
-      ['uInfo.gender']: gender
-    })
-  },
-  bindSchoolChange: function (e) {
-    var school = e.detail.value;
-    this.setData({
-      ['uInfo.school']: school
-    })
-  },
-  bindPhoneChange: function (e) {
-    var phone = e.detail.value;
-    this.setData({
-      ['uInfo.phone']: phone
+  /**
+   * 跳转到修改信息页面
+   */
+  bindToEditInfo: function () {
+    app.checkAuth(function () {
+      wx.navigateTo({
+        url: '/pages/edit-info/edit-info',
+      })
     })
   },
   /**

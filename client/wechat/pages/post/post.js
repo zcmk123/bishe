@@ -104,11 +104,6 @@ Page({
         Toptips('请阅读并同意相关条款，否则不能发布信息');
       }
     } else {// 未将信息填写完整
-      // wx.showModal({
-      //   title: '提示',
-      //   content: '请将信息填写完整',
-      //   showCancel: false
-      // })
       Toptips('请将信息填写完整');
     }
   },

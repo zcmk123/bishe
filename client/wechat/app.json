@@ -6,6 +6,7 @@
     "pages/list-item/list-item",
     "pages/map/map",
     "pages/info/info",
+    "pages/edit-info/edit-info",
     "pages/driver-info/driver-info",
     "pages/my-order/my-order",
     "pages/order-info/order-info",

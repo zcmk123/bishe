@@ -16,6 +16,7 @@ App({
     this.globalData.login = wx.getStorageSync('CACHE.login') || false;
 
     if (!this.globalData.login) {
+      // 没登录
       // 登陆 Promise 写法
       new Promise(function (resolve, reject) {
         wx.login({// 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -38,18 +39,19 @@ App({
         if (_this.uInfoCallback) {
           _this.uInfoCallback(upperData);
         }
-        _this.globalData.openId = upperData.data.openid;  // 存储openid到全局
-        _this.globalData.uInfo = upperData.data;
-        wx.setStorage({
-          key: 'CACHE.uInfo',
-          data: upperData.data,
-        })
-        wx.setStorage({
-          key: 'CACHE.login',
-          data: true,
-        })
+        _this.globalData.openId = upperData.data;  // 存储openid到全局
+        // _this.globalData.uInfo = upperData.data;
+        // wx.setStorage({
+        //   key: 'CACHE.uInfo',
+        //   data: upperData.data,
+        // })
+        // wx.setStorage({
+        //   key: 'CACHE.login',
+        //   data: true,
+        // })
       })
     }else {
+      // 有登录信息了
       _this.getUInfo();
     }
     // if (upperData.errcode) {
