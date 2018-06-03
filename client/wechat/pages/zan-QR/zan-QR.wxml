@@ -1,0 +1,16 @@
+<!--pages/zan-QR/zan-QR.wxml-->
+<zan-toptips id="zan-toptips" />
+<view class="container-a">
+  <text style="margin-top: 20rpx;">上传赞赏码之后就可以收到现金打赏了</text>
+  <view class="zan-box" bindtap="bindToUploadQR" wx:if="{{zanImgSrc == ''}}">
+    <view class="cross-box">
+    <view class="line1"></view>
+    <view class="line2"></view>
+    </view>
+    <view class="desc-text">点击上传赞赏码</view>
+  </view>
+  <view class="zan-qr" bindtap="bindToUploadQR" wx:if="{{zanImgSrc != ''}}">
+    <image id="zanQR" src="{{zanImgSrc}}" mode="aspectFit"></image>
+    <view style="text-align: center; margin-top: 10rpx; color: #aaa;">点击以更换赞赏码</view>
+  </view>
+</view>

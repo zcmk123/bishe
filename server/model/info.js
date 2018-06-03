@@ -228,6 +228,29 @@ var info = {
         })
     },
     /**
+     * 上传赞赏码
+     * @param {string} picName 图片名称
+     * @param {string} filePath 图片路径
+     * @param {res} resp response对象
+     */
+    uploadZanQR: function (picName, filePath, resp) {
+        //上传车的图片
+        fs.rename(filePath, 'uploadpic/zanQR/' + picName + '.jpg', function (err) {
+            if (err) {
+                throw err;
+            }
+            var imgUrl = 'https://pinche.istarmcgames.com/uploadpic/zanQR/' + picName + '.jpg';
+            dbUtil.update('user', {_id: ObjectId(picName)}, { $set: {'isdriver.zanqr': imgUrl } }, function () {
+                console.log('zanQR上传成功!');
+                resp.jsonp({
+                    msg: 'success',
+                    imgUrl: imgUrl
+                })
+                resp.end();
+            })
+        })
+    },
+    /**
      * 设置司机信息
      */
     setDriverInfo: function (postInfo, resp) {
@@ -242,7 +265,7 @@ var info = {
                     'isdriver.phone': postInfo.postInfo.phone,
                     'isdriver.car': postInfo.postInfo.car,
                     'isdriver.carid': postInfo.postInfo.carid,
-                    'isdriver.carpic': 'https://localhost/uploadpic/car/' + driverId + '.jpg'
+                    'isdriver.carpic': 'https://pinche.istarmcgames.com/uploadpic/car/' + driverId + '.jpg'
                 }
             }, function (results) {
                 resp.jsonp('success');

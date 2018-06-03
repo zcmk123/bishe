@@ -1,0 +1,6 @@
+<!--pages/show-zanqr/show-zanqr.wxml-->
+<view class="container-a">
+  <view class="qr" wx:if="{{zanImgSrc != ''}}">点击查看赞赏码，长按识别后打赏司机</view>
+  <image id="zanQR" bindtap="bindToPreview" wx:if="{{zanImgSrc != ''}}" src="{{zanImgSrc}}" mode="aspectFit"></image>
+  <view class="noqr" wx:if="{{zanImgSrc == ''}}">该司机暂时未上传赞赏码</view>
+</view>

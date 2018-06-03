@@ -37,6 +37,15 @@ router.post('/uploadpic', upload.single('file'), function(req, res){
 })
 
 /**
+ * 上传赞赏码
+ */
+router.post('/uploadpic/zanqr', upload.single('file'), function(req, res){
+    var picName = req.body.id;
+    var filePath = req.file.path;
+    info.uploadZanQR(picName, filePath, res);
+})
+
+/**
  * 司机信息验证
  */
 router.post('/setdriverinfo', function (req, res) {

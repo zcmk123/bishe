@@ -13,6 +13,17 @@ Page({
     canComment: false,
     canComplet: false
   },
+  //打赏司机页面
+  bindThumbUp: function () {
+    var _this = this;
+    wx.navigateTo({
+      url: '/pages/show-zanqr/show-zanqr',
+    })
+    wx.setStorage({
+      key: "CACHE.ZanQR",
+      data: _this.data.itemData.driver.isdriver.zanqr
+    })
+  },
   bindCallPhone: function () {
     var _this = this;
     var itemData = _this.data.itemData;

@@ -7,6 +7,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    actionsheet: {
+      show: false,
+      cancelWithMask: true,
+      actions: [{
+        name: '司机认证信息',
+        loading: false
+      }, {
+        name: '上传赞赏码',
+        loading: false
+      }],
+      cancelText: '取消'
+    },
     login: false,
     genderArr: ['女', '男'],
     // 后端传来的用户信息
@@ -18,6 +30,34 @@ Page({
       driver: false
     },
     vipNum: 0
+  },
+  //弹出actionSheet
+  openActionSheet() {
+    this.setData({
+      'actionsheet.show': true
+    });
+  },
+  //关闭actionSheet
+  closeActionSheet() {
+    this.setData({
+      'actionsheet.show': false
+    });
+  },
+  handleActionClick({ detail }) {
+    // 获取被点击的按钮 index
+    const { index } = detail;
+    switch(index) {
+      case 0://去司机认证信息页面
+        wx.navigateTo({
+          url: '/pages/driver-info/driver-info'
+        })
+      break;
+      case 1://去上传赞赏码页面
+        wx.navigateTo({
+          url: '/pages/zan-QR/zan-QR'
+        })
+      break;
+    }
   },
   /**
    * 手动登录逻辑
@@ -62,6 +102,12 @@ Page({
             title: '登录成功！',
             icon: 'none'
           })
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: '登录失败！' + res.data,
+            icon: 'none'
+          })
         }
       })
     }
@@ -84,12 +130,11 @@ Page({
    * 跳转到司机验证/信息页面
    */
   bindToDriverInfo: function () {
+    var _this = this;
     app.checkAuth(function () {
       var driverInfo = app.globalData.uInfo;
       if (util.isDriver(driverInfo)) {
-        wx.navigateTo({
-          url: '/pages/driver-info/driver-info'
-        })
+        _this.openActionSheet();
       } else {
         wx.showModal({
           title: '提示',
@@ -205,7 +250,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.closeActionSheet();
   },
 
   /**

@@ -1,0 +1,50 @@
+/* pages/zan-QR/zan-QR.wxss */
+.container-a {
+  font-size: 18px;
+}
+.zan-box {
+  position: relative;
+  margin-top: 20rpx;
+  width: 90vw;
+  height: 500rpx;
+  box-sizing: border-box;
+  border:2px #fff  solid;
+  border-radius: 6px;
+  background-color: #fff;
+}
+.cross-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150rpx;
+  height: 150rpx;
+  /* border: 1px black solid; */
+}
+.line1, .line2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120rpx;
+  height: 4rpx;
+  background-color: #ccc;
+}
+.line1 {
+  transform: translate(-50%, -50%);
+}
+.line2 {
+  transform-origin: left center;
+  transform: rotate(90deg) translate(-50%, -50%);
+}
+.desc-text {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #aaa;
+}
+#zanQR {
+  width: 640px;
+  height: 320px; 
+}

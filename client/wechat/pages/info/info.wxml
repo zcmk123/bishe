@@ -50,3 +50,15 @@
   
   <zan-button type="primary" class="edit-info-btn" bindtap="bindToEditInfo">修改个人信息</zan-button>
 </view>
+<view class="actionsheet-container">
+  <!-- 监听自定义事件 cancel 和 actionclick，绑定回调函数 -->
+  <zan-actionsheet
+    show="{{ actionsheet.show }}"
+    actions="{{ actionsheet.actions }}"
+    cancel-text="{{ actionsheet.cancelText }}"
+    cancel-with-mask="{{ actionsheet.cancelWithMask }}"
+    bind:cancel="closeActionSheet"
+    bind:actionclick="handleActionClick"
+  >
+  </zan-actionsheet>
+</view>

@@ -39,8 +39,8 @@ App({
         if (_this.uInfoCallback) {
           _this.uInfoCallback(upperData);
         }
-        _this.globalData.openId = upperData.data;  // 存储openid到全局
-        // _this.globalData.uInfo = upperData.data;
+        _this.globalData.openId = upperData.data.openid;  // 存储openid到全局
+        _this.globalData.uInfo = upperData.data;
         // wx.setStorage({
         //   key: 'CACHE.uInfo',
         //   data: upperData.data,

@@ -33,6 +33,7 @@ Page({
     })
   },
   bindSubDriverInfo: function () {
+    var _this = this;
     wx.showModal({
       title: '确认提交信息',
       content: '确定提交认证信息吗？',
@@ -44,7 +45,7 @@ Page({
     })
 
     function sendInfo() {
-      var postInfo = this.data.postInfo;
+      var postInfo = _this.data.postInfo;
       var _id = app.globalData.uInfo._id;
       if (postInfo.car && postInfo.carid && postInfo.carImgSrc && postInfo.phone) {
         if (util.checkPhoneNum(postInfo.phone)) {

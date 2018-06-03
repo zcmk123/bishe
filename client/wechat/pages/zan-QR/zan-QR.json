@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "zan-toptips": "/libs/zanui/toptips/index"
+  }
+}
