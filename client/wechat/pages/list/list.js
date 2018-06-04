@@ -8,8 +8,61 @@ Page({
    */
   data: {
     page: 1,// 默认页数
+    optionArr: ['全部', '出发地', '目的地'],
+    optionSelect: 0,
     isLoading: false,
     loadedList: [],
+    inputShowed: false,
+    inputVal: ""//目的地关键字
+  },
+  /**
+   * 按目的地搜索
+   */
+  tapConfirm: function () {
+    var searchText = util.trim(this.data.inputVal);
+    this.loadList(searchText);
+  },
+  showInput: function () {
+    if (this.data.searchDisabled) {
+      console.log('input已经禁用')
+    }else {
+      this.setData({
+        inputShowed: true
+      });
+    }
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
+  },
+  bindPickerChange: function (e) {
+    var _this = this;
+    if (e.detail.value == 0) {
+      this.setData({
+        searchDisabled: true
+      })
+      this.loadList();
+    } else {
+      this.setData({
+        searchDisabled: false
+      })
+    }
+    this.setData({
+      optionSelect: e.detail.value,
+      inputVal: ''
+    })
   },
   bindItemTap: function (e) {
     app.checkAuth(function () { // 检查用户信息
@@ -23,7 +76,8 @@ Page({
   /**
    * 加载拼车信息列表
    */
-  loadList: function () {
+  loadList: function (search) {
+    var sText = search || '';
     var _this = this;
     // show加载
     wx.showLoading({
@@ -34,12 +88,15 @@ Page({
       url: config.requestUrl + 'loadlist',
       data: {
         page: 1,
-        school: app.globalData.selectSchool
+        school: app.globalData.selectSchool,
+        search: sText,
+        option: this.data.optionSelect
       },
       success: function (data) {
         if (data.data != 'end') {
           _this.setData({
-            loadedList: util.formatData(data.data)
+            loadedList: util.formatData(data.data),
+            loadMoreText: '下拉加载更多'
           })
         } else {
           _this.setData({
@@ -75,6 +132,10 @@ Page({
    */
   onShow: function () {
     this.setData({
+      optionSelect: 0,
+      inputVal: '',
+      searchDisabled: true,
+      inputShowed: false,
       page: 1       // 重置page
     })
     this.loadList();
@@ -119,7 +180,9 @@ Page({
       url: config.requestUrl + 'loadlist',
       data: {
         page: _this.data.page + 1,
-        school: app.globalData.selectSchool
+        school: app.globalData.selectSchool,
+        search: this.data.inputVal,
+        option: this.data.optionSelect
       },
       success: function (data) {
         // 拉取信息成功

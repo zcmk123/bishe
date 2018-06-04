@@ -19,6 +19,9 @@ Page({
    */
   initPage: function () {
     var _this = this;
+    wx.showLoading({
+      title: '加载中...'
+    })
     wx.getStorage({
       key: 'CACHE.ZanQR',
       success: function (res) {
@@ -26,10 +29,12 @@ Page({
           _this.setData({
             zanImgSrc: res.data
           })
+          wx.hideLoading();
         }else {
           _this.setData({
             zanImgSrc: ''
           })
+          wx.hideLoading();
         }
       },
     })

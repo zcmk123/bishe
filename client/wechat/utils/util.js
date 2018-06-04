@@ -110,11 +110,19 @@ function isDriver(uInfo) {
   return v_status == 'verified' ? true : false;
 }
 
+/**
+ * 去除两边空格
+ */
+function trim (str) {
+  return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
 module.exports = {
   formatTime: formatTime,
   formatData: formatData,
   convertRank: convertRank,
   isDriver: isDriver,
   timeDiff: timeDiff,
-  checkPhoneNum: checkPhoneNum
+  checkPhoneNum: checkPhoneNum,
+  trim: trim
 }

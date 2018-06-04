@@ -28,13 +28,12 @@
        <view class="weui-uploader__input-box" wx:if="{{postInfo.carImgSrc == '' && v_status == 0}}">
         <view class="weui-uploader__input" bindtap="choosePic"></view>
        </view>
-       <view class="weui-uploader__file" style="display: {{postInfo.carImgSrc == '' ? 'none' : 'block'}}">
+       <view class="weui-uploader__file" wx:if="{{v_status == 0}}">
         <image class="weui-uploader__img" wx:if="{{v_status == 0}}" src="{{postInfo.carImgSrc}}" mode="aspectFit" bindtap="choosePic"></image>
        </view>
 
       <view class="weui-uploader__file">
-        <image class="weui-uploader__img" wx:if="{{v_status == 1}}" src="{{showData.carImgSrc}}" mode="aspectFit"></image>
-        <image class="weui-uploader__img" wx:if="{{v_status == 2}}" src="{{showData.carImgSrc}}" mode="aspectFit" bindtap="choosePic"></image>
+        <image class="weui-uploader__img" wx:if="{{v_status != 0}}" src="{{postInfo.carImgSrc}}" mode="aspectFit" bindtap="choosePic"></image>
       </view>
     </view>
   </view>

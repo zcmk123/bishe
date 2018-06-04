@@ -115,7 +115,7 @@ Page({
         // 拉取信息成功
         if (data.data.comment_list.length == 0) {  // 没有更多数据了
           _this.setData({
-            loadMoreText: '没有更多拼车信息了',
+            loadMoreText: '没有更多评论了',
             isLoading: false
           })
         } else {

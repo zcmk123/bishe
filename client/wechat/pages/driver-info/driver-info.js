@@ -34,83 +34,85 @@ Page({
   },
   bindSubDriverInfo: function () {
     var _this = this;
-    wx.showModal({
-      title: '确认提交信息',
-      content: '确定提交认证信息吗？',
-      success: function (res) {
-        if (res.confirm) {
-          sendInfo();
-        }
+    var postInfo = _this.data.postInfo;
+    if (postInfo.car && postInfo.carid && postInfo.carImgSrc && postInfo.phone) {
+      if (util.checkPhoneNum(postInfo.phone)) {
+        wx.showModal({
+          title: '确认提交信息',
+          content: '确定提交认证信息吗？(已认证的司机修改认证信息将会重新审核)',
+          success: function (res) {
+            if (res.confirm) {
+              sendInfo();
+            }
+          }
+        })
+      } else {
+        Toptips('手机号码格式错误！');
       }
-    })
+    } else {
+      Toptips('请您将信息输入完整！');
+    }
 
     function sendInfo() {
-      var postInfo = _this.data.postInfo;
+
       var _id = app.globalData.uInfo._id;
-      if (postInfo.car && postInfo.carid && postInfo.carImgSrc && postInfo.phone) {
-        if (util.checkPhoneNum(postInfo.phone)) {
-          // 提交服务器
-          wx.showLoading({
-            title: '提交中',
-          })
-          Promise.all([uploadInfo(), uploadPic()])
-            .then(function (res) {
-              if (res[0] == 'success' && res[1] == '"success"') {
-                wx.hideLoading();
-                wx.showToast({
-                  title: '提交成功！',
-                  icon: "success",
-                  success: function () {
-                    setTimeout(wx.navigateBack, 1500);
-                  }
-                })
+
+      // 提交服务器
+      wx.showLoading({
+        title: '提交中',
+      })
+      Promise.all([uploadInfo(), uploadPic()])
+        .then(function (res) {
+          if (res[0] == 'success' && res[1] == '"success"') {
+            wx.hideLoading();
+            wx.showToast({
+              title: '提交成功！',
+              icon: "success",
+              success: function () {
+                setTimeout(wx.navigateBack, 1500);
               }
             })
-
-          function uploadInfo() {
-            return new Promise(function (resolve, reject) {
-              wx.request({
-                method: 'POST',
-                url: config.requestUrl + 'setdriverinfo',
-                data: {
-                  driverId: _id,
-                  postInfo: postInfo
-                },
-                success: function (res) {
-                  resolve(res.data);
-                },
-                fail: function (res) {
-                  reject(res.data);
-                }
-              })
-            })
           }
+        })
 
-          function uploadPic() {
-            return new Promise(function (resolve, reject) {
-              wx.uploadFile({
-                url: config.requestUrl + 'uploadpic', //上传文件接口
-                filePath: postInfo.carImgSrc,
-                name: 'file',
-                formData: {
-                  'id': _id
-                },
-                success: function (res) {
-                  console.log(res)
-                  // console.log(res.data);
-                  resolve(res.data);
-                },
-                fail: function (res) {
-                  reject(res.data);
-                }
-              })
-            })
-          }
-        } else {
-          Toptips('手机号码格式错误！');
-        }
-      } else {
-        Toptips('请您将信息输入完整！');
+      function uploadInfo() {
+        return new Promise(function (resolve, reject) {
+          wx.request({
+            method: 'POST',
+            url: config.requestUrl + 'setdriverinfo',
+            data: {
+              driverId: _id,
+              postInfo: postInfo
+            },
+            success: function (res) {
+              resolve(res.data);
+            },
+            fail: function (res) {
+              reject(res.data);
+            }
+          })
+        })
+      }
+
+      function uploadPic() {
+        return new Promise(function (resolve, reject) {
+          wx.uploadFile({
+            url: config.requestUrl + 'uploadpic', //上传文件接口
+            filePath: postInfo.carImgSrc,
+            name: 'file',
+            formData: {
+              'id': _id
+            },
+            success: function (res) {
+              console.log(res)
+              // console.log(res.data);
+              resolve(res.data);
+            },
+            fail: function (res) {
+              reject(res.data);
+            }
+          })
+        })
       }
     }
   },
@@ -152,13 +154,22 @@ Page({
       //设置提交按钮的状态与文字
       _this.setData({
         v_status: driverInfo.v_status,
-        ['showData.car']: driverInfo.car,
-        ['showData.carid']: driverInfo.carid,
-        ['showData.phone']: driverInfo.phone,
-        ['showData.carImgSrc']: driverInfo.carpic,
-        ['subBtnProp.subBtnText']: subBtnText,
-        ['subBtnProp.subBtnStatus']: subBtnStatus
+        'showData.car': driverInfo.car,
+        'showData.carid': driverInfo.carid,
+        'showData.phone': driverInfo.phone,
+        'showData.carImgSrc': driverInfo.carpic,
+        'subBtnProp.subBtnText': subBtnText,
+        'subBtnProp.subBtnStatus': subBtnStatus
       })
+
+      if (v_status != 'unverified') {
+        _this.setData({
+          'postInfo.car': driverInfo.car,
+          'postInfo.carid': driverInfo.carid,
+          'postInfo.phone': driverInfo.phone,
+          'postInfo.carImgSrc': driverInfo.carpic
+        })
+      }
     });
   },
   /**

@@ -58,7 +58,7 @@ var pinche = {
             });
         }
 
-                
+
         /**
          * 创建评论条目
          */
@@ -71,7 +71,7 @@ var pinche = {
 
             return new Promise(function (resolve, reject) {
                 dbUtil.find('comments', {}, { driverId: ObjectId(driverId) }, function (len, results) {
-                    if(len == 0) {
+                    if (len == 0) {
                         dbUtil.insert('comments', insertObj, function (res) {
                             resolve('success');
                         })
@@ -87,8 +87,21 @@ var pinche = {
      * @param {number} page 信息列表页数
      * @param {res} resp response对象
      */
-    loadList: function (page, school, resp) {
+    loadList: function (page, school, search, option, resp) {
         var filter = school == null ? { status: 0 } : { school: parseInt(school), status: 0 };
+
+        if (search && option != 0) {    //如果有搜索关键词且搜索项不为全部
+            var reg = new RegExp("^.*" + search + ".*$");
+            switch (option) {
+                case '1':
+                    filter['startLoc.name'] = reg;
+                    break;
+                case '2':
+                    filter['destLoc.name'] = reg;
+                    break;
+            }
+        }
+
         dbUtil.findByPage(page, filter, function (results) {
             if (results.length == 0) {
                 resp.jsonp('end');
@@ -247,7 +260,7 @@ var pinche = {
     },
     /**
      * 处理评论、评分
-     */ 
+     */
     comment: function (postData, resp) {
         var userId = postData.userId;
         var driverId = postData.driverId;
@@ -317,7 +330,7 @@ var pinche = {
      */
     checkComment: function (userId, itemId, resp) {
         dbUtil.find('comments', {}, {
-            comment_list: { $elemMatch: { userId: ObjectId(userId), orderId: ObjectId(itemId) }}
+            comment_list: { $elemMatch: { userId: ObjectId(userId), orderId: ObjectId(itemId) } }
         }, function (len, results) {
             if (len == 0) {
                 resp.jsonp('true');
@@ -342,16 +355,16 @@ var pinche = {
                     'avatarUrl': 1
                 }
             }, {
-                _id: { $in: uid_list}
-            }, function (len, res) {
-                if (len != 0) {
-                    sendObj.uid_list = res;
-                } else {
-                    sendObj = [];
-                }
-                resp.jsonp(sendObj);
-                resp.end();
-            })
+                    _id: { $in: uid_list }
+                }, function (len, res) {
+                    if (len != 0) {
+                        sendObj.uid_list = res;
+                    } else {
+                        sendObj = [];
+                    }
+                    resp.jsonp(sendObj);
+                    resp.end();
+                })
 
         })
     },

@@ -1,7 +1,30 @@
 <!--pages/list/list.wxml-->
+<view class="weui-search-bar">
+    <view class="search-option">
+      <picker bindchange="bindPickerChange" value="{{optionSelect}}" range="{{optionArr}}">
+        <view class="picker">
+          {{optionArr[optionSelect]}}
+        </view>
+      </picker>
+    </view>
+    <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="输入关键字进行搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="tapConfirm" disabled="{{searchDisabled}}"/>
+            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                <icon type="clear" size="14"></icon>
+            </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+            <icon class="weui-icon-search" type="search" size="14"></icon>
+            <view class="weui-search-bar__text">输入关键字进行搜索</view>
+        </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+</view>
 <view class="container-a">
-    <view class="post-list">
-<!-- wx:for="{{loadedList}}" -->
+    <view class="hint" wx:if="{{loadedList.length == 0}}">没有相关的拼车信息</view>
+    <view class="post-list" wx:if="{{loadedList.length != 0}}">
     <view class="post-item" hover-class="item-hover" data-id="{{item._id}}" wx:key="{{item._id}}" wx:for="{{loadedList}}" bindtap="bindItemTap">
       <view class="item-title">标题:{{item.title}}</view>
       <view class="item-start"><image class="icon-dot" src="../../images/icon/startdot.png" mode="aspectFit"></image>出发地：{{item.startLoc.name}}</view>

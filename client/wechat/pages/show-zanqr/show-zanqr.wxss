@@ -7,6 +7,12 @@
   margin: 20rpx 0;
 }
 .noqr {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  color: #aaa;
   margin-top: 20rpx;
   font-size: 60rpx;
 }

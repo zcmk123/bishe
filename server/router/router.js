@@ -103,7 +103,9 @@ router.post('/postinfo', function (req, res) {
 router.get('/loadlist', function (req, res) {
     var page = url.parse(req.url, true).query.page;
     var school = url.parse(req.url, true).query.school || null;
-    pinche.loadList(page, school, res);
+    var search = url.parse(req.url, true).query.search;
+    var option = url.parse(req.url, true).query.option;
+    pinche.loadList(page, school, search, option, res);
 })
 
 /**
