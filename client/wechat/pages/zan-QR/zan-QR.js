@@ -60,9 +60,13 @@ Page({
    * 页面初始化
    */
   initPage: function (){
+    wx.showLoading({
+      title: '加载中...'
+    })
     this.setData({
       zanImgSrc: app.globalData.uInfo.isdriver.zanqr
     })
+    wx.hideLoading();
   },
   /**
    * 生命周期函数--监听页面加载

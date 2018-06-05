@@ -1,6 +1,10 @@
 <!--pages/order-info/order-info.wxml-->
 <import src="/pages/template/list-item-template.wxml"/>
 <view class="container">
+  <view class="item-box" style="padding-bottom: 30rpx;">
+    <zan-steps type="horizon" steps="{{steps}}"></zan-steps>
+  </view>
+
   <template is="list-item-template" data="{{...itemData}}"/>
 
 <!--双方都能看到的按钮  -->

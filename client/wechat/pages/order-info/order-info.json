@@ -1,6 +1,7 @@
 {
   "onReachBottomDistance": -80,
   "usingComponents": {
-    "zan-button": "/libs/zanui/btn/index"
+    "zan-button": "/libs/zanui/btn/index",
+    "zan-steps": "/libs/zanui/steps/index"
   }
 }

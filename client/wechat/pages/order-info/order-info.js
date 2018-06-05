@@ -11,7 +11,27 @@ Page({
     itemData: null,
     canCancel: false,
     canComment: false,
-    canComplet: false
+    canComplet: false,
+    steps: [
+      {
+        // 此步骤是否当前完成状态
+        current: false,
+        // 此步骤是否已经完成
+        done: false,
+        // 此步骤显示文案
+        text: '预约成功'
+      },
+      {
+        done: false,
+        current: false,
+        text: '拼车进行中'
+      },
+      {
+        done: false,
+        current: false,
+        text: '订单完成'
+      }
+    ]
   },
   //打赏司机页面
   bindThumbUp: function () {
@@ -101,6 +121,7 @@ Page({
     function cancelOrder() {
       var userId = app.globalData.uInfo._id;
       var itemId = _this.data.itemData._id;
+      var isdriver = _this.data.itemData.fromOrder.fromPost;
       wx.showLoading({
         title: '正在取消订单',
       })
@@ -109,7 +130,8 @@ Page({
         url: config.requestUrl + 'order/cancelorder',
         data: {
           userId: userId,
-          itemId: itemId
+          itemId: itemId,
+          driver: isdriver
         },
         success: function (res) {
           if (res.data == 'success') {
@@ -200,6 +222,9 @@ Page({
           }
         })
 
+        //转换订单状态
+        _this.converSteps(_this.data.itemData);
+
         // 检查能否取消订单
         _this.checkCancel();
 
@@ -220,7 +245,7 @@ Page({
   },
   checkCanComplet: function () {
     var itemData = this.data.itemData;
-    return new Date() - new Date(itemData.date) > 0;
+    return new Date() - util.iosDate(itemData.date) > 0;
   },
   checkCanComment: function () {
     var _this = this;
@@ -250,13 +275,39 @@ Page({
   checkCancel: function () {
     var status = this.data.itemData.status;
     var startDate = this.data.itemData.date;
-    var timeDiff = util.timeDiff(new Date(startDate), new Date());
-    var timeCheck = timeDiff >= 0 && timeDiff <= 30;
+    var timeDiff = util.timeDiff(util.iosDate(startDate), new Date());
+    var timeCheck = timeDiff >= 30;
     if (status == 0 && timeCheck) {
       this.setData({
         canCancel: true
       })
     }
+  },
+  /**
+   * 转换订单状态
+   */
+  converSteps: function (itemData) {
+    //current: false,
+    // 此步骤是否已经完成
+    // done: true,
+    var status = itemData.status;
+    var steps = this.data.steps;
+    if (status == 0) {
+      // var dateOrigin = new Date(itemData.date);
+      // var dateNow = new Date();
+      // util.timeDiff(dateOrigin, dateNow);
+      // 预约成功状态未处理
+      for (let i = 0; i <= status+1; i++) {
+        steps[i].done = true;
+      }
+    } else if (status == 1) {
+      steps.forEach(function (ele, index) {
+        ele.done = true;
+      })
+    }
+    this.setData({
+      steps: steps
+    })
   },
   /**
    * 生命周期函数--监听页面加载

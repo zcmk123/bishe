@@ -117,6 +117,14 @@ function trim (str) {
   return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
+/**
+ * 兼容iosDate
+ */
+function iosDate(dateStr) {
+  var iosDateArr = dateStr.split(/[- : \/]/);
+  return new Date(iosDateArr[0], iosDateArr[1] - 1, iosDateArr[2], iosDateArr[3], iosDateArr[4]);
+}
+
 module.exports = {
   formatTime: formatTime,
   formatData: formatData,
@@ -124,5 +132,6 @@ module.exports = {
   isDriver: isDriver,
   timeDiff: timeDiff,
   checkPhoneNum: checkPhoneNum,
-  trim: trim
+  trim: trim,
+  iosDate: iosDate
 }
