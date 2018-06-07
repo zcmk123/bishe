@@ -3,5 +3,5 @@
   "usingComponents": {
     "zan-card": "/libs/zanui/card/index"
   },
-  "onReachBottomDistance": -80
+  "onReachBottomDistance": 0
 }

@@ -30,7 +30,10 @@ App({
             data: {
               jsCode: upperData.code
             },
-            success: res => { resolve(res) },
+            success: res => {
+              console.log(res); 
+              resolve(res);
+            },
             fail: res => { reject('获取openid失败：' + res.errMsg) }
           })
         });
@@ -41,6 +44,7 @@ App({
         }
         _this.globalData.openId = upperData.data.openid;  // 存储openid到全局
         _this.globalData.uInfo = upperData.data;
+        console.log(_this.globalData);
       })
     }else {
       // 有登录信息了

@@ -61,7 +61,7 @@ var info = {
                             // 不存在，添加默认记录
                             dbUtil.insert('user', userDefaultObj, function (res) {
                                 userDefaultObj._id = res.insertedId;
-                                resp.jsonp(oid);
+                                resp.jsonp(userDefaultObj);
                                 resp.end();
                             });
                         } else {

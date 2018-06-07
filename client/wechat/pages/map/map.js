@@ -73,11 +73,13 @@ Page({
         iconPath: "/images/icon/marker.png",
         width: 16,
         height: 20,
+        title: '',
         label: {}
       };
       tempObj.id = index;
       tempObj.latitude = ele.latitude;
       tempObj.longitude = ele.longitude;
+      tempObj.title = ele.name;
       tempObj.label.content = ele.name;
       tempObj.label.x = ele.name.length * -6;
       markersArr.push(tempObj);

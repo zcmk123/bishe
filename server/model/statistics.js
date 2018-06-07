@@ -1,3 +1,6 @@
+/**
+ * 统计功能
+ */
 var dbUtil = require('./mongodb');
 var ObjectId = require('mongodb').ObjectId;
 
