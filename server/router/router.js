@@ -12,6 +12,15 @@ var info = require('../model/info');
 
 var pinche = require('../model/pinche');
 
+var statistics = require('../model/statistics');
+
+/**
+ * 统计
+ */
+router.get('/statistics/pinchetime', function (req, res) {
+    statistics.sTime(res);
+})
+
 // 路由
 
 router.get('/getinfo', function (req, res) {
@@ -148,7 +157,11 @@ router.get('/loadlist', function (req, res) {
   */
  router.delete('/order/cancelorder', function (req, res) {
     var postData = req.body;
-    pinche.removePassenger(postData, res);
+    if(postData.driver) {
+        pinche.removeOrder(postData, res);
+    } else {
+        pinche.removePassenger(postData, res);
+    }
  })
 
  /**

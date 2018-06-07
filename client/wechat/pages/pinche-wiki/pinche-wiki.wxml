@@ -1,0 +1,4 @@
+<!--pages/pinche-wiki/pinche-wiki.wxml-->
+<view class="container">
+  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+</view>

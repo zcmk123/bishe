@@ -205,7 +205,11 @@ var info = {
         dbUtil.find('user', { projection: { 'postorder': 1 } }, { _id: ObjectId(userId) }, function (len, results) {
             var postOrder = results[0].postorder;
             dbUtil.findByPage(page, { _id: { $in: postOrder } }, function (results) {
-                resp.jsonp(results);
+                if (results.length == 0) {
+                    resp.jsonp('end');
+                } else {
+                    resp.jsonp(results);
+                }
                 resp.end();
             });
         });

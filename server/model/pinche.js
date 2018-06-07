@@ -259,6 +259,45 @@ var pinche = {
         }
     },
     /**
+     * 删除订单
+     */
+    removeOrder: function (postData, resp) {
+        var userId = postData.userId;
+        var itemId = postData.itemId;
+        
+        Promise.all([removeListItem(), removeMyPost()])
+        .then(function (res) {
+            if (res[0] == 'success' && res[1] == 'success') {   // 两个都更新成功
+                resp.jsonp('success');
+                resp.end();
+            }
+            // TODO 有一个失败要回滚
+        })
+
+        function removeListItem() {
+            return new Promise(function (resolve, reject) {
+                dbUtil.delete('list', { _id: ObjectId(itemId) }, function (results) {
+                    resolve('success');
+                })
+            });
+        }
+
+        function removeMyPost() {
+            return new Promise(function (resolve, reject) {
+                dbUtil.findAndModify('user', {
+                    _id: ObjectId(userId)
+                }, {
+                        $pull: {
+                            postorder: ObjectId(itemId)
+                        }
+                    },
+                    function (results) {
+                        resolve('success');
+                    });
+            });
+        }
+    },
+    /**
      * 处理评论、评分
      */
     comment: function (postData, resp) {

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "统计信息",
+  "usingComponents": {
+    "ec-canvas": "../../libs/echarts/ec-canvas/ec-canvas"
+  }
+}

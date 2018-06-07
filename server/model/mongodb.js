@@ -41,8 +41,21 @@ var dbUtil = {
             })
         })
     },
-    delete: function () {
-        // TODO删除
+    /**
+     * 更新一条数据
+     * @param {stirng} collectionName 集合名称
+     * @param {object} filter where筛选条件
+     * @param {function} callback 回调函数
+     */
+    delete: function (collectionName, filter, callback) {
+        // 删除
+        connect(function (err, db) {
+            db.collection(collectionName).deleteMany(filter, null, function (error, res) {
+                if (callback) {
+                    callback(res);
+                }
+            })
+        })
     },
     /**
      * 更新一条数据
@@ -87,8 +100,8 @@ var dbUtil = {
      */
     findAndModify: function (collectionName, filter, obj, callback) {
         connect(function (err, db) {
-            db.collection(collectionName).findOneAndUpdate(filter, obj, {returnOriginal: false},function (error, result) {
-                if(callback) {
+            db.collection(collectionName).findOneAndUpdate(filter, obj, { returnOriginal: false }, function (error, result) {
+                if (callback) {
                     callback(result);
                 }
             })
@@ -104,6 +117,21 @@ var dbUtil = {
             db.collection(collectionName).findOne({ _id: _id }, {}, function (error, result) {
                 if (callback) {
                     callback(result);
+                }
+            })
+        })
+    },
+    /**
+     * mongodb函数操作查询
+     * @param {string} collectionName 集合名称
+     * @param {array} pineline 查询条件
+     * @param {function} callback 回调函数
+     */
+    aggregate: function (collectionName, pipeline, callback) {
+        connect(function (err, db) {
+            db.collection(collectionName).aggregate(pipeline).toArray(function (error, results) {
+                if (callback) {
+                    callback(results);
                 }
             })
         })

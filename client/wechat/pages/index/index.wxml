@@ -18,12 +18,19 @@
         <view style="color: #bbb; font-size: 40rpx;">发布拼车</view>
       </view>
     </view>
+
     <view class="item" bindtap="toListPage">
       <view id="pin">
         <image src="../../images/icon/pinche.png" mode="aspectFit"></image>
         <view style="color: #bbb; font-size: 40rpx;">我要拼车</view>
       </view>
+    </view>
 
+    <view class="item" bindtap="toStatisticsPage">
+      <view id="data">
+        <image src="../../images/icon/baike.png" mode="aspectFit"></image>
+        <view style="color: #bbb; font-size: 40rpx;">统计信息</view>
+      </view>
     </view>
   </view>
 

@@ -24,6 +24,24 @@ var schoolList = [{
       longitude: 110.417365
     },
     {
+      name: 'B区宿舍',
+      address: '桂林电子科技大学花江校区B区宿舍',
+      latitude: 25.318827,
+      longitude: 110.415897
+    },
+    {
+      name: 'D区宿舍',
+      address: '桂林电子科技大学花江校区D区宿舍',
+      latitude: 25.31117,
+      longitude: 110.410489
+    },
+    {
+      name: '第五教学楼',
+      address: '桂林电子科技大学花江校区第五教学楼',
+      latitude: 25.31395,
+      longitude: 110.417522
+    },
+    {
       name: '实训中心',
       address: '桂林电子科技大学花江校区实训中心',
       latitude: 25.310218,
@@ -50,6 +68,18 @@ var schoolList = [{
       address: '桂林理工大学雁山校区教学楼',
       latitude: 25.064144,
       longitude: 110.293555
+    },
+    {
+      name: '学生宿舍',
+      address: '桂林理工大学雁山校区学生宿舍',
+      latitude: 25.060222,
+      longitude: 110.302976
+    },
+    {
+      name: '体育馆',
+      address: '桂林理工大学雁山校区体育馆',
+      latitude: 25.066121,
+      longitude: 110.29656
     }
   ]
 }]

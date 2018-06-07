@@ -23,12 +23,14 @@ Page({
     if (this.data.currentTab != clickTab) { // 点击的就是当前页面，不做处理
       if (clickTab == 0) {  // 我加入的Tab
         _this.setData({
-          currentTab: clickTab
+          currentTab: clickTab,
+          page: 1          
         })
         _this.requestOrder('myorder');
       } else if (clickTab == 1) {  // 我发布的Tab
         _this.setData({
-          currentTab: clickTab
+          currentTab: clickTab,
+          page: 1
         })
         this.requestOrder('postorder');
       }
@@ -132,9 +134,10 @@ Page({
     isLoading = isLoading ? false : true;
     _this.setData({ isLoading: isLoading });
     var userId = app.globalData.uInfo._id;
+    var route = this.data.currentTab == 0 ? 'order/myorder' : 'order/postorder';
     // 向后台发送请求拉取数据
     wx.request({
-      url: config.requestUrl + 'order/myorder',
+      url: config.requestUrl + route,
       data: {
         userId: userId,
         page: _this.data.page + 1

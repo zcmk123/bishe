@@ -19,7 +19,7 @@ Page({
         // 此步骤是否已经完成
         done: false,
         // 此步骤显示文案
-        text: '预约成功'
+        text: '预约/发布成功'
       },
       {
         done: false,

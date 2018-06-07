@@ -50,8 +50,11 @@ page {
   text-align: center;
   flex-grow: 1;
 }
-.item:nth-child(2) {
-  margin-left: 20rpx;
+.item {
+  margin-right: 20rpx;
+}
+.item:last-child {
+  margin-right: 0;
 }
 .footer {
   flex-grow: 1;
@@ -81,7 +84,7 @@ page {
   font-family: '黑体';
   font-weight: bolder; */
 }
-#post image, #pin image {
+#post image, #pin image,#data image {
   width: 120rpx;
   height: 120rpx;
 }

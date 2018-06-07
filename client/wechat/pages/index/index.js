@@ -30,6 +30,14 @@ Page({
     console.log(app.globalData)
   },
   /**
+   * 去统计页面
+   */
+  toStatisticsPage: function () {
+    wx.navigateTo({
+      url: '../pinche-wiki/pinche-wiki',
+    })
+  },
+  /**
    * 去拼车列表页面
    */
   toListPage: function () {

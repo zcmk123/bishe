@@ -9,6 +9,7 @@ Page({
    */
   data: {
     postInfo: {
+      desc: '',
       passenger: [],
       seat: 1
     },
