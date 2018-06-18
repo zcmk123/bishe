@@ -9,7 +9,7 @@
 
 <!--双方都能看到的按钮  -->
   <view style="margin-top: 0;" class="weui-btn-area" wx:if="{{itemData.status == 0}}">
-    <view class="page__desc" style="width: 90vw;">*发车前30分钟内不能取消订单</view>
+    <view class="page__desc" style="width: 90vw;">*发车前5分钟内不能取消订单</view>
     <zan-button style="margin-top: 0;" class="weui-btn" type="primary" bindtap="bindCancel" disabled="{{!canCancel}}">取消订单</zan-button>
      <zan-button style="margin-top: 0; margin-left: 20rpx;" class="weui-btn" type="primary" bindtap="bindRTPMap" wx:if="{{itemData.status == 0}}">实时定位</zan-button> 
   </view>

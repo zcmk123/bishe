@@ -276,7 +276,7 @@ Page({
     var status = this.data.itemData.status;
     var startDate = this.data.itemData.date;
     var timeDiff = util.timeDiff(util.iosDate(startDate), new Date());
-    var timeCheck = timeDiff >= 30;
+    var timeCheck = timeDiff >= 5;
     if (status == 0 && timeCheck) {
       this.setData({
         canCancel: true
